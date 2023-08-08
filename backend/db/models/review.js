@@ -14,13 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: "spotId",
       });
 
+      Review.belongsTo(models.User, {
+        foreignKey: "userId",
+      });
       Review.hasMany(models.ReviewImage, {
         foreignKey: "reviewId",
         onDelete: "CASCADE",
         hooks: true,
-      });
-      Review.belongsTo(models.User, {
-        foreignKey: "userId",
       });
     }
   }
