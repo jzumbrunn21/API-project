@@ -14,10 +14,16 @@ module.exports = (sequelize, DataTypes) => {
       });
 
       Spot.hasMany(models.SpotImage, {
-        foreignKey: 'spotId',
-        onDelete: 'CASCADE',
+        foreignKey: "spotId",
+        onDelete: "CASCADE",
         hooks: true,
-      })
+      });
+
+      Spot.hasMany(models.Review, {
+        foreignKey: "spotId",
+        onDelete: "CASCADE",
+        hooks: true,
+      });
     }
   }
   Spot.init(
