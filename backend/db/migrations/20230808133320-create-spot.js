@@ -17,6 +17,7 @@ module.exports = {
         ownerId: {
           type: Sequelize.INTEGER,
           allowNull: false,
+          // autoIncrement: true,
           references: {
             model: "Users",
           },

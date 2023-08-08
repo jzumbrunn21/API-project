@@ -16,6 +16,7 @@ module.exports = {
         },
         reviewId: {
           type: Sequelize.INTEGER,
+          autoIncrement: true,
           allowNull: false,
           references: {
             model: "Reviews",
