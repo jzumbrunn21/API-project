@@ -63,6 +63,18 @@ module.exports = {
             "This lovely lodge is nestled right in the middle of a Class 5 rapid section. Transportation is not included.",
           price: 20.0,
         },
+        {
+          ownerId: 1,
+          address: "123 Lane of Vacation",
+          city: "Orlando",
+          state: "Florida",
+          country: "United States",
+          lat: 24.950575,
+          lng: -72.457176,
+          name: "Above-water BnB Experience",
+          description: "Close to Disney.",
+          price: 999.0,
+        },
       ],
       { validate: true }
     );
@@ -88,6 +100,7 @@ module.exports = {
             "Mountain Getaway",
             "City Slick Shack",
             "Grand Lodging",
+            "Above-water BnB Experience",
           ],
         },
       },

@@ -25,6 +25,16 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   await deletedSpot.destroy();
   return res.json({ message: "Successfully deleted" });
 });
+// GET ALL SPOTS BY CURRENT USER
+
+router.get("/current", requireAuth, async (req, res) => {
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: req.user.id,
+    },
+  });
+  res.json({ Spots: spots });
+});
 
 // GET ALL SPOTS //
 router.get("", async (req, res) => {
