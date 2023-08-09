@@ -29,19 +29,37 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 
 router.get("/current", requireAuth, async (req, res) => {
   const spots = await Spot.findAll({
+    include: [
+      {
+        model: Review,
+        attributes: ["stars"],
+      },
+      {
+        model: SpotImage,
+        attributes: ["url"],
+      },
+    ],
     where: {
       ownerId: req.user.id,
     },
-    include: {
-      model: SpotImage,
-      attributes: ["preview"],
-    },
-    include: {
-      model: Review,
-      attributes: ["stars"],
-    },
   });
-  res.json({ Spots: spots });
+
+  let spotsList = [];
+
+  spots.forEach((spot) => {
+    spotsList.push(spot.toJSON());
+  });
+
+  spotsList.forEach((singleSpot) => {
+    singleSpot.SpotImages.forEach((image) => {
+      if (image.preview === true) {
+        singleSpot.url = image.url;
+      }
+    });
+
+    delete singleSpot.images;
+  });
+  res.json({ spotsList });
 });
 
 // GET ALL SPOTS //
