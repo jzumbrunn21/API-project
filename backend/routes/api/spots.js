@@ -6,7 +6,7 @@ const {
   requireAuth,
   restoreUser,
 } = require("../../utils/auth");
-const { Spot, User } = require("../../db/models");
+const { Spot, User, SpotImage, Review } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -31,6 +31,14 @@ router.get("/current", requireAuth, async (req, res) => {
   const spots = await Spot.findAll({
     where: {
       ownerId: req.user.id,
+    },
+    include: {
+      model: SpotImage,
+      attributes: ["preview"],
+    },
+    include: {
+      model: Review,
+      attributes: ["stars"],
     },
   });
   res.json({ Spots: spots });
