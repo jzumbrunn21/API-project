@@ -14,14 +14,16 @@ const { handleValidationErrors } = require("../../utils/validation");
 router.delete("/:spotId", requireAuth, async (req, res) => {
   const deletedSpot = await Spot.findByPk(req.params.spotId);
 
-  if (deletedSpot && (this.owner === User.id)) {
-    await deletedSpot.destroy();
-    return res.json({
-      message: "Successfully Deleted",
-    });
-  } else {
-    res.status(404).json({ message: "Spot couldn't be found" });
+  if (!deletedSpot) {
+    return res.status(404).json({ message: "Spot couldn't be found" });
   }
+
+  if (deletedSpot.ownerId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  await deletedSpot.destroy();
+  return res.json({ message: "Successfully deleted" });
 });
 
 // GET ALL SPOTS //
