@@ -38,6 +38,18 @@ module.exports = {
             "Honestly, I thought this was Grand Rapids, Michigan, so my wife is pretty upset at me. Beautiful room!",
           stars: 3,
         },
+        {
+          spotId: 5,
+          userId: 1,
+          review: "Love this spot!",
+          stars: 3,
+        },
+        {
+          spotId: 1,
+          userId: 1,
+          review: "We love Disney world!",
+          stars: 5,
+        },
       ],
       { validate: true }
     );
@@ -56,7 +68,7 @@ module.exports = {
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
       spotId: {
-        [Op.in]: [1, 2, 3, 4],
+        [Op.in]: [1, 2, 3, 4, 1, 5],
       },
     });
     /**

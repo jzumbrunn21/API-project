@@ -30,6 +30,11 @@ module.exports = {
           url: "https://cdn.onekindesign.com/wp-content/uploads/2019/01/Rustic-Mountain-Home-Berlin-Architects-01-1-Kindesign.jpg",
           preview: true,
         },
+        {
+          spotId: 5,
+          url: "https://people.com/thmb/PGjbUcpE8MzgoNhl0U7K3a7G7JY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2):format(webp)/disney-house-overview-front-yard-9457101549314a1790c10f0de8bb5c6c.jpg",
+          preview: false,
+        },
       ],
       { validate: true }
     );
@@ -48,7 +53,7 @@ module.exports = {
     const Op = Sequelize.Op;
     await queryInterface.bulkDelete(options, {
       spotId: {
-        [Op.in]: [1, 2, 3, 4],
+        [Op.in]: [1, 2, 3, 4, 5],
       },
     }, {
 

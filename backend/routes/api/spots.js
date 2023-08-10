@@ -27,21 +27,13 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 });
 // GET ALL SPOTS BY CURRENT USER
 
-router.get("/current", requireAuth, async (req, res) => {
+router.get("/current", requireAuth, async (req, res) => {});
+
+// GET ALL SPOTS //
+
+router.get("/", async (req, res) => {
   const spots = await Spot.findAll({
-    include: [
-      {
-        model: Review,
-        attributes: ["stars"],
-      },
-      {
-        model: SpotImage,
-        attributes: ["url"],
-      },
-    ],
-    where: {
-      ownerId: req.user.id,
-    },
+    include: [{ model: SpotImage }, { model: Review }],
   });
 
   let spotsList = [];
@@ -50,21 +42,31 @@ router.get("/current", requireAuth, async (req, res) => {
     spotsList.push(spot.toJSON());
   });
 
-  spotsList.forEach((singleSpot) => {
-    singleSpot.SpotImages.forEach((image) => {
+  // PREVIEW IMAGE
+  spotsList.forEach((spot) => {
+    spot.SpotImages.forEach((image) => {
       if (image.preview === true) {
-        singleSpot.url = image.url;
+        spot.previewImage = image.url;
       }
     });
+
+    if (!spot.previewImage) {
+      spot.previewImage = "No image available";
+    }
     delete spot.SpotImages;
-
   });
-  res.json({ spotsList });
-});
+  // AVERAGE STARS
+  spotsList.forEach((spot) => {
+    let total = 0;
+    spot.Reviews.forEach((review) => {
+      total += review.stars;
+    });
 
-// GET ALL SPOTS //
-router.get("", async (req, res) => {
-  const spots = await Spot.findAll();
-  res.json({ Spots: spots });
+    const averageStars = total / spot.Reviews.length;
+    spot.avgRating = averageStars;
+    delete spot.Reviews;
+  });
+
+  res.json({ Spots: spotsList });
 });
 module.exports = router;
