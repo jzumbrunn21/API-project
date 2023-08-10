@@ -27,7 +27,48 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
 });
 // GET ALL SPOTS BY CURRENT USER
 
-router.get("/current", requireAuth, async (req, res) => {});
+router.get("/current", requireAuth, async (req, res) => {
+  const spots = await Spot.findAll({
+    include: [{ model: SpotImage }, { model: Review }],
+    where: {
+      ownerId: req.user.id,
+    },
+  });
+
+  let spotsList = [];
+
+  spots.forEach((spot) => {
+    spotsList.push(spot.toJSON());
+  });
+
+  // PREVIEW IMAGE
+  spotsList.forEach((spot) => {
+    spot.SpotImages.forEach((image) => {
+      if (image.preview === true) {
+        spot.previewImage = image.url;
+      }
+    });
+
+    if (!spot.previewImage) {
+      spot.previewImage = "No image available";
+    }
+    delete spot.SpotImages;
+  });
+
+  // AVERAGE STARS
+  spotsList.forEach((spot) => {
+    let total = 0;
+    spot.Reviews.forEach((review) => {
+      total += review.stars;
+    });
+
+    const averageStars = total / spot.Reviews.length;
+    spot.avgRating = averageStars;
+    delete spot.Reviews;
+  });
+
+  res.json({ Spots: spotsList });
+});
 
 // GET ALL SPOTS //
 
