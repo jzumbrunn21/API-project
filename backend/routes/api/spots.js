@@ -78,6 +78,8 @@ router.get("/:spotId", async (req, res) => {
   if (!spot) {
     res.status(404).json({ message: "Spot couldn't be found" });
   }
+  let jsonSpot = spot.toJSON();
+
   const images = await SpotImage.findAll({
     where: {
       spotId: req.params.spotId,
@@ -91,10 +93,29 @@ router.get("/:spotId", async (req, res) => {
     attributes: { exclude: ["username"] },
   });
 
-  
+  const reviews = await Review.findAll({
+    where: {
+      spotId: req.params.spotId,
+    },
+  });
 
+  let reviewsList = [];
 
-  res.json({ Spot: spot, SpotImages: images, Owner: owner });
+  reviews.forEach((review) => {
+    reviewsList.push(review.toJSON());
+  });
+
+  reviewsList.forEach((review) => {
+    let total = 0;
+    total += review.stars;
+    const averageStars = total / reviewsList.length;
+    jsonSpot.avgStarRating = averageStars;
+    delete jsonSpot.Reviews;
+  });
+
+  jsonSpot.numReview = reviewsList.length;
+
+  res.json({ Spot: jsonSpot, SpotImages: images, Owner: owner });
 });
 // GET ALL SPOTS //
 
