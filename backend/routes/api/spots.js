@@ -56,8 +56,8 @@ router.get("/current", requireAuth, async (req, res) => {
         singleSpot.url = image.url;
       }
     });
+    delete spot.SpotImages;
 
-    delete singleSpot.images;
   });
   res.json({ spotsList });
 });
