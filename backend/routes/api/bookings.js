@@ -28,8 +28,8 @@ router.get("/current", requireAuth, async (req, res) => {
     ],
   });
 
-  // Doing it manually. Couldn't figure out pojo manipulation way with this route (toJSON)
-
+  // Doing it manually. Can't figure out pojo manipulation way with this route (toJSON)
+  // Will revisit for efficiency
   const response = bookings.map((booking) => {
     return {
       id: booking.id,

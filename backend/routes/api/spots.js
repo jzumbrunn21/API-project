@@ -77,6 +77,33 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Spots: spotsList });
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 // Get all Reviews by a Spot's id
 
 router.get("/:spotId/reviews", async (req, res) => {
