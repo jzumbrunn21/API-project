@@ -239,4 +239,43 @@ router.get("/", async (req, res) => {
 
   res.json({ Spots: spotsList });
 });
+
+// Create a Spot
+
+router.post("/", requireAuth, async (req, res) => {
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+
+  const error = {};
+
+  if (!address) error.address = "Street address is required";
+  if (!city) error.city = "City is required";
+  if (!state) error.state = "State is required";
+  if (!country) error.country = "Country is required";
+  if (!lat) error.lat = "Latitude is not valid";
+  if (!lng) error.lng = "Longitude is not valid";
+  if (!name || name.length > 50)
+    error.name = "Name must be less than 50 characters";
+  if (!description) error.description = "Description is required";
+  if (!price || price < 1) error.price = "Price per day is required";
+
+  if (Object.keys(error)) {
+    return res.status(400).json({ message: "Bad Request", errors: error });
+  }
+
+  const newSpot = await Spot.create({
+    ownerId: req.user.id,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+
+  res.status(201).json({ newSpot });
+});
 module.exports = router;
