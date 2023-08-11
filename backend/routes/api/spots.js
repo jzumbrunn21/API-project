@@ -12,6 +12,7 @@ const {
   SpotImage,
   Review,
   ReviewImage,
+  Booking,
 } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
@@ -77,32 +78,47 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Spots: spotsList });
 });
 
+// Get all Bookings for a Spot based on the Spot's id
 
+router.get("/:spotId/bookings", requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) {
+    res.status(404).json({ message: "Spot couldn't be found" });
+  }
 
+  if (req.user.id === spot.ownerId) {
+    const ownedBookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId,
+      },
+      include: {
+        model: User,
+        attributes: {
+          exclude: [
+            "username",
+            "email",
+            "hashedPassword",
+            "createdAt",
+            "updatedAt",
+          ],
+        },
+      },
+    });
 
+    res.json({ Bookings: ownedBookings });
+  } else {
+    const unownedBookings = await Booking.findAll({
+      where: {
+        spotId: req.params.spotId,
+      },
+      attributes: {
+        exclude: ["id", "userId", "createdAt", "updatedAt"],
+      },
+    });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    res.json({ Bookings: unownedBookings });
+  }
+});
 
 // Get all Reviews by a Spot's id
 
