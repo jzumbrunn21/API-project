@@ -6,7 +6,13 @@ const {
   requireAuth,
   restoreUser,
 } = require("../../utils/auth");
-const { Spot, User, SpotImage, Review } = require("../../db/models");
+const {
+  Spot,
+  User,
+  SpotImage,
+  Review,
+  ReviewImage,
+} = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -69,6 +75,39 @@ router.get("/current", requireAuth, async (req, res) => {
   });
 
   res.json({ Spots: spotsList });
+});
+
+// Get all Reviews by a Spot's id
+
+router.get("/:spotId/reviews", async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) {
+    res.status(404).json({ message: "Spot couldn't be found" });
+  }
+  const reviews = await Review.findAll({
+    include: [
+      {
+        model: User,
+        attributes: {
+          exclude: [
+            "username",
+            "email",
+            "hashedPassword",
+            "createdAt",
+            "updatedAt",
+          ],
+        },
+      },
+      {
+        model: ReviewImage,
+        attributes: { exclude: ["reviewId", "createdAt", "updatedAt"] },
+      },
+    ],
+    where: {
+      spotId: spot.id,
+    },
+  });
+  res.json({ Reviews: reviews });
 });
 
 // Get details of a Spot from an id
