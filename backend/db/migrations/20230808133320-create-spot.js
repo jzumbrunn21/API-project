@@ -16,12 +16,13 @@ module.exports = {
         },
         ownerId: {
           type: Sequelize.INTEGER,
+          // autoIncrement: true,
           allowNull: false,
           // autoIncrement: true,
           references: {
             model: "Users",
           },
-          onDelete: 'CASCADE'
+          onDelete: "CASCADE",
         },
         address: {
           type: Sequelize.STRING,
@@ -41,16 +42,19 @@ module.exports = {
         },
         lat: {
           type: Sequelize.DECIMAL,
+          allowNull: false,
         },
         lng: {
           type: Sequelize.DECIMAL,
+          allowNull: false,
         },
         name: {
-          type: Sequelize.STRING,
+          type: Sequelize.STRING(50),
           allowNull: false,
         },
         description: {
           type: Sequelize.STRING,
+          allowNull: false,
         },
         price: {
           type: Sequelize.DECIMAL,
