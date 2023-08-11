@@ -6,7 +6,13 @@ const {
   requireAuth,
   restoreUser,
 } = require("../../utils/auth");
-const { Spot, User, SpotImage, Review } = require("../../db/models");
+const {
+  Spot,
+  User,
+  SpotImage,
+  Review,
+  ReviewImage,
+} = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
 
@@ -23,6 +29,43 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
 
   await deletedReview.destroy();
   return res.json({ message: "Successfully deleted" });
+});
+
+// Get all Reviews of the Current User
+router.get("/current", requireAuth, async (req, res) => {
+  const reviews = await Review.findAll({
+    include: [
+      {
+        model: User,
+        attributes: {
+          exclude: [
+            "email",
+            "username",
+            "hashedPassword",
+            "createdAt",
+            "updatedAt",
+          ],
+        },
+      },
+      {
+        model: Spot,
+        attributes: {
+          exclude: ["description", "createdAt", "updatedAt"],
+        },
+      },
+      {
+        model: ReviewImage,
+        attributes: {
+          exclude: ["createdAt", "updatedAt", "reviewId"],
+        },
+      },
+    ],
+    where: {
+      userId: req.user.id,
+    },
+  });
+
+  res.json({ Reviews: reviews, Spot: Spot, ReviewImages: ReviewImage });
 });
 
 module.exports = router;
