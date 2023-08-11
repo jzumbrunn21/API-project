@@ -17,47 +17,45 @@ router.get("/current", requireAuth, async (req, res) => {
     where: {
       userId: req.user.id,
     },
-    attributes: {
-      exclude: ["createdAt", "updatedAt"],
-    },
+    include: [
+      {
+        model: Spot,
+        attributes: {
+          exclude: ["description", "createdAt", "updatedAt"],
+        },
+        include: [{ model: SpotImage, attributes: ["url"] }],
+      },
+    ],
   });
 
-  const spots = await Spot.findAll({
-    include: [{ model: SpotImage }, { model: User }],
-    where: {
-      ownerId: req.user.id,
-    },
-    attributes: {
-      exclude: ["description", "createdAt", "updatedAt"],
-    },
+  // Doing it manually. Couldn't figure out pojo manipulation way with this route (toJSON)
+
+  const response = bookings.map((booking) => {
+    return {
+      id: booking.id,
+      spotId: booking.spotId,
+      Spot: {
+        id: booking.Spot.id,
+        ownerId: booking.Spot.id,
+        address: booking.Spot.address,
+        city: booking.Spot.city,
+        state: booking.Spot.state,
+        country: booking.Spot.state,
+        lat: booking.Spot.lat,
+        lng: booking.Spot.lng,
+        name: booking.Spot.name,
+        price: booking.Spot.price,
+        previewImage: booking.Spot.SpotImages[0].url,
+      },
+      userId: booking.userId,
+      startDate: booking.startDate,
+      endDate: booking.endDate,
+      createdAt: booking.createdAt,
+      updatedAt: booking.updatedAt,
+    };
   });
 
-  let spotsList = [];
-
-  spots.forEach((spot) => {
-    spotsList.push(spot.toJSON());
-  });
-
-  // PREVIEW IMAGE
-  spotsList.forEach((spot) => {
-    spot.SpotImages.forEach((image) => {
-      if (image.preview === true) {
-        spot.previewImage = image.url;
-      }
-    });
-
-    if (!spot.previewImage) {
-      spot.previewImage = "No image available";
-    }
-    delete spot.SpotImages;
-  });
-
-  const user = await User.findAll({
-    where: {
-      id: req.user.id,
-    },
-  });
-  res.json({ Bookings: bookings, Spot: spotsList, user });
+  res.json({ Bookings: response });
 });
 
 // Delete a Booking
