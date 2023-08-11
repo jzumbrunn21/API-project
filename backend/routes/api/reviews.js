@@ -48,12 +48,6 @@ router.get("/current", requireAuth, async (req, res) => {
         },
       },
       {
-        model: Spot,
-        attributes: {
-          exclude: ["description", "createdAt", "updatedAt"],
-        },
-      },
-      {
         model: ReviewImage,
         attributes: {
           exclude: ["createdAt", "updatedAt", "reviewId"],
@@ -64,8 +58,37 @@ router.get("/current", requireAuth, async (req, res) => {
       userId: req.user.id,
     },
   });
+  const spots = await Spot.findAll({
+    include: { model: SpotImage },
+    where: {
+      ownerId: req.user.id,
+    },
+    attributes: {
+      exclude: ["description", "createdAt", "updatedAt"],
+    },
+  });
 
-  res.json({ Reviews: reviews, Spot: Spot, ReviewImages: ReviewImage });
+  let spotsList = [];
+
+  spots.forEach((spot) => {
+    spotsList.push(spot.toJSON());
+  });
+
+  // PREVIEW IMAGE
+  spotsList.forEach((spot) => {
+    spot.SpotImages.forEach((image) => {
+      if (image.preview === true) {
+        spot.previewImage = image.url;
+      }
+    });
+
+    if (!spot.previewImage) {
+      spot.previewImage = "No image available";
+    }
+    delete spot.SpotImages;
+  });
+
+  res.json({ Reviews: reviews, Spot: spotsList, ReviewImages: ReviewImage });
 });
 
 module.exports = router;
