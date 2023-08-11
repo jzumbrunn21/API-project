@@ -31,6 +31,51 @@ router.delete("/:reviewId", requireAuth, async (req, res) => {
   return res.json({ message: "Successfully deleted" });
 });
 
+// Add an Image to a Review based on the Review's id
+router.post("/:reviewId/images", requireAuth, async (req, res) => {
+  const review = await Review.findByPk(req.params.reviewId);
+  if (!review) {
+    res.status(404).json({ message: "Review couldn't be found" });
+  }
+  if (review.userId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  const reviewImages = await ReviewImage.findAll({
+    where: {
+      reviewId: review.id,
+    },
+  });
+
+  imageList = [];
+
+  reviewImages.forEach((image) => {
+    imageList.push(image);
+  });
+
+  if (imageList.length > 10) {
+    res
+      .status(403)
+      .json({
+        message: "Maximum number of images for this resource was reached",
+      });
+  }
+
+  const { url } = req.body;
+
+  const newImage = await ReviewImage.create({
+    reviewId: review.id,
+    url,
+  });
+
+  const response = {
+    id: newImage.id,
+    url: newImage.url,
+  };
+
+  res.json({ response });
+});
+
 // Get all Reviews of the Current User
 router.get("/current", requireAuth, async (req, res) => {
   const reviews = await Review.findAll({
