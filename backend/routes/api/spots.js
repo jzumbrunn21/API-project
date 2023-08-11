@@ -240,6 +240,34 @@ router.get("/", async (req, res) => {
   res.json({ Spots: spotsList });
 });
 
+// Add an Image to a Spot based on the Spot's id
+
+router.post("/:spotId/images", requireAuth, async (req, res) => {
+  const spot = await Spot.findByPk(req.params.spotId);
+  if (!spot) {
+    res.status(404).json({ message: "Spot couldn't be found" });
+  }
+  if (spot.ownerId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  const { url, preview } = req.body;
+
+  const newImage = await SpotImage.create({
+    spotId: spot.id,
+    url,
+    preview,
+  });
+
+  const response = {
+    id: newImage.id,
+    url: newImage.url,
+    preview: newImage.preview,
+  };
+
+  res.status(200).json({ response });
+});
+
 // Create a Spot
 
 router.post("/", requireAuth, async (req, res) => {
