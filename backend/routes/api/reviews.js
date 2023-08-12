@@ -54,11 +54,9 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   });
 
   if (imageList.length > 10) {
-    res
-      .status(403)
-      .json({
-        message: "Maximum number of images for this resource was reached",
-      });
+    res.status(403).json({
+      message: "Maximum number of images for this resource was reached",
+    });
   }
 
   const { url } = req.body;
@@ -74,6 +72,35 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   };
 
   res.json({ response });
+});
+
+// Edit a Review
+router.put("/:reviewId", requireAuth, async (req, res) => {
+  const reviews = await Review.findByPk(req.params.reviewId);
+  if (!reviews) {
+    res.status(404).json({ message: "Review couldn't be found" });
+  }
+  if (reviews.userId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  const { review, stars } = req.body;
+  const error = {};
+  if (!review) error.review = "Review text is required";
+  if (!stars || stars < 0 || stars > 5)
+    error.stars = "Stars must be an integer from 1 to 5";
+
+  if (Object.keys(error).length > 0) {
+    return res.status(400).json({ message: "Bad Request", errors: error });
+  }
+
+  reviews.set({
+    review,
+    stars,
+  });
+
+  await reviews.save();
+  res.json({ reviews });
 });
 
 // Get all Reviews of the Current User
