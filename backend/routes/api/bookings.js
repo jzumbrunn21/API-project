@@ -65,6 +65,18 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Bookings: response });
 });
 
+router.put('/:bookingId', requireAuth, async (req, res)=> {
+  const editedBooking = await Booking.findByPk(req.params.bookingId);
+  if (!editedBooking) {
+    return res.status(404).json({ message: "Booking couldn't be found" });
+  }
+  if (editedBooking.userId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
+  }
+
+  const {startDate, endDate} = req.params
+})
+
 // Delete a Booking
 
 router.delete("/:bookingId", requireAuth, async (req, res) => {
