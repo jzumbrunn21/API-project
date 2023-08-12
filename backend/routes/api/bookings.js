@@ -78,15 +78,14 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  // startDateString = deletedBooking.startDate.toDateString();
-  // currentTimeObj = new Date();
-  // // currentTimeString = currentTimeObj.toDateString();
+  
+  currentTimeObj = new Date();
 
-  // if (currentTimeObj >= deletedBooking.startDate) {
-  //   res.status(403).json({
-  //     message: "Bookings that have been started can't be deleted",
-  //   });
-  // }
+  if (currentTimeObj >= deletedBooking.startDate) {
+    res.status(403).json({
+      message: "Bookings that have been started can't be deleted",
+    });
+  }
 
   await deletedBooking.destroy();
   return res.json({ message: "Successfully deleted" });
