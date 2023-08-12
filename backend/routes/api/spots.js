@@ -315,73 +315,52 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
   res.json({ newReview });
 });
 
-// Create and return a new booking from a spot specified by id.
+// Edit a Spot
 
-router.post("/:spotId/bookings", requireAuth, async (req, res) => {
+router.put("/:spotId", requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
     res.status(404).json({ message: "Spot couldn't be found" });
   }
-
-  if (req.user.id === spot.ownerId) {
-    return res
-      .status(403)
-      .json({ message: "Forbidden: Spot cannot be booked by owner" });
-  } else {
-    const { startDate, endDate } = req.body;
-
-    const dateError = {};
-
-    if (!startDate) dateError.startDate = "startDate must exist";
-    if (!endDate) dateError.endDate = "endDate must exist";
-    if (endDate <= startDate)
-      dateError.endDate = "endDate cannot be on or before startDate";
-
-    if (Object.keys(dateError).length > 0) {
-      return res
-        .status(400)
-        .json({ message: "Bad Request", errors: dateError });
-    }
-
-    const bookings = await Booking.findAll({
-      where: {
-        spotId: spot.id,
-      },
-    });
-
-    let bookingConflict = {};
-
-    let startTime = new Date(startDate).getTime();
-    let endTime = new Date(endDate).getTime();
-    for (let booking of bookings) {
-      let bookedStartDate = new Date(booking.startDate);
-      let bookedEndDate = new Date(booking.endDate);
-      let bookedStartTime = bookedStartDate.getTime();
-      let bookedEndTime = bookedEndDate.getTime();
-
-      if (bookedStartTime >= startTime && bookedStartTime <= endTime) {
-        bookingConflict.startDate =
-          "Start date conflicts with an existing booking";
-      }
-      if (bookedEndTime >= startTime && bookedEndTime <= endTime) {
-        bookingConflict.endDate = "End date conflicts with an existing booking";
-      }
-    }
-    if (Object.keys(bookingConflict).length > 0) {
-      return res.status(400).json({
-        message: "Sorry, this spot is already booked for the specified dates",
-        errors: bookingConflict,
-      });
-    }
-    const newBooking = await Booking.create({
-      spotId: spot.id,
-      userId: req.user.id,
-      startDate,
-      endDate,
-    });
-
-    res.json({ newBooking });
+  if (spot.ownerId !== req.user.id) {
+    return res.status(403).json({ message: "Forbidden" });
   }
+
+  const { address, city, state, country, lat, lng, name, description, price } =
+    req.body;
+
+  const error = {};
+
+  if (!address) error.address = "Street address is required";
+  if (!city) error.city = "City is required";
+  if (!state) error.state = "State is required";
+  if (!country) error.country = "Country is required";
+  if (!lat) error.lat = "Latitude is not valid";
+  if (!lng) error.lng = "Longitude is not valid";
+  if (!name || name.length > 50)
+    error.name = "Name must be less than 50 characters";
+  if (!description) error.description = "Description is required";
+  if (!price || price < 1) error.price = "Price per day is required";
+
+  if (Object.keys(error).length > 0) {
+    return res.status(400).json({ message: "Bad Request", errors: error });
+  }
+
+  spot.set({
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price,
+  });
+
+  await spot.save();
+
+  res.json({ spot });
 });
 
 // Create a Spot
