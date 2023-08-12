@@ -65,15 +65,21 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Bookings: response });
 });
 
+// Edit a booking
 router.put("/:bookingId", requireAuth, async (req, res) => {
   const booking = await Booking.findByPk(req.params.bookingId);
-
   if (!booking) {
     return res.status(404).json({ message: "Booking couldn't be found" });
   }
   if (booking.userId !== req.user.id) {
     return res.status(403).json({ message: "Forbidden" });
   }
+  const spot = await Spot.findOne({
+    where: {
+      id: booking.spotId,
+    },
+  });
+
 
   const { startDate, endDate } = req.body;
   const dateError = {};
@@ -94,11 +100,6 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
       message: "Past bookings can't be modified",
     });
   }
-  const spot = await Spot.findAll({
-    where: {
-      id: req.Bookings.spotId,
-    },
-  });
   const bookings = await Booking.findAll({
     where: {
       spotId: spot.id,
