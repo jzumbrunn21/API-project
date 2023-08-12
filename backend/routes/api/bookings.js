@@ -78,7 +78,6 @@ router.delete("/:bookingId", requireAuth, async (req, res) => {
     return res.status(403).json({ message: "Forbidden" });
   }
 
-  
   currentTimeObj = new Date();
 
   if (currentTimeObj >= deletedBooking.startDate) {
