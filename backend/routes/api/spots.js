@@ -509,7 +509,7 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 
   await spot.save();
 
-  res.json({ spot });
+  res.json( spot );
 });
 
 // Create a Spot
