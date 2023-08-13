@@ -161,18 +161,15 @@ router.get("/:spotId", async (req, res) => {
   if (!spot) {
     res.status(404).json({ message: "Spot couldn't be found" });
   }
-  let jsonSpot = spot.toJSON();
+  // let jsonSpot = spot.toJSON();
 
-  const images = await SpotImage.findAll({
+  const spotImages = await SpotImage.findAll({
     where: {
       spotId: req.params.spotId,
     },
     attributes: { exclude: ["createdAt", "updatedAt", "spotId"] },
   });
-  const owner = await User.findAll({
-    where: {
-      id: spot.ownerId,
-    },
+  const owner = await User.findByPk(spot.ownerId, {
     attributes: { exclude: ["username"] },
   });
 
@@ -182,23 +179,42 @@ router.get("/:spotId", async (req, res) => {
     },
   });
 
-  let reviewsList = [];
-
+  let total = 0;
   reviews.forEach((review) => {
-    reviewsList.push(review.toJSON());
+    total += review.starts;
   });
 
-  reviewsList.forEach((review) => {
-    let total = 0;
-    total += review.stars;
-    const averageStars = total / reviewsList.length;
-    jsonSpot.avgStarRating = averageStars;
-    delete jsonSpot.Reviews;
-  });
+  const avgStars = total / reviews.length;
 
-  jsonSpot.numReview = reviewsList.length;
+  const response = {
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: spot.createdAt,
+    updatedAt: spot.updatedAt,
+    numReviews: reviews.length,
+    avgStarRating: avgStars,
+    SpotImages: spotImages.map((image) => ({
+      id: image.id,
+      url: image.url,
+      preview: image.preview,
+    })),
+    Owner: {
+      id: owner.id,
+      firstName: owner.firstName,
+      lastName: owner.lastName,
+    },
+  };
 
-  res.json({ Spot: jsonSpot, SpotImages: images, Owner: owner });
+  res.json({ ...response });
 });
 // Query Params Handler
 
@@ -260,7 +276,6 @@ router.get("/", validateSpotQueryParams, async (req, res, next) => {
   ) {
     size = 20;
   }
-
 
   size = parseInt(size);
   page = parseInt(page);
