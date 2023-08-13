@@ -16,6 +16,7 @@ const {
 } = require("../../db/models");
 const { check } = require("express-validator");
 const { handleValidationErrors } = require("../../utils/validation");
+// const { query } = require('express-validator/check');
 
 // DELETE SPOT BY ID //
 router.delete("/:spotId", requireAuth, async (req, res) => {
@@ -199,11 +200,75 @@ router.get("/:spotId", async (req, res) => {
 
   res.json({ Spot: jsonSpot, SpotImages: images, Owner: owner });
 });
+// Query Params Handler
+
+const validateSpotQueryParams = [
+  check("page")
+    .optional()
+    .isInt({ min: 1, max: 10 })
+    .default(1)
+    .withMessage("Page must be greater than or equal to 1"),
+  check("size")
+    .optional()
+    .isInt({ min: 1, max: 20 })
+    .default(20)
+    .withMessage("Size must be greater than or equal to 1"),
+  check("minLat")
+    .optional()
+    .isDecimal()
+    .withMessage("Minimum latitude is invalid"),
+  check("maxLat")
+    .optional()
+    .isDecimal()
+    .withMessage("Maximum latitude is invalid"),
+  check("minLng")
+    .optional()
+    .isDecimal()
+    .withMessage("Minimum longitude is invalid"),
+  check("maxLng")
+    .optional()
+    .isDecimal()
+    .withMessage("Maximum longitude is invalid"),
+  check("minPrice")
+    .optional()
+    .isDecimal({ min: 0 })
+    .withMessage("Minimum price must be greater than or equal to 0"),
+  check("maxPrice")
+    .optional()
+    .isDecimal({ min: 0 })
+    .withMessage("Maximum price must be greater than or equal to 0"),
+  handleValidationErrors,
+];
 // GET ALL SPOTS //
 
-router.get("/", async (req, res) => {
+router.get("/", validateSpotQueryParams, async (req, res, next) => {
+  let { page, size } = req.query;
+
+  if (
+    !page ||
+    isNaN(parseInt(page)) ||
+    parseInt(page) < 1 ||
+    parseInt(page) > 10
+  ) {
+    page = 1;
+  }
+  if (
+    !size ||
+    isNaN(parseInt(size)) ||
+    parseInt(size) < 1 ||
+    parseInt(size) > 20
+  ) {
+    size = 20;
+  }
+
+
+  size = parseInt(size);
+  page = parseInt(page);
+
   const spots = await Spot.findAll({
     include: [{ model: SpotImage }, { model: Review }],
+    offset: (page - 1) * size,
+    limit: size,
   });
 
   let spotsList = [];
@@ -237,7 +302,7 @@ router.get("/", async (req, res) => {
     delete spot.Reviews;
   });
 
-  res.json({ Spots: spotsList });
+  res.json({ Spots: spotsList, page, size });
 });
 
 // Add an Image to a Spot based on the Spot's id
@@ -346,7 +411,6 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
     const bookings = await Booking.findAll({
       where: {
         spotId: spot.id,
-
       },
     });
 
