@@ -100,7 +100,7 @@ router.put("/:reviewId", requireAuth, async (req, res) => {
   });
 
   await reviews.save();
-  res.json({ reviews });
+  res.json( reviews );
 });
 
 // Get all Reviews of the Current User
