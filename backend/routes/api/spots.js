@@ -548,6 +548,6 @@ router.post("/", requireAuth, async (req, res) => {
     price,
   });
 
-  res.status(201).json({ newSpot });
+  res.status(201).json(newSpot);
 });
 module.exports = router;
