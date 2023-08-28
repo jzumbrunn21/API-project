@@ -3,6 +3,7 @@ import * as sessionActions from "../../store/session";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
+import { useHistory } from "react-router-dom";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -10,12 +11,34 @@ function LoginFormModal() {
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
+  const history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
       .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
+
+  const handleDemoUser = (e) => {
+    e.preventDefault();
+    setErrors({});
+    return dispatch(
+      sessionActions.login({
+        credential: "demo@user.io",
+        password: "password",
+      })
+    )
+      .then(() => {
+        closeModal();
+        history.push("/");
+      })
       .catch(async (res) => {
         const data = await res.json();
         if (data && data.errors) {
@@ -46,11 +69,10 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
+        {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
+      <button onClick={handleDemoUser}>Log in as Demo User</button>
     </>
   );
 }
