@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpots } from "../../store/spots";
+import "./SpotsList.css";
 
 function SpotsList() {
   const dispatch = useDispatch();
@@ -13,14 +14,15 @@ function SpotsList() {
   return (
     <>
       <ul>
-        {spotList.map(({ id, previewImage, city, state, name }) => (
+        {spotList.map(({ id, previewImage, city, state, price, avgRating }) => (
           <li key={id}>
-            <h3>{name}</h3>
+            <img src={previewImage} alt={`Spot ${id}`} />
+
             <p>
               {city},{state}
             </p>
-
-            <img src={previewImage} alt={`Spot ${id}`} />
+            <p>${price} night</p>
+            <p>{avgRating}</p>
           </li>
         ))}
       </ul>
