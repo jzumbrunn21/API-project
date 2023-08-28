@@ -13,8 +13,13 @@ function SpotsList() {
   return (
     <>
       <ul>
-        {spotList?.map(({ id, previewImage }) => (
+        {spotList.map(({ id, previewImage, city, state, name }) => (
           <li key={id}>
+            <h3>{name}</h3>
+            <p>
+              {city},{state}
+            </p>
+
             <img src={previewImage} alt={`Spot ${id}`} />
           </li>
         ))}

@@ -5,7 +5,7 @@ const GET_ALL_SPOTS = "/spots/getAllSpots";
 const loadSpots = (spots) => {
   return {
     type: GET_ALL_SPOTS,
-    spots: [spots],
+    spots,
   };
 };
 
@@ -25,7 +25,8 @@ const spotsReducer = (state = {}, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS: {
       const newState = {};
-      action.spots.forEach((spot) => (newState[spot.id] = spot));
+      console.log("Action Spots", action.spots);
+      action.spots.Spots.forEach((spot) => (newState[spot.id] = spot));
       return newState;
     }
     default:
