@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import SpotsList from "./components/Spots";
 import SingleSpot from "./components/SingleSpot";
 
+
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
