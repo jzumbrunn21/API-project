@@ -8,15 +8,24 @@ function SingleSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
-  const {name, city, state, country, previewImage, description }
+  const { id, name, city, state, country, previewImage, description } =
+    singleSpot;
 
   useEffect(() => {
-    dispatch(getSingleSpot());
+    dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
 
   return (
     <>
-    <h2>{}</h2>
+      <h2>{name}</h2>
+      <h4>
+        {city}, {state}, {country}
+      </h4>
+      <img src={previewImage} alt={`Spot ${id}`}></img>
+      <h3>Hosted by firstName LastName</h3>
+      <p>{description}</p>
     </>
-  )
+  );
 }
+
+export default SingleSpot;
