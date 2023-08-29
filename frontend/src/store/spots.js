@@ -1,5 +1,8 @@
+// import { useParams } from "react-router-dom";
 // constant
 const GET_ALL_SPOTS = "/spots/getAllSpots";
+const GET_SINGLE_SPOT = "spots/getSingleSpot";
+// const { spotId } = useParams();
 
 // action creator
 const loadSpots = (spots) => {
@@ -9,6 +12,12 @@ const loadSpots = (spots) => {
   };
 };
 
+const loadSingleSpot = (spot) => {
+  return {
+    type: GET_SINGLE_SPOT,
+    spot,
+  };
+};
 // thunk action creator
 export const getAllSpots = () => async (dispatch) => {
   const response = await fetch("/api/spots");
@@ -20,13 +29,31 @@ export const getAllSpots = () => async (dispatch) => {
   }
 };
 
+export const getSingleSpot = (spotId) => async (dispatch) => {
+  const response = await fetch(`/api/spots/${spotId}`);
+  if (response.ok) {
+    const data = await response.json();
+    dispatch(loadSingleSpot(data));
+    return data;
+  }
+};
+
 // Initial state and reducer
-const spotsReducer = (state = {}, action) => {
+
+const initialState = {
+  allSpots: {},
+  singleSpot: {},
+};
+const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS: {
-      const newState = {};
-      console.log("Action Spots", action.spots);
-      action.spots.Spots.forEach((spot) => (newState[spot.id] = spot));
+      const newState = { ...state };
+      action.spots.Spots.forEach((spot) => (newState.allSpots[spot.id] = spot));
+      return newState;
+    }
+    case GET_SINGLE_SPOT: {
+      const newState = { ...state, singleSpot: action.spot };
+      // newState.singleSpot = action.spot;
       return newState;
     }
     default:
