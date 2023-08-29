@@ -8,12 +8,20 @@ function SingleSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
-  const { id, name, city, state, country, previewImage, description } =
-    singleSpot;
-
   useEffect(() => {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
+  const {
+    id,
+    name,
+    city,
+    state,
+    country,
+    previewImage,
+    description,
+    SpotImages,
+    Owner,
+  } = singleSpot;
 
   return (
     <>
@@ -21,8 +29,20 @@ function SingleSpot() {
       <h4>
         {city}, {state}, {country}
       </h4>
-      <img src={previewImage} alt={`Spot ${id}`}></img>
-      <h3>Hosted by firstName LastName</h3>
+      {SpotImages && SpotImages.length > 0 && (
+        <ul className="spot-images">
+          {SpotImages.map(({ id, url }) => (
+            <li key={id} className="spot-image">
+              <img src={url} alt={`Spot ${id}`} />
+            </li>
+          ))}
+        </ul>
+      )}
+      {Owner && (
+        <h3>
+          Hosted by {Owner.firstName} {Owner.lastName}
+        </h3>
+      )}
       <p>{description}</p>
     </>
   );
