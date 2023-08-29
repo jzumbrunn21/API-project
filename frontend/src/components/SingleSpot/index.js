@@ -18,10 +18,18 @@ function SingleSpot() {
     state,
     country,
     previewImage,
+    price,
+    numReviews,
+    avgStarRating,
     description,
     SpotImages,
     Owner,
   } = singleSpot;
+
+  const handleReservationClick = (e) => {
+    e.preventDefault();
+    alert("Feature Coming Soon!");
+  };
 
   return (
     <>
@@ -44,6 +52,16 @@ function SingleSpot() {
         </h3>
       )}
       <p>{description}</p>
+      <div className="reservation-details">
+        <p>${price} night</p>
+        <p>
+          {avgStarRating}
+          {numReviews} reviews
+        </p>
+        <button id="reserve-button" onClick={handleReservationClick}>
+          Reserve
+        </button>
+      </div>
     </>
   );
 }
