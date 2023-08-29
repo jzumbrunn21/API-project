@@ -1,20 +1,28 @@
 // import { useParams } from "react-router-dom";
 // constant
-const GET_ALL_SPOTS = "/spots/getAllSpots";
+const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SINGLE_SPOT = "spots/getSingleSpot";
+const CREATE_NEW_SPOT = "spots/createNewSpot";
 // const { spotId } = useParams();
 
 // action creator
-const loadSpots = (spots) => {
+export const loadSpots = (spots) => {
   return {
     type: GET_ALL_SPOTS,
     spots,
   };
 };
 
-const loadSingleSpot = (spot) => {
+export const loadSingleSpot = (spot) => {
   return {
     type: GET_SINGLE_SPOT,
+    spot,
+  };
+};
+
+export const addNewSpot = (spot) => {
+  return {
+    type: CREATE_NEW_SPOT,
     spot,
   };
 };
@@ -38,6 +46,22 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
   }
 };
 
+export const createNewSpot = (spot) => async (dispatch) => {
+  const res = await fetch("/api/spots", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(spot),
+  });
+
+  if (res.ok) {
+    const newSpot = await res.json();
+    dispatch(addNewSpot(newSpot));
+    return newSpot;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
 // Initial state and reducer
 
 const initialState = {
@@ -55,6 +79,9 @@ const spotsReducer = (state = initialState, action) => {
       const newState = { ...state, singleSpot: action.spot };
       // newState.singleSpot = action.spot;
       return newState;
+    }
+    case CREATE_NEW_SPOT: {
+      return { ...state, [action.spot.id]: action.spot };
     }
     default:
       return state;

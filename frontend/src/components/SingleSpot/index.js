@@ -12,12 +12,12 @@ function SingleSpot() {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
   const {
-    id,
+    // id,
     name,
     city,
     state,
     country,
-    previewImage,
+    // previewImage,
     price,
     numReviews,
     avgStarRating,

@@ -19,7 +19,7 @@ function SpotsList() {
         {spotList.map(
           ({ id, previewImage, city, state, price, avgRating, name }) => (
             <li key={id} className="single-spot">
-              <Link to={`/api/spots/${id}`}>
+              <Link exact to={`/api/spots/${id}`}>
                 <img
                   src={previewImage}
                   alt={`Spot ${id}`}
