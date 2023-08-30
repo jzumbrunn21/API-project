@@ -1,4 +1,3 @@
-// import { useParams } from "react-router-dom";
 // constant
 const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SINGLE_SPOT = "spots/getSingleSpot";
@@ -68,6 +67,7 @@ const initialState = {
   allSpots: {},
   singleSpot: {},
 };
+
 const spotsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_SPOTS: {
@@ -81,7 +81,13 @@ const spotsReducer = (state = initialState, action) => {
       return newState;
     }
     case CREATE_NEW_SPOT: {
-      return { ...state, [action.spot.id]: action.spot };
+      return {
+        ...state,
+        allSpots: {
+          ...state.allSpots,
+          [action.spot.id]: action.spot,
+        },
+      };
     }
     default:
       return state;

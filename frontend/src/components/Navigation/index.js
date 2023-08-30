@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
       </li>
       {sessionUser && (
         <li>
-          <NavLink exact to="/api/spots/">
+          <NavLink exact to="/api/spots/new">
             Create New Spot
           </NavLink>
         </li>

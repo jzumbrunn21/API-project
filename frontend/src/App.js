@@ -23,11 +23,11 @@ function App() {
           <Route exact path="/">
             <SpotsList />
           </Route>
+          <Route exact path="/api/spots/new">
+            <CreateNewSpot />
+          </Route>
           <Route exact path="/api/spots/:spotId">
             <SingleSpot />
-          </Route>
-          <Route exact path="/api/spots/">
-            <CreateNewSpot />
           </Route>
         </Switch>
       )}

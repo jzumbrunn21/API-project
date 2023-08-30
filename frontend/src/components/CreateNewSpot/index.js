@@ -2,9 +2,10 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createNewSpot } from "../../store/spots";
+import { useEffect } from "react";
 import "./CreateNewSpot.css";
 
-function CreateNewSpot({spot}) {
+function CreateNewSpot({ spot }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -16,14 +17,12 @@ function CreateNewSpot({spot}) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [newSpot, setNewSpot] = useState(null);
   const [url, setUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    const newSpot = await dispatch(createNewSpot(spot));
-    spot = newSpot;
-
     spot = {
       ...newSpot,
       address,
@@ -35,16 +34,26 @@ function CreateNewSpot({spot}) {
       price,
       previewImage,
     };
-
-    if (spot.errors) {
-      setErrors(spot.errors);
-    } else {
-      history.push(`/spots/${spot.id}`);
-    }
+    const createdSpot = await dispatch(createNewSpot(spot));
+    setNewSpot(createdSpot);
   };
 
+  useEffect(() => {
+    if (newSpot && !newSpot.errors) {
+      setCountry(newSpot.country);
+      setAddress(newSpot.address);
+      setCity(newSpot.city);
+      setState(newSpot.state);
+      setDescription(newSpot.description);
+      setName(newSpot.name);
+      setPrice(newSpot.price);
+      setPreviewImage(newSpot.previewImage);
+      history.push(`/api/spots/${newSpot.id}`);
+    }
+  }, [newSpot, history]);
+
   return (
-    <form className="spot-form" onSubmit={handleSubmit}>
+    <form id="spot-form" onSubmit={handleSubmit}>
       <h1>Create a new Spot</h1>
       <h3>Where's your place located?</h3>
       <h5>
