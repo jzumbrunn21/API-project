@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createNewSpot } from "../../store/spots";
+import "./CreateNewSpot.css";
 
-function CreateNewSpot({ spot }) {
+function CreateNewSpot({spot}) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [errors, setErrors] = useState({});
@@ -14,10 +15,15 @@ function CreateNewSpot({ spot }) {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
+  const [previewImage, setPreviewImage] = useState("");
+  const [url, setUrl] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
+    const newSpot = await dispatch(createNewSpot(spot));
+    spot = newSpot;
+
     spot = {
       ...newSpot,
       address,
@@ -27,10 +33,8 @@ function CreateNewSpot({ spot }) {
       name,
       description,
       price,
+      previewImage,
     };
-
-    const newSpot = await dispatch(createNewSpot(spot));
-    spot = newSpot;
 
     if (spot.errors) {
       setErrors(spot.errors);
@@ -40,7 +44,7 @@ function CreateNewSpot({ spot }) {
   };
 
   return (
-    <>
+    <form className="spot-form" onSubmit={handleSubmit}>
       <h1>Create a new Spot</h1>
       <h3>Where's your place located?</h3>
       <h5>
@@ -76,9 +80,7 @@ function CreateNewSpot({ spot }) {
           placeholder="STATE"
         />
       </div>
-      <div className="line-break">
-        000000000000000000000000000000000000000000000000000000000000000000
-      </div>
+      <div className="line-break"></div>
       <h3>Describe your place to guests</h3>
       <h5>
         Mention the best features of your space, any special amenities like fast
@@ -91,15 +93,75 @@ function CreateNewSpot({ spot }) {
         placeholder="Description"
       />
       <div id="descriptionErrors">{errors.description}</div>
-      <div className="line-break">
-        000000000000000000000000000000000000000000000000000000000000000000
-      </div>
+      <div className="line-break"></div>
       <h3>Create a title for your spot</h3>
+      <h5>
+        Catch guests' attention with a spot title that highlights what makes
+        your place special.
+      </h5>
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Name of your Spot"
+      />
+      <div className="line-break"></div>
+      <h3>Set a base price for your spot</h3>
       <h5>
         Competitive pricing can help your listing stand out and rank higher in
         search results.
       </h5>
-    </>
+      <div>
+        ${" "}
+        <input
+          type="text"
+          value={price}
+          onChange={(e) => setPrice(e.target.value)}
+          placeholder="Price per night (USD)"
+        />
+      </div>
+      <div id="priceErrors">{errors.price}</div>
+      <div className="line-break"></div>
+      <h3>Liven up your spot with photos</h3>
+      <h5>Submit a link to at least one photo to publish your spot.</h5>
+      <input
+        type="text"
+        value={previewImage}
+        onChange={(e) => setPreviewImage(e.target.value)}
+        placeholder="Preview Image URL"
+      />
+      <div className="previewImageErrors">{errors.previewImage}</div>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Image URL"
+      />
+      <div className="urlErrors">{errors.url}</div>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Image URL"
+      />
+      <div className="urlErrors">{errors.url}</div>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Image URL"
+      />
+      <div className="urlErrors">{errors.url}</div>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => setUrl(e.target.value)}
+        placeholder="Image URL"
+      />
+      <div className="urlErrors">{errors.url}</div>
+      <div className="line-break"></div>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
