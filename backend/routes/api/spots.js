@@ -392,9 +392,9 @@ router.post("/:spotId/reviews", requireAuth, async (req, res) => {
     stars,
   });
 
-  res.status(201).json( newReview );
+  res.status(201).json(newReview);
 });
- 
+
 // Create and return a new booking from a spot specified by id.
 
 router.post("/:spotId/bookings", requireAuth, async (req, res) => {
@@ -509,7 +509,7 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 
   await spot.save();
 
-  res.json( spot );
+  res.json(spot);
 });
 
 // Create a Spot

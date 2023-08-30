@@ -1,3 +1,5 @@
+import { csrfFetch } from "./csrf";
+
 // constant
 const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SINGLE_SPOT = "spots/getSingleSpot";
@@ -27,7 +29,7 @@ export const addNewSpot = (spot) => {
 };
 // thunk action creator
 export const getAllSpots = () => async (dispatch) => {
-  const response = await fetch("/api/spots");
+  const response = await csrfFetch("/api/spots");
 
   if (response.ok) {
     const data = await response.json();
@@ -37,7 +39,7 @@ export const getAllSpots = () => async (dispatch) => {
 };
 
 export const getSingleSpot = (spotId) => async (dispatch) => {
-  const response = await fetch(`/api/spots/${spotId}`);
+  const response = await csrfFetch(`/api/spots/${spotId}`);
   if (response.ok) {
     const data = await response.json();
     dispatch(loadSingleSpot(data));
@@ -46,7 +48,7 @@ export const getSingleSpot = (spotId) => async (dispatch) => {
 };
 
 export const createNewSpot = (spot) => async (dispatch) => {
-  const res = await fetch("/api/spots", {
+  const res = await csrfFetch("/api/spots", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),

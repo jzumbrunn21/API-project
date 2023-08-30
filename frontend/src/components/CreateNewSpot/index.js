@@ -17,6 +17,8 @@ function CreateNewSpot({ spot }) {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const [newSpot, setNewSpot] = useState(null);
   const [url, setUrl] = useState("");
 
@@ -30,6 +32,8 @@ function CreateNewSpot({ spot }) {
       country,
       state,
       name,
+      lat,
+      lng,
       description,
       price,
       previewImage,
@@ -45,6 +49,8 @@ function CreateNewSpot({ spot }) {
       setCity(newSpot.city);
       setState(newSpot.state);
       setDescription(newSpot.description);
+      setLat(newSpot.lat);
+      setLng(newSpot.lng);
       setName(newSpot.name);
       setPrice(newSpot.price);
       setPreviewImage(newSpot.previewImage);
@@ -87,6 +93,22 @@ function CreateNewSpot({ spot }) {
           value={state}
           onChange={(e) => setState(e.target.value)}
           placeholder="STATE"
+        />
+      </div>
+      <div id="lat-lng">
+        <div id="lat-Errors">Latitude {errors.lat}</div>
+        <input
+          type="text"
+          value={lat}
+          onChange={(e) => setLat(e.target.value)}
+          placeholder="Latitude"
+        />
+        <div id="lng-Errors">Longitude {errors.lng}</div>
+        <input
+          type="text"
+          value={lng}
+          onChange={(e) => setLng(e.target.value)}
+          placeholder="Longitude"
         />
       </div>
       <div className="line-break"></div>
