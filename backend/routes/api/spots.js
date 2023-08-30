@@ -345,7 +345,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
     preview: newImage.preview,
   };
 
-  res.status(200).json({ response });
+  res.status(200).json( response );
 });
 
 // Create a Review for a Spot based on the Spot's id
