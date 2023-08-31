@@ -21,6 +21,7 @@ function CreateNewSpot({ spot }) {
   const [lng, setLng] = useState("");
   const [newSpot, setNewSpot] = useState(null);
   const [url, setUrl] = useState("");
+  const [imageUrls, setImageUrls] = useState(["", "", "", ""]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,15 +40,15 @@ function CreateNewSpot({ spot }) {
       previewImage,
     };
     const createdSpot = await dispatch(createNewSpot(spot));
-    // setNewSpot(createdSpot);
-    history.push(`/api/spots/${createdSpot.id}`);
+    setNewSpot(createdSpot);
 
-    const imageUrlArray = [url, ...url];
-    const imagePromises = imageUrlArray.map((imageUrl) =>
+    const extraUrls = imageUrls.slice(1);
+    const imagePromises = extraUrls.map((imageUrl) =>
       dispatch(addNewImage({ url: imageUrl }, createdSpot.id))
     );
-
     await Promise.all(imagePromises);
+
+    history.push(`/api/spots/${createdSpot.id}`);
   };
 
   useEffect(() => {
@@ -65,6 +66,21 @@ function CreateNewSpot({ spot }) {
     }
   }, [newSpot, history]);
 
+  const handleImageInputs = (e, index) => {
+    const newUrls = [...imageUrls];
+    newUrls[index] = e.target.value;
+    setImageUrls(newUrls);
+  };
+  const imageInputs = imageUrls.map((url, index) => (
+    <div key={index}>
+      <input
+        type="text"
+        value={url}
+        onChange={(e) => handleImageInputs(e, index)}
+        placeholder="Image Url"
+      />
+    </div>
+  ));
   return (
     <form id="spot-form" onSubmit={handleSubmit}>
       <h1>Create a new Spot</h1>
@@ -162,6 +178,7 @@ function CreateNewSpot({ spot }) {
       <div className="line-break"></div>
       <h3>Liven up your spot with photos</h3>
       <h5>Submit a link to at least one photo to publish your spot.</h5>
+
       <input
         type="text"
         value={previewImage}
@@ -169,7 +186,8 @@ function CreateNewSpot({ spot }) {
         placeholder="Preview Image URL"
       />
       <div className="previewImageErrors">{errors.previewImage}</div>
-      <input
+      {imageInputs}
+      {/* <input
         type="text"
         value={url}
         onChange={(e) => setUrl(e.target.value)}
@@ -197,7 +215,7 @@ function CreateNewSpot({ spot }) {
         placeholder="Image URL"
       />
       <div className="urlErrors">{errors.url}</div>
-      <div className="line-break"></div>
+      <div className="line-break"></div> */}
       <button type="submit">Submit</button>
     </form>
   );
