@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import DeleteSpotModal from "../DeleteSpotModal";
 import { useModal } from "../../context/Modal";
 import { deletedSpot } from "../../store/spots";
+import { useParams } from "react-router-dom";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
@@ -31,7 +32,8 @@ function ManageSpots() {
     e.preventDefault();
     history.push("/api/spots/new");
   };
-  const handleUpdateSpot = (spotId) => {
+  const { spotId } = useParams();
+  const handleUpdateSpot = () => {
     history.push(`/api/spots/${spotId}/edit`);
   };
 

@@ -112,18 +112,18 @@ module.exports = {
         },
         {
           spotId: 5,
-          url: "https://people.com/thmb/PGjbUcpE8MzgoNhl0U7K3a7G7JY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2):format(webp)/disney-house-overview-front-yard-9457101549314a1790c10f0de8bb5c6c.jpg",
-          preview: false,
+          url: "https://a0.muscache.com/im/pictures/b7c9264d-73c9-45c3-882e-6e9577d63d68.jpg?im_w=1440",
+          preview: true,
         },
         {
           spotId: 5,
-          url: "https://people.com/thmb/PGjbUcpE8MzgoNhl0U7K3a7G7JY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2):format(webp)/disney-house-overview-front-yard-9457101549314a1790c10f0de8bb5c6c.jpg",
-          preview: false,
+          url: "https://a0.muscache.com/im/pictures/3ef0bf91-afc0-4884-b2c8-13936778696a.jpg?im_w=1440",
+          preview: true,
         },
         {
           spotId: 5,
-          url: "https://people.com/thmb/PGjbUcpE8MzgoNhl0U7K3a7G7JY=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():focal(999x0:1001x2):format(webp)/disney-house-overview-front-yard-9457101549314a1790c10f0de8bb5c6c.jpg",
-          preview: false,
+          url: "https://a0.muscache.com/im/pictures/75376979-1705-4f6a-8e96-eadeda49f3d9.jpg?im_w=1440",
+          preview: true,
         },
       ],
       { validate: true }
@@ -141,13 +141,15 @@ module.exports = {
 
   async down(queryInterface, Sequelize) {
     const Op = Sequelize.Op;
-    await queryInterface.bulkDelete(options, {
-      spotId: {
-        [Op.in]: [1, 2, 3, 4, 5],
+    await queryInterface.bulkDelete(
+      options,
+      {
+        spotId: {
+          [Op.in]: [1, 2, 3, 4, 5],
+        },
       },
-    }, {
-
-    });
+      {}
+    );
     /**
      * Add commands to revert seed here.
      *

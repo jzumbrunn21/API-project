@@ -1,32 +1,38 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { updateSpot } from "../../store/spots";
+import { updateSpot, getSingleSpot } from "../../store/spots";
 import "./UpdateSpot.css";
+import { useParams } from "react-router-dom";
 
-function UpdateSpot({ spot }) {
+function UpdateSpot() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const singleSpot = useSelector((state) => state.spots.singleSpot);
+  const { spotId } = useParams();
+  console.log("spotId", spotId);
   const [errors, setErrors] = useState({});
-  const [address, setAddress] = useState("");
-  const [city, setCity] = useState("");
-  const [state, setState] = useState("");
-  const [country, setCountry] = useState("");
-  const [name, setName] = useState("");
-  const [description, setDescription] = useState("");
-  const [price, setPrice] = useState("");
-  const [previewImage, setPreviewImage] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
-  const [newSpot, setNewSpot] = useState(null);
-  const [url, setUrl] = useState("");
+  const [address, setAddress] = useState(singleSpot.address);
+  const [city, setCity] = useState(singleSpot.city);
+  const [state, setState] = useState(singleSpot.state);
+  const [country, setCountry] = useState(singleSpot.country);
+  const [name, setName] = useState(singleSpot.name);
+  const [description, setDescription] = useState(singleSpot.description);
+  const [price, setPrice] = useState(singleSpot.price);
+  const [lat, setLat] = useState(singleSpot.lat);
+  const [lng, setLng] = useState(singleSpot.lng);
+  const [newSpot, setNewSpot] = useState(singleSpot);
+
+  useEffect(() => {
+    dispatch(getSingleSpot(spotId));
+  }, [dispatch]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-    spot = {
-      ...newSpot,
+    const updatedSpot = {
+      id: singleSpot.id,
       address,
       city,
       country,
@@ -36,10 +42,11 @@ function UpdateSpot({ spot }) {
       lng,
       description,
       price,
-      previewImage,
     };
-    const updatedSpot = await dispatch(updateSpot(spot));
-    setNewSpot(updatedSpot);
+
+    const editedSpot = await dispatch(updateSpot(updatedSpot));
+    setNewSpot(editedSpot);
+    history.push(`/api/spots/${editedSpot.id}`);
   };
 
   useEffect(() => {
@@ -53,10 +60,8 @@ function UpdateSpot({ spot }) {
       setLng(newSpot.lng);
       setName(newSpot.name);
       setPrice(newSpot.price);
-      setPreviewImage(newSpot.previewImage);
-      history.push(`/api/spots/${newSpot.id}`);
     }
-  }, [newSpot, history]);
+  }, [newSpot]);
 
   return (
     <form id="spot-form" onSubmit={handleSubmit}>
@@ -153,44 +158,7 @@ function UpdateSpot({ spot }) {
       </div>
       <div id="priceErrors">{errors.price}</div>
       <div className="line-break"></div>
-      {/* <h3>Liven up your spot with photos</h3>
-      <h5>Submit a link to at least one photo to publish your spot.</h5>
-      <input
-        type="text"
-        value={previewImage}
-        onChange={(e) => setPreviewImage(e.target.value)}
-        placeholder="Preview Image URL"
-      />
-      <div className="previewImageErrors">{errors.previewImage}</div>
-      <input
-        type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        placeholder="Image URL"
-      />
-      <div className="urlErrors">{errors.url}</div>
-      <input
-        type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        placeholder="Image URL"
-      />
-      <div className="urlErrors">{errors.url}</div>
-      <input
-        type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        placeholder="Image URL"
-      />
-      <div className="urlErrors">{errors.url}</div>
-      <input
-        type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
-        placeholder="Image URL"
-      />
-      <div className="urlErrors">{errors.url}</div>
-      <div className="line-break"></div> */}
+
       <button type="submit">Submit</button>
     </form>
   );
