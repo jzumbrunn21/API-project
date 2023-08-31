@@ -17,7 +17,7 @@ function SingleSpot() {
     city,
     state,
     country,
-    // previewImage,
+    previewImage,
     price,
     numReviews,
     avgStarRating,

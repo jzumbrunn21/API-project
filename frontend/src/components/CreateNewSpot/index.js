@@ -24,7 +24,7 @@ function CreateNewSpot({ spot }) {
   const [url2, setUrl2] = useState("");
   const [url3, setUrl3] = useState("");
   const [url4, setUrl4] = useState("");
-  const user = useSelector((state) => state.session.user);
+  const createdSpot = useSelector((state) => state.spots.singleSpot);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,14 +42,23 @@ function CreateNewSpot({ spot }) {
       price,
       previewImage,
     };
-    const createdSpot = await dispatch(createNewSpot(spot));
-    const spotId = createdSpot.id;
-    const imageUrls = [url1, url2, url3, url4];
-    for (const imageUrl of imageUrls) {
-      await dispatch(addNewImage({ imageUrl, spotId }));
+    try {
+      const createdSpot = await dispatch(createNewSpot(spot));
+      if (createdSpot.id) {
+        const spotId = createdSpot.id;
+        const imageUrls = [previewImage, url1, url2, url3, url4];
+        console.log(("imageUrls ", imageUrls));
+        for (const imageUrl of imageUrls) {
+          await dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
+        }
+        // setNewSpot(createdSpot);
+        history.push(`/api/spots/${spotId}`);
+      } else {
+        console.log("CREATION BUG");
+      }
+    } catch (error) {
+      console.log("SPOT CREATION ERROR");
     }
-    // setNewSpot(createdSpot);
-    history.push(`/api/spots/${spotId}`);
   };
 
   useEffect(() => {
@@ -69,7 +78,7 @@ function CreateNewSpot({ spot }) {
       setUrl3(newSpot.url3);
       setUrl4(newSpot.url4);
     }
-  }, [newSpot, history]);
+  }, [newSpot]);
 
   return (
     <form id="spot-form" onSubmit={handleSubmit}>

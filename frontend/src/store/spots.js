@@ -43,23 +43,25 @@ export const editSpot = (spot) => {
   };
 };
 
-export const uploadImage = (image) => {
+export const uploadImage = (image, spotId) => {
   return {
     type: IMPORT_IMAGE,
     image,
+    spotId,
   };
 };
 export const addNewImage = (image, spotId) => async (dispatch) => {
+  const { url, preview } = image;
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify( image),
+    body: JSON.stringify({ url, preview }),
   });
 
   if (response.ok) {
-    const newSpot = await response.json();
-    dispatch(addNewSpot(newSpot));
-    return newSpot;
+    const newImage = await response.json();
+    dispatch(uploadImage(newImage, spotId));
+    return newImage;
   } else {
     const errors = await response.json();
     return errors;
@@ -173,10 +175,10 @@ const spotsReducer = (state = initialState, action) => {
       const { spotId, image } = action;
       const updatedSpot = { ...state.allSpots[spotId] };
 
-      if (!updateSpot.images) {
+      if (!updatedSpot.images) {
         updatedSpot.images = [];
       }
-      updateSpot.images.push(image);
+      updatedSpot.images.push(image);
 
       return {
         ...state,
