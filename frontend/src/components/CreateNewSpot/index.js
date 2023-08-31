@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { addNewImage, createNewSpot } from "../../store/spots";
+import { createNewSpot } from "../../store/spots";
 import { useEffect } from "react";
 import "./CreateNewSpot.css";
 
@@ -14,20 +14,22 @@ function CreateNewSpot({ spot }) {
   const [state, setState] = useState("");
   const [country, setCountry] = useState("");
   const [name, setName] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [previewImage, setPreviewImage] = useState("");
-  const [lat, setLat] = useState("");
-  const [lng, setLng] = useState("");
   const [newSpot, setNewSpot] = useState(null);
-  const [url, setUrl] = useState("");
-  const [imageUrls, setImageUrls] = useState(["", "", "", ""]);
+  const [url1, setUrl1] = useState("");
+  const [url2, setUrl2] = useState("");
+  const [url3, setUrl3] = useState("");
+  const [url4, setUrl4] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     spot = {
-      // ...newSpot,
+      ...newSpot,
       address,
       city,
       country,
@@ -41,14 +43,6 @@ function CreateNewSpot({ spot }) {
     };
     const createdSpot = await dispatch(createNewSpot(spot));
     setNewSpot(createdSpot);
-
-    const extraUrls = imageUrls.slice(1);
-    const imagePromises = extraUrls.map((imageUrl) =>
-      dispatch(addNewImage({ url: imageUrl }, createdSpot.id))
-    );
-    await Promise.all(imagePromises);
-
-    history.push(`/api/spots/${createdSpot.id}`);
   };
 
   useEffect(() => {
@@ -58,29 +52,15 @@ function CreateNewSpot({ spot }) {
       setCity(newSpot.city);
       setState(newSpot.state);
       setDescription(newSpot.description);
+      setName(newSpot.name);
       setLat(newSpot.lat);
       setLng(newSpot.lng);
-      setName(newSpot.name);
       setPrice(newSpot.price);
       setPreviewImage(newSpot.previewImage);
+      history.push(`/api/spots/${newSpot.id}`);
     }
   }, [newSpot, history]);
 
-  const handleImageInputs = (e, index) => {
-    const newUrls = [...imageUrls];
-    newUrls[index] = e.target.value;
-    setImageUrls(newUrls);
-  };
-  const imageInputs = imageUrls.map((url, index) => (
-    <div key={index}>
-      <input
-        type="text"
-        value={url}
-        onChange={(e) => handleImageInputs(e, index)}
-        placeholder="Image Url"
-      />
-    </div>
-  ));
   return (
     <form id="spot-form" onSubmit={handleSubmit}>
       <h1>Create a new Spot</h1>
@@ -178,7 +158,6 @@ function CreateNewSpot({ spot }) {
       <div className="line-break"></div>
       <h3>Liven up your spot with photos</h3>
       <h5>Submit a link to at least one photo to publish your spot.</h5>
-
       <input
         type="text"
         value={previewImage}
@@ -186,36 +165,35 @@ function CreateNewSpot({ spot }) {
         placeholder="Preview Image URL"
       />
       <div className="previewImageErrors">{errors.previewImage}</div>
-      {imageInputs}
-      {/* <input
+      <input
         type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={url1}
+        onChange={(e) => setUrl1(e.target.value)}
         placeholder="Image URL"
       />
       <div className="urlErrors">{errors.url}</div>
       <input
         type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={url2}
+        onChange={(e) => setUrl2(e.target.value)}
         placeholder="Image URL"
       />
       <div className="urlErrors">{errors.url}</div>
       <input
         type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={url3}
+        onChange={(e) => setUrl3(e.target.value)}
         placeholder="Image URL"
       />
       <div className="urlErrors">{errors.url}</div>
       <input
         type="text"
-        value={url}
-        onChange={(e) => setUrl(e.target.value)}
+        value={url4}
+        onChange={(e) => setUrl4(e.target.value)}
         placeholder="Image URL"
       />
       <div className="urlErrors">{errors.url}</div>
-      <div className="line-break"></div> */}
+      <div className="line-break"></div>
       <button type="submit">Submit</button>
     </form>
   );
