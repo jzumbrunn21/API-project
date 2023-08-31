@@ -93,7 +93,7 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),
   });
-  console.log(spotId);
+  // console.log(spotId);
   if (response.ok) {
     const newSpot = await response.json();
     dispatch(editSpot(spot));
