@@ -30,7 +30,6 @@ function CreateNewSpot({ spot }) {
     e.preventDefault();
     setErrors({});
     spot = {
-      // ...newSpot,
       address,
       city,
       country,
@@ -46,7 +45,9 @@ function CreateNewSpot({ spot }) {
       const createdSpot = await dispatch(createNewSpot(spot));
       if (createdSpot.id) {
         const spotId = createdSpot.id;
-        const imageUrls = [previewImage, url1, url2, url3, url4];
+        const imageUrls = [previewImage, url1, url2, url3, url4].filter(
+          Boolean
+        );
         console.log(("imageUrls ", imageUrls));
         for (const imageUrl of imageUrls) {
           await dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
