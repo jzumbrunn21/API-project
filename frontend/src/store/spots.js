@@ -6,6 +6,7 @@ const GET_SINGLE_SPOT = "spots/getSingleSpot";
 const CREATE_NEW_SPOT = "spots/createNewSpot";
 const DELETE_SPOT = "spots/deleteSpot";
 const UPDATE_SPOT = "spots/updateSpot";
+const IMPORT_IMAGE = "spots/addNewImage";
 // const { spotId } = useParams();
 
 // action creator
@@ -41,16 +42,23 @@ export const editSpot = (spot) => {
     spot,
   };
 };
+
+export const uploadImage = (image) => {
+  return {
+    type: IMPORT_IMAGE,
+    image,
+  };
+};
 export const addNewImage = (image, spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/images`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(image),
+    body: JSON.stringify( image),
   });
 
   if (response.ok) {
     const newSpot = await response.json();
-    // dispatch(addNewSpot(newSpot));
+    dispatch(addNewSpot(newSpot));
     return newSpot;
   } else {
     const errors = await response.json();
@@ -86,7 +94,7 @@ export const createNewSpot = (spot) => async (dispatch) => {
 
   if (res.ok) {
     const newSpot = await res.json();
-    // dispatch(addNewSpot(newSpot));
+    dispatch(addNewSpot(newSpot));
     return newSpot;
   } else {
     const errors = await res.json();
@@ -160,6 +168,23 @@ const spotsReducer = (state = initialState, action) => {
       const newState = { ...state };
       delete newState.allSpots[action.spotId];
       return newState;
+    }
+    case IMPORT_IMAGE: {
+      const { spotId, image } = action;
+      const updatedSpot = { ...state.allSpots[spotId] };
+
+      if (!updateSpot.images) {
+        updatedSpot.images = [];
+      }
+      updateSpot.images.push(image);
+
+      return {
+        ...state,
+        allSpots: {
+          ...state.allSpots,
+          [spotId]: updatedSpot,
+        },
+      };
     }
     default:
       return state;

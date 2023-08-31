@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { createNewSpot } from "../../store/spots";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewImage, createNewSpot } from "../../store/spots";
 import { useEffect } from "react";
 import "./CreateNewSpot.css";
 
@@ -24,12 +24,13 @@ function CreateNewSpot({ spot }) {
   const [url2, setUrl2] = useState("");
   const [url3, setUrl3] = useState("");
   const [url4, setUrl4] = useState("");
+  const user = useSelector((state) => state.session.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     spot = {
-      ...newSpot,
+      // ...newSpot,
       address,
       city,
       country,
@@ -42,7 +43,13 @@ function CreateNewSpot({ spot }) {
       previewImage,
     };
     const createdSpot = await dispatch(createNewSpot(spot));
-    setNewSpot(createdSpot);
+    const spotId = createdSpot.id;
+    const imageUrls = [url1, url2, url3, url4];
+    for (const imageUrl of imageUrls) {
+      await dispatch(addNewImage({ imageUrl, spotId }));
+    }
+    // setNewSpot(createdSpot);
+    history.push(`/api/spots/${spotId}`);
   };
 
   useEffect(() => {
@@ -57,7 +64,10 @@ function CreateNewSpot({ spot }) {
       setLng(newSpot.lng);
       setPrice(newSpot.price);
       setPreviewImage(newSpot.previewImage);
-      history.push(`/api/spots/${newSpot.id}`);
+      setUrl1(newSpot.url1);
+      setUrl2(newSpot.url2);
+      setUrl3(newSpot.url3);
+      setUrl4(newSpot.url4);
     }
   }, [newSpot, history]);
 
