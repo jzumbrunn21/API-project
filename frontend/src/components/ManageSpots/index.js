@@ -5,9 +5,11 @@ import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
 import { csrfFetch } from "../../store/csrf";
+import { useHistory } from "react-router-dom";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     async function fetchSpots() {
@@ -18,6 +20,10 @@ function ManageSpots() {
     }
     fetchSpots();
   }, []);
+  const handleCreateSpot = (e) => {
+    e.preventDefault();
+    history.push("/api/spots/new");
+  };
 
   return (
     <>
@@ -42,13 +48,15 @@ function ManageSpots() {
                 </p>
                 <p className="spot-info">${price} night</p>
                 <p className="spot-info">{avgRating || "New"}</p>
+                <button>Update</button>
+                <button>Delete</button>
               </li>
             )
           )}
         </ul>
       ) : (
         <div>
-          <button>Create a New Spot</button>
+          <button onClick={handleCreateSpot}>Create a New Spot</button>
         </div>
       )}
     </>
