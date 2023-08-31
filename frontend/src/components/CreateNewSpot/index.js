@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { createNewSpot } from "../../store/spots";
+import { addNewImage, createNewSpot } from "../../store/spots";
 import { useEffect } from "react";
 import "./CreateNewSpot.css";
 
@@ -26,7 +26,7 @@ function CreateNewSpot({ spot }) {
     e.preventDefault();
     setErrors({});
     spot = {
-      ...newSpot,
+      // ...newSpot,
       address,
       city,
       country,
@@ -39,7 +39,15 @@ function CreateNewSpot({ spot }) {
       previewImage,
     };
     const createdSpot = await dispatch(createNewSpot(spot));
-    setNewSpot(createdSpot);
+    // setNewSpot(createdSpot);
+    history.push(`/api/spots/${createdSpot.id}`);
+
+    const imageUrlArray = [url, ...url];
+    const imagePromises = imageUrlArray.map((imageUrl) =>
+      dispatch(addNewImage({ url: imageUrl }, createdSpot.id))
+    );
+
+    await Promise.all(imagePromises);
   };
 
   useEffect(() => {
@@ -54,7 +62,6 @@ function CreateNewSpot({ spot }) {
       setName(newSpot.name);
       setPrice(newSpot.price);
       setPreviewImage(newSpot.previewImage);
-      history.push(`/api/spots/${newSpot.id}`);
     }
   }, [newSpot, history]);
 

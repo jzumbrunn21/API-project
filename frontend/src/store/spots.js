@@ -41,6 +41,22 @@ export const editSpot = (spot) => {
     spot,
   };
 };
+export const addNewImage = (image, spotId) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(image),
+  });
+
+  if (response.ok) {
+    const newSpot = await response.json();
+    // dispatch(addNewSpot(newSpot));
+    return newSpot;
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
+};
 // thunk action creator
 export const getAllSpots = () => async (dispatch) => {
   const response = await csrfFetch("/api/spots");
@@ -70,7 +86,7 @@ export const createNewSpot = (spot) => async (dispatch) => {
 
   if (res.ok) {
     const newSpot = await res.json();
-    dispatch(addNewSpot(newSpot));
+    // dispatch(addNewSpot(newSpot));
     return newSpot;
   } else {
     const errors = await res.json();
