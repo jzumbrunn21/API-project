@@ -8,6 +8,7 @@ import { csrfFetch } from "../../store/csrf";
 import { useHistory } from "react-router-dom";
 import DeleteSpotModal from "../DeleteSpotModal";
 import { useModal } from "../../context/Modal";
+import { deletedSpot } from "../../store/spots";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
@@ -15,6 +16,7 @@ function ManageSpots() {
   // const [deletedSpot, setDeletedSpot] = useState({});
   const { closeModal } = useModal();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     async function fetchSpots() {
@@ -30,22 +32,14 @@ function ManageSpots() {
     history.push("/api/spots/new");
   };
 
-  // const openModal = (spotId, spotName) => {
-  //   setDeleteModalOn(true);
-  //   setDeletedSpot({ id: spotId, name: spotName });
-  // };
-  // const closeModal = () => {
-  //   setDeleteModalOn(false);
-  //   setDeletedSpot({});
-  // };
   const handleDeleteSpot = async (spotId) => {
-    const response = await csrfFetch(`/api/spots/${spotId.id}`, {
-      method: "DELETE",
-    });
-    if (response.ok) {
-      setCurrentSpots(currentSpots.filter((spot) => spot.id !== spotId.id));
-    }
+    dispatch(deletedSpot(spotId));
+    setCurrentSpots((spots) => spots.filter((spot) => spot.id !== spotId));
     closeModal();
+    setTimeout(() => {
+      history.push("/api/spots/current");
+    }, 1000);
+    // }
   };
 
   return (
@@ -75,7 +69,7 @@ function ManageSpots() {
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}
-                  onClick={handleDeleteSpot}
+                  onDelete={handleDeleteSpot}
                 />
               </li>
             )

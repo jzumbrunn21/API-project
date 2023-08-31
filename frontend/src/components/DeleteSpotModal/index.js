@@ -2,8 +2,10 @@ import React from "react";
 import { useModal } from "../../context/Modal";
 
 function DeleteSpotModal({ spotId, spotName, onDelete }) {
-  const { setModalContent, setOnModalClose } = useModal();
+  const { setModalContent, setOnModalClose, closeModal } = useModal();
   const openModal = () => {
+    setModalContent(null);
+
     setModalContent(
       <>
         <h2>Confirm Delete</h2>
@@ -11,19 +13,16 @@ function DeleteSpotModal({ spotId, spotName, onDelete }) {
         <button
           onClick={() => {
             onDelete(spotId);
+            closeModal();
           }}
         >
           Yes (Delete Spot)
         </button>
-        <button onClick={setOnModalClose}>No (Keep Spot)</button>
+        <button onClick={closeModal}>No (Keep Spot)</button>
       </>
     );
-
-    setOnModalClose(() => {
-      setModalContent(null);
-    });
   };
-  return <li onClick={openModal}>Delete</li>;
+  return <button onClick={openModal}>Delete</button>;
 }
 
 export default DeleteSpotModal;
