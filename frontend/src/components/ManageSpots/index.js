@@ -31,6 +31,9 @@ function ManageSpots() {
     e.preventDefault();
     history.push("/api/spots/new");
   };
+  const handleUpdateSpot = (spotId) => {
+    history.push(`/api/spots/${spotId}/edit`);
+  };
 
   const handleDeleteSpot = async (spotId) => {
     dispatch(deletedSpot(spotId));
@@ -65,7 +68,7 @@ function ManageSpots() {
                 </p>
                 <p className="spot-info">${price} night</p>
                 <p className="spot-info">{avgRating || "New"}</p>
-                <button>Update</button>
+                <button onClick={handleUpdateSpot}>Update</button>
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}

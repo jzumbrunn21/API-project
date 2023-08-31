@@ -5,6 +5,7 @@ const GET_ALL_SPOTS = "spots/getAllSpots";
 const GET_SINGLE_SPOT = "spots/getSingleSpot";
 const CREATE_NEW_SPOT = "spots/createNewSpot";
 const DELETE_SPOT = "spots/deleteSpot";
+const UPDATE_SPOT = "spots/updateSpot";
 // const { spotId } = useParams();
 
 // action creator
@@ -32,6 +33,12 @@ export const removeSpot = (spotId) => {
   return {
     type: DELETE_SPOT,
     spotId,
+  };
+};
+export const editSpot = (spot) => {
+  return {
+    type: UPDATE_SPOT,
+    spot,
   };
 };
 // thunk action creator
@@ -79,6 +86,23 @@ export const deletedSpot = (spotId) => async (dispatch) => {
     dispatch(removeSpot(spotId));
   }
 };
+
+export const updateSpot = (spotId, spot) => async (dispatch) => {
+  const response = await csrfFetch(`/api/spots/${spotId}/edit`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(spot),
+  });
+  console.log(spotId);
+  if (response.ok) {
+    const newSpot = await response.json();
+    dispatch(editSpot(spot));
+    return newSpot;
+  } else {
+    const errors = await response.json();
+    return errors;
+  }
+};
 // Initial state and reducer
 
 const initialState = {
@@ -99,6 +123,15 @@ const spotsReducer = (state = initialState, action) => {
       return newState;
     }
     case CREATE_NEW_SPOT: {
+      return {
+        ...state,
+        allSpots: {
+          ...state.allSpots,
+          [action.spot.id]: action.spot,
+        },
+      };
+    }
+    case UPDATE_SPOT: {
       return {
         ...state,
         allSpots: {

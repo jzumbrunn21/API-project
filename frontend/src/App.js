@@ -8,6 +8,7 @@ import SpotsList from "./components/Spots";
 import SingleSpot from "./components/SingleSpot";
 import CreateNewSpot from "./components/CreateNewSpot";
 import ManageSpots from "./components/ManageSpots";
+import UpdateSpot from "./components/UpdateSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
           </Route>
           <Route exact path="/api/spots/current">
             <ManageSpots />
+          </Route>
+          <Route exact path="/api/spots/:spotId/edit">
+            <UpdateSpot />
           </Route>
           <Route exact path="/api/spots/:spotId">
             <SingleSpot />
