@@ -40,6 +40,12 @@ function ProfileButton({ user }) {
     history.push("/");
   };
 
+  const manageRedirect = (e) => {
+    e.preventDefault();
+    closeMenu();
+    history.push("/api/spots/current");
+  };
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -52,6 +58,9 @@ function ProfileButton({ user }) {
           <>
             <li>Hello, {user.firstName}</li>
             <li>{user.email}</li>
+            <li>
+              <button onClick={manageRedirect}>Manage Spots</button>
+            </li>
             <li>
               <button onClick={logout}>Log Out</button>
             </li>
