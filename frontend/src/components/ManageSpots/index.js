@@ -6,9 +6,14 @@ import { Tooltip } from "react-tooltip";
 import { useState } from "react";
 import { csrfFetch } from "../../store/csrf";
 import { useHistory } from "react-router-dom";
+import DeleteSpotModal from "../DeleteSpotModal";
+import { useModal } from "../../context/Modal";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
+  // const [deleteModalOn, setDeleteModalOn] = useState(false);
+  // const [deletedSpot, setDeletedSpot] = useState({});
+  const { closeModal } = useModal();
   const history = useHistory();
 
   useEffect(() => {
@@ -23,6 +28,24 @@ function ManageSpots() {
   const handleCreateSpot = (e) => {
     e.preventDefault();
     history.push("/api/spots/new");
+  };
+
+  // const openModal = (spotId, spotName) => {
+  //   setDeleteModalOn(true);
+  //   setDeletedSpot({ id: spotId, name: spotName });
+  // };
+  // const closeModal = () => {
+  //   setDeleteModalOn(false);
+  //   setDeletedSpot({});
+  // };
+  const handleDeleteSpot = async (spotId) => {
+    const response = await csrfFetch(`/api/spots/${spotId.id}`, {
+      method: "DELETE",
+    });
+    if (response.ok) {
+      setCurrentSpots(currentSpots.filter((spot) => spot.id !== spotId.id));
+    }
+    closeModal();
   };
 
   return (
@@ -49,7 +72,11 @@ function ManageSpots() {
                 <p className="spot-info">${price} night</p>
                 <p className="spot-info">{avgRating || "New"}</p>
                 <button>Update</button>
-                <button>Delete</button>
+                <DeleteSpotModal
+                  spotId={id}
+                  spotName={name}
+                  onClick={handleDeleteSpot}
+                />
               </li>
             )
           )}
