@@ -11,7 +11,7 @@ function UpdateSpot() {
   const history = useHistory();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
   const { spotId } = useParams();
-  console.log("spotId", spotId);
+  // console.log("spotId", spotId);
   const [errors, setErrors] = useState({});
   const [address, setAddress] = useState(singleSpot.address);
   const [city, setCity] = useState(singleSpot.city);
@@ -28,7 +28,8 @@ function UpdateSpot() {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e, spotId) => {
+    // console.log("spotId", spotId);
     e.preventDefault();
     setErrors({});
     const updatedSpot = {
@@ -43,11 +44,13 @@ function UpdateSpot() {
       description,
       price,
     };
+    console.log(updatedSpot);
 
-    const editedSpot = await dispatch(updateSpot(updatedSpot));
-    dispatch(getSingleSpot(spotId));
+    const editedSpot = await dispatch(updateSpot(spotId, updatedSpot));
+    dispatch(getSingleSpot(updatedSpot.id));
     setNewSpot(editedSpot);
-    history.push(`/api/spots/${editedSpot.id}`);
+    console.log("editedSpot", editedSpot);
+    history.push(`/api/spots/${updatedSpot.id}`);
   };
 
   useEffect(() => {
@@ -65,7 +68,7 @@ function UpdateSpot() {
   }, [newSpot]);
 
   return (
-    <form id="spot-form" onSubmit={handleSubmit}>
+    <form id="spot-form" onSubmit={(e) => handleSubmit(e, spotId)}>
       <h1>Update Your Spot</h1>
       <h3>Where's your place located?</h3>
       <h5>

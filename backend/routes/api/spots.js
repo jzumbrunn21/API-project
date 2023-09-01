@@ -508,7 +508,7 @@ router.put("/:spotId", requireAuth, async (req, res) => {
   });
 
   await spot.save();
-  console.log("SPOT,", spot);
+  // console.log("SPOT,", spot);
   res.json(spot);
 });
 
