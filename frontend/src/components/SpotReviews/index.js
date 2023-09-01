@@ -1,32 +1,32 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
 import { getAllReviews } from "../../store/reviews";
-import { getAllSpots } from "../../store/spots";
+import { useParams } from "react-router-dom";
+
 import "./SpotReviews.css";
 
 function SpotReviews() {
   const dispatch = useDispatch();
-  const { spotId } = useParams();
-  const reviewsList = useSelector((state) => Object.values(state.reviews.spot));
-//   useEffect(() => {
-//     dispatch(getAllReviews());
-//   }, [dispatch]);
 
-  const spotList = useSelector((state) => Object.values(state.spots.allSpots));
+  useEffect(() => {
+    dispatch(getAllReviews(spotId));
+  }, spotId);
 
-//   useEffect(() => {
-//     dispatch(getAllSpots());
-//   }, [dispatch]);
+  const reviews = useSelector((state) => state.reviews.spot);
   return (
     <>
       <div className="line-break"></div>
-      {/* <div className="review-ticker">
-        {spotList.map(({ avgRating, userId }) => (
-          <p key={userId}>{avgRating} * _ reviews </p>
-        ))}
-        <h2>Review Ticker</h2>
-      </div> */}
+      <div className="reviews-ticker">
+        <p>STARIMAGE</p>
+        <p>{AVGRATING}</p>
+        <p>*</p>
+        <p>{NUMREVIEWS} reviews</p>
+      </div>
+      <div className="review-container">
+        <p>{FIRSTNAME}</p>
+        <p>{DATE}</p>
+        <p>{REVIEW}</p>
+      </div>
     </>
   );
 }
