@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getCurrentUserSpots } from "../../store/spots";
+// import { getSingleSpot } from "../../store/spots";
 import { Link } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import { useState } from "react";
@@ -13,12 +13,17 @@ import { useParams } from "react-router-dom";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
-  // const [deleteModalOn, setDeleteModalOn] = useState(false);
-  // const [deletedSpot, setDeletedSpot] = useState({});
   const { closeModal } = useModal();
   const history = useHistory();
   const dispatch = useDispatch();
+  const singleSpot = useSelector((state) => state.spots.singleSpot);
+  const { spotId } = useParams();
 
+  // useEffect(() => {
+  //   if (singleSpot) {
+  //     const spotId = singleSpot.spotId;
+  //   }
+  // }, [singleSpot]);
   useEffect(() => {
     async function fetchSpots() {
       const response = await csrfFetch("/api/spots/current");
@@ -32,9 +37,9 @@ function ManageSpots() {
     e.preventDefault();
     history.push("/api/spots/new");
   };
-  const { spotId } = useParams();
-  const handleUpdateSpot = () => {
-    history.push(`/api/spots/${spotId}/edit`);
+  const handleUpdateSpot = (id) => {
+    // e.preventDefault();
+    history.push(`/api/spots/${id}/edit`);
   };
 
   const handleDeleteSpot = async (spotId) => {
@@ -56,7 +61,7 @@ function ManageSpots() {
           {currentSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
               <li key={id} className="single-spot">
-                <Link exact to={`/api/spots/${id}`}>
+                <Link to={`/api/spots/${id}`}>
                   <img
                     src={previewImage}
                     alt={`Spot ${id}`}
@@ -70,7 +75,7 @@ function ManageSpots() {
                 </p>
                 <p className="spot-info">${price} night</p>
                 <p className="spot-info">{avgRating || "New"}</p>
-                <button onClick={handleUpdateSpot}>Update</button>
+                <button onClick={() => handleUpdateSpot(id)}>Update</button>
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}
@@ -85,6 +90,7 @@ function ManageSpots() {
           <button onClick={handleCreateSpot}>Create a New Spot</button>
         </div>
       )}
+      <Tooltip id="tooltip" />
     </>
   );
 }

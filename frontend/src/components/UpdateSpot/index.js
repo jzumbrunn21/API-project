@@ -26,13 +26,13 @@ function UpdateSpot() {
 
   useEffect(() => {
     dispatch(getSingleSpot(spotId));
-  }, [dispatch]);
+  }, [dispatch, spotId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
     const updatedSpot = {
-      id: singleSpot.id,
+      id: spotId,
       address,
       city,
       country,
@@ -45,6 +45,7 @@ function UpdateSpot() {
     };
 
     const editedSpot = await dispatch(updateSpot(updatedSpot));
+    dispatch(getSingleSpot(spotId));
     setNewSpot(editedSpot);
     history.push(`/api/spots/${editedSpot.id}`);
   };
