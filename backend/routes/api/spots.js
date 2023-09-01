@@ -181,7 +181,7 @@ router.get("/:spotId", async (req, res) => {
 
   let total = 0;
   reviews.forEach((review) => {
-    total += review.starts;
+    total += review.stars;
   });
 
   const avgStars = total / reviews.length;

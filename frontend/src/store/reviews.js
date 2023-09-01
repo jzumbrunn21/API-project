@@ -30,8 +30,8 @@ const initialState = {
 const reviewsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_REVIEWS: {
-      const newState = {...state};
-      action.reviews.forEach(
+      const newState = { ...state };
+      action.reviews.Reviews.forEach(
         (review) => (newState.spot[review.id] = review)
       );
       return newState;

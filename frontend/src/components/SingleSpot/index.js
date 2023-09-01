@@ -20,7 +20,7 @@ function SingleSpot() {
     previewImage,
     price,
     numReviews,
-    avgStarRating,
+    avgRating,
     description,
     SpotImages,
     Owner,
@@ -55,7 +55,7 @@ function SingleSpot() {
       <div className="reservation-details">
         <p>${price} night</p>
         <p>
-          {avgStarRating}
+          {avgRating}
           {numReviews} reviews
         </p>
         <button id="reserve-button" onClick={handleReservationClick}>
