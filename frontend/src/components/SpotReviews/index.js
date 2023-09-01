@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { clearReviews, getAllReviews } from "../../store/reviews";
+import { getAllReviews } from "../../store/reviews";
 import { useParams } from "react-router-dom";
+import { useState } from "react";
 
 import "./SpotReviews.css";
 
@@ -9,9 +10,12 @@ function SpotReviews() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const reviews = useSelector((state) => state.reviews.spot || []);
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    dispatch(getAllReviews(spotId));
+    dispatch(getAllReviews(spotId)).then(() => {
+      setLoaded(true);
+    });
   }, [dispatch, spotId]);
 
   console.log("reviews,", reviews);
