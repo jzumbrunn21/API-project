@@ -53,11 +53,10 @@ function SingleSpot() {
       )}
       <p>{description}</p>
       <div className="reservation-details">
+        <p>STARIMAGE</p>
         <p>${price} night</p>
-        <p>
-          {avgStarRating}
-          {numReviews} reviews
-        </p>
+        <p>{avgStarRating}</p>
+        <p>{numReviews} reviews</p>
         <button id="reserve-button" onClick={handleReservationClick}>
           Reserve
         </button>

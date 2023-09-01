@@ -3,6 +3,7 @@ import { csrfFetch } from "./csrf";
 // contants
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
 
+
 // regular action creater
 export const loadReviews = (reviews) => {
   return {
@@ -10,6 +11,7 @@ export const loadReviews = (reviews) => {
     reviews,
   };
 };
+
 
 // Thunks
 export const getAllReviews = (spotId) => async (dispatch) => {
