@@ -20,7 +20,7 @@ function SingleSpot() {
     previewImage,
     price,
     numReviews,
-    avgRating,
+    avgStarRating,
     description,
     SpotImages,
     Owner,
@@ -55,13 +55,21 @@ function SingleSpot() {
       <div className="reservation-details">
         <p>${price} night</p>
         <p>
-          {avgRating}
+          {avgStarRating}
           {numReviews} reviews
         </p>
         <button id="reserve-button" onClick={handleReservationClick}>
           Reserve
         </button>
       </div>
+      <div className="line-break"></div>
+      <div className="reviews-ticker">
+        <p>STARIMAGE</p>
+        <p>Stars: {avgStarRating}</p>
+        <p>*</p>
+        <p>{numReviews} reviews</p>
+      </div>
+      <div className="review-container"></div>
     </>
   );
 }
