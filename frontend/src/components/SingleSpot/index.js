@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpot } from "../../store/spots";
 import { useParams } from "react-router-dom";
@@ -8,9 +8,6 @@ function SingleSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
-  useEffect(() => {
-    dispatch(getSingleSpot(spotId));
-  }, [dispatch, spotId]);
   const {
     // id,
     name,
@@ -19,12 +16,23 @@ function SingleSpot() {
     country,
     previewImage,
     price,
-    numReviews,
-    avgStarRating,
+    // numReviews,
+    // avgStarRating,
     description,
     SpotImages,
     Owner,
   } = singleSpot;
+  const [avgStarRating, setAvgStarRating] = useState(singleSpot.avgStarRating);
+  const [numReviews, setNumReviews] = useState(singleSpot.numReviews);
+
+  useEffect(() => {
+    dispatch(getSingleSpot(spotId));
+  }, [dispatch, spotId]);
+
+  useEffect(() => {
+    setAvgStarRating(singleSpot.avgStarRating);
+    setNumReviews(singleSpot.numReviews);
+  }, [singleSpot]);
 
   const handleReservationClick = (e) => {
     e.preventDefault();

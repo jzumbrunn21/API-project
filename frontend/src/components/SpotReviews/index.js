@@ -1,11 +1,15 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllReviews, deleteReview } from "../../store/reviews";
-import * as sessionActions from "../../store/session";
+// import * as sessionActions from "../../store/session";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
+import { useModal } from "../../context/Modal";
+import DeleteReviewModal from "../DeleteReviewModal";
+import { getSingleSpot } from "../../store/spots";
 
 import "./SpotReviews.css";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function SpotReviews() {
   const dispatch = useDispatch();
@@ -13,9 +17,8 @@ function SpotReviews() {
   const reviews = useSelector((state) => state.reviews.spot || []);
   const currentUser = useSelector((state) => state.session.user || null);
   const [loaded, setLoaded] = useState(false);
-  console.log("currentUser", currentUser);
-  console.log();
-  console.log("reviews", reviews);
+  const history = useHistory();
+  const { closeModal } = useModal();
 
   useEffect(() => {
     dispatch(getAllReviews(spotId)).then(() => {
@@ -23,13 +26,21 @@ function SpotReviews() {
     });
   }, [dispatch, spotId]);
 
-  // console.log("reviews,", reviews);
+
   const currentSpotReviews = Object.values(reviews).filter(
     (review) => review.spotId === parseInt(spotId)
   );
 
-  const handleDeleteReview = (reviewId) => {
+  const handleDeleteReview = async (reviewId) => {
     dispatch(deleteReview(reviewId));
+
+    dispatch(getSingleSpot(spotId));
+
+    closeModal();
+    setTimeout(() => {
+      history.push(`/api/spots/${spotId}`);
+    }, 1000);
+    
   };
   // console.log(currentSpotReviews);
   return (
@@ -43,9 +54,13 @@ function SpotReviews() {
               <h5>{review.createdAt}</h5>
               <h5>{review.review}</h5>
               {currentUser !== null && review.User.id === currentUser.id ? (
-                <button onClick={() => handleDeleteReview(review.id)}>
-                  Delete
-                </button>
+                // <button onClick={() => handleDeleteReview(review.id)}>
+                //   Delete
+                // </button>
+                <DeleteReviewModal
+                  reviewId={review.id}
+                  onDelete={handleDeleteReview}
+                />
               ) : null}
               {/* {currentUser !== null && review.User.id === currentUser ? (
                 <button onClick={() => handleDeleteReview(review.id)}>
