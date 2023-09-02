@@ -11,7 +11,7 @@ function SpotReviews() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const reviews = useSelector((state) => state.reviews.spot || []);
-  const currentUser = useSelector((state) => state.session.user.id || null);
+  const currentUser = useSelector((state) => state.session.user || null);
   const [loaded, setLoaded] = useState(false);
   console.log("currentUser", currentUser);
   console.log();
@@ -42,16 +42,16 @@ function SpotReviews() {
               <h3>{review.User.firstName}</h3>
               <h5>{review.createdAt}</h5>
               <h5>{review.review}</h5>
-              {currentUser !== null && review.User.id === currentUser ? (
+              {currentUser !== null && review.User.id === currentUser.id ? (
                 <button onClick={() => handleDeleteReview(review.id)}>
                   Delete
                 </button>
               ) : null}
-              {currentUser !== null && review.User.id === currentUser ? (
+              {/* {currentUser !== null && review.User.id === currentUser ? (
                 <button onClick={() => handleDeleteReview(review.id)}>
                   Delete
                 </button>
-              ) : loggedOutUser === null ? null : null}
+              ) : loggedOutUser === null ? null : null} */}
             </li>
           ))}
         </ul>
