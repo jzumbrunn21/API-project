@@ -26,7 +26,6 @@ function SpotReviews() {
     });
   }, [dispatch, spotId]);
 
-
   const currentSpotReviews = Object.values(reviews).filter(
     (review) => review.spotId === parseInt(spotId)
   );
@@ -40,38 +39,27 @@ function SpotReviews() {
     setTimeout(() => {
       history.push(`/api/spots/${spotId}`);
     }, 1000);
-
   };
-  // console.log(currentSpotReviews);
   return (
-    <>
+    <div className="reviews-container-2">
       {currentSpotReviews && currentSpotReviews.length > 0 ? (
-        <ul className="reviews-list">
-          <h1>Reviews Below</h1>
+        <div className="reviews-list">
           {currentSpotReviews.map((review) => (
-            <li key={review.id}>
+            <div key={review.id}>
               <h3>{review.User.firstName}</h3>
               <h5>{review.createdAt}</h5>
               <h5>{review.review}</h5>
               {currentUser !== null && review.User.id === currentUser.id ? (
-                // <button onClick={() => handleDeleteReview(review.id)}>
-                //   Delete
-                // </button>
                 <DeleteReviewModal
                   reviewId={review.id}
                   onDelete={handleDeleteReview}
                 />
               ) : null}
-              {/* {currentUser !== null && review.User.id === currentUser ? (
-                <button onClick={() => handleDeleteReview(review.id)}>
-                  Delete
-                </button>
-              ) : loggedOutUser === null ? null : null} */}
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       ) : null}
-    </>
+    </div>
   );
 }
 export default SpotReviews;
