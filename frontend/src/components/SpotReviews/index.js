@@ -9,7 +9,7 @@ import DeleteReviewModal from "../DeleteReviewModal";
 import { getSingleSpot } from "../../store/spots";
 
 import "./SpotReviews.css";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
 
 function SpotReviews() {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function SpotReviews() {
     setTimeout(() => {
       history.push(`/api/spots/${spotId}`);
     }, 1000);
-    
+
   };
   // console.log(currentSpotReviews);
   return (
@@ -72,7 +72,7 @@ function SpotReviews() {
         </ul>
       ) : (
         <div>
-          <button onClick={""}>Be the first to post a review!</button>
+          <p>Be the first to post a review!</p>
         </div>
       )}
     </>

@@ -2,7 +2,8 @@ import { csrfFetch } from "./csrf";
 
 // contants
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
-const DELETE_REVIEW = "spots/deleteReview";
+const DELETE_REVIEW = "reviews/deleteReview";
+const CREATE_NEW_REVIEW = "review/createReview";
 
 // regular action creater
 export const loadReviews = (reviews) => {
@@ -17,7 +18,12 @@ export const removeReview = (reviewId) => {
     reviewId,
   };
 };
-
+export const addNewReview = (review) => {
+  return {
+    type: CREATE_NEW_REVIEW,
+    review,
+  };
+};
 // Thunks
 export const getAllReviews = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`);
@@ -25,6 +31,20 @@ export const getAllReviews = (spotId) => async (dispatch) => {
     const data = await response.json();
     dispatch(loadReviews(data));
     return data;
+  }
+};
+
+export const createNewReview = (review) => async (dispatch) => {
+  const response = await csrfFetch("api/reviews", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(review),
+  });
+
+  if (response.ok) {
+    const newReview = await response.json();
+    dispatch(addNewReview(newReview));
+    return newReview;
   }
 };
 
@@ -45,13 +65,12 @@ const initialState = {
 };
 
 const reviewsReducer = (state = initialState, action) => {
-  
   switch (action.type) {
     case GET_ALL_REVIEWS: {
       const newState = { ...state };
       action.reviews.Reviews.forEach((review) => {
         newState.spot[review.id] = review;
-        newState.user[review.id] = review;
+        // newState.user[review.id] = review;
       });
       return newState;
     }
@@ -59,8 +78,13 @@ const reviewsReducer = (state = initialState, action) => {
       const newState = { ...state };
       const { reviewId } = action;
       delete newState.spot[reviewId];
-      delete newState.user[reviewId]
+      // delete newState.user[reviewId]
       return newState;
+    }
+    case CREATE_NEW_REVIEW: {
+      const newState = { ...state };
+      const { review } = action;
+      newState.spot[review.id] = review;
     }
     default:
       return state;

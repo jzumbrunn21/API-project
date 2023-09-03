@@ -1,13 +1,18 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getSingleSpot } from "../../store/spots";
+import { getAllReviews } from "../../store/reviews";
 import { useParams } from "react-router-dom";
+import CreateReviewModal from "../CreateReviewModal";
 import "./SingleSpot.css";
 
 function SingleSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
+  const currentUser = useSelector((state) => state.session.user || null);
+  const [useCreateReview, setUseCreateReview] = useState(false);
+  // const reviews = useSelector((state) => state.reviews.spot || []);
   const {
     // id,
     name,
@@ -16,6 +21,7 @@ function SingleSpot() {
     country,
     previewImage,
     price,
+    ownerId,
     // numReviews,
     // avgStarRating,
     description,
@@ -29,6 +35,10 @@ function SingleSpot() {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
 
+  // useEffect(() => {
+  //   dispatch(getAllReviews(spotId));
+  // }, [dispatch, spotId]);
+
   useEffect(() => {
     setAvgStarRating(singleSpot.avgStarRating);
     setNumReviews(singleSpot.numReviews);
@@ -38,6 +48,13 @@ function SingleSpot() {
     e.preventDefault();
     alert("Feature Coming Soon!");
   };
+
+  const handleCreateReview = () => {
+    // *RENDER CREATENEWREVIEW COMPONENT*
+    setUseCreateReview(true);
+  };
+  // console.log("owner", Owner);
+  // console.log("currentUser", currentUser);
 
   return (
     <>
@@ -71,12 +88,48 @@ function SingleSpot() {
       </div>
       <div className="line-break"></div>
       <div className="reviews-ticker">
-        <p>STARIMAGE</p>
-        <p>Stars: {avgStarRating}</p>
-        <p>*</p>
-        <p>{numReviews} reviews</p>
+        {currentUser === null && numReviews > 0 ? (
+          <>
+            <p>STARIMAGE</p>
+            <p>Stars: {avgStarRating}</p>
+            <p>*</p>
+            <p>{numReviews} reviews</p>
+          </>
+        ) : numReviews < 1 ? (
+          <>
+            <p>STARIMAGE</p>
+            <p>New</p>
+            {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
+              <>
+                <CreateReviewModal />
+              </>
+            ) : null}
+          </>
+        ) : numReviews > 0 ? (
+          <>
+            <p>STARIMAGE</p>
+            <p>Stars: {avgStarRating}</p>
+            <p>*</p>
+            <p>{numReviews} reviews</p>
+            {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
+              <>
+                <CreateReviewModal />
+              </>
+            ) : null}
+          </>
+        ) : // : currentUser !== null &&
+        //   numReviews > 0 &&
+        //   Owner &&
+        //   currentUser.id === Owner.id ? (
+        //   <>
+        //     <p>STARIMAGE</p>
+        //     <p>Stars: {avgStarRating}</p>
+        //     <p>*</p>
+        //     <p>{numReviews} reviews</p>
+        //   </>
+        // )
+        null}
       </div>
-      <div className="review-container"></div>
     </>
   );
 }
