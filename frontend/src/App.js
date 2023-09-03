@@ -11,7 +11,7 @@ import ManageSpots from "./components/ManageSpots";
 import UpdateSpot from "./components/UpdateSpot";
 import SpotReviews from "./components/SpotReviews";
 import CreateReviewModal from "./components/CreateReviewModal";
-
+import "./index.css";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
