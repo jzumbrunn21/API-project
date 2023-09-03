@@ -2,35 +2,30 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createNewReview } from "../../store/reviews";
+import { useParams } from "react-router-dom";
 
 function CreateReviewModal() {
-  const { setModalContent, closeModal } = useModal();
   const dispatch = useDispatch();
+  const { setModalContent } = useModal();
+  const { spotId } = useParams();
+
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(0);
-  const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrors({});
-    return dispatch(
-      createNewReview({
-        review,
-        stars,
-      })
-    )
-      .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
-        }
-      });
+
+    const newReview = {
+      review,
+      stars,
+    };
+
+    await dispatch(createNewReview(newReview, spotId));
+
+    // setModalContent(null);
   };
 
   const openModal = () => {
-    setModalContent(null);
-
     setModalContent(
       <>
         <h2>How was your stay?</h2>
@@ -42,18 +37,17 @@ function CreateReviewModal() {
             placeholder="Leave your review here..."
           />
           <input
-            type="text"
+            type="number"
             value={stars}
             onChange={(e) => setStars(e.target.value)}
+            placeholder="Enter star rating (1-5)"
           />
           <button type="submit">Submit Your Review</button>
         </form>
       </>
     );
   };
-  //   return setErrors({
 
-  //   })
   return <button onClick={openModal}>Post Your Review</button>;
 }
 

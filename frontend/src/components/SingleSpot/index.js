@@ -11,10 +11,9 @@ function SingleSpot() {
   const { spotId } = useParams();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
   const currentUser = useSelector((state) => state.session.user || null);
-  const [useCreateReview, setUseCreateReview] = useState(false);
-  // const reviews = useSelector((state) => state.reviews.spot || []);
+
   const {
-    // id,
+
     name,
     city,
     state,
@@ -22,8 +21,7 @@ function SingleSpot() {
     previewImage,
     price,
     ownerId,
-    // numReviews,
-    // avgStarRating,
+
     description,
     SpotImages,
     Owner,
@@ -35,9 +33,7 @@ function SingleSpot() {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
 
-  // useEffect(() => {
-  //   dispatch(getAllReviews(spotId));
-  // }, [dispatch, spotId]);
+
 
   useEffect(() => {
     setAvgStarRating(singleSpot.avgStarRating);
@@ -49,12 +45,7 @@ function SingleSpot() {
     alert("Feature Coming Soon!");
   };
 
-  const handleCreateReview = () => {
-    // *RENDER CREATENEWREVIEW COMPONENT*
-    setUseCreateReview(true);
-  };
-  // console.log("owner", Owner);
-  // console.log("currentUser", currentUser);
+
 
   return (
     <>
