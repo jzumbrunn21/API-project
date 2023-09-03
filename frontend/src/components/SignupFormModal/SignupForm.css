@@ -1,0 +1,42 @@
+.signup-form {
+  z-index: 2;
+  display: grid;
+  align-items: center;
+  justify-items: center;
+  /* height: 300px; */
+  width: 350px;
+  gap: 10px;
+  text-align: center;
+  padding: 20px;
+}
+.signup-form form {
+  display: grid;
+  gap: 15px;
+  align-items: center;
+  width: 90%;
+  top: 10px;
+}
+.signup-form h1 {
+  position: relative;
+}
+.signup-form input {
+  display: grid;
+  gap: 15px;
+  align-items: center;
+  width: 98%;
+  border: 2px solid black;
+}
+.signup-form button {
+  background-color: Red;
+  box-shadow: 2px 2px 2px 0px black;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+}
+.signup-form button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+.signup-form p {
+  color: red;
+}

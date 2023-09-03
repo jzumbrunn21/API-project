@@ -59,9 +59,9 @@ function LoginFormModal() {
         </label>
         <label>
           <label id='errors'>
-            {credential.length < 4 && (
+            {/* {credential.length < 4 && (
               <p>Username must be longer that 4 characters</p>
-            )}
+            )} */}
           </label>
           <input
             type="text"
@@ -72,9 +72,9 @@ function LoginFormModal() {
           />
         </label>
         <label id='errors'>
-            {password.length < 6 && (
+            {/* {password.length < 6 && (
               <p>Password must be longer that 6 characters</p>
-            )}
+            )} */}
           </label>
         <label>
           <input
