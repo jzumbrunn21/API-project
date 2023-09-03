@@ -9,25 +9,33 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <ul className="spotsList">
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-      </li>
-      {sessionUser && (
+    <div className="header-container">
+      <ul className="spotsList">
         <li>
-          <NavLink exact to="/api/spots/new">
-            Create New Spot
+          <NavLink exact to="/">
+            <img
+              id="home-image"
+              src="https://img.icons8.com/?size=512&id=63956&format=png"
+              alt="Bnb Logo"
+            />
           </NavLink>
         </li>
-      )}
-      {isLoaded && (
-        <li>
-          <ProfileButton user={sessionUser} />
-        </li>
-      )}
-    </ul>
+        <div id="header-right">
+          {sessionUser && (
+            <li>
+              <NavLink exact to="/api/spots/new">
+                Create New Spot
+              </NavLink>
+            </li>
+          )}
+          {isLoaded && (
+            <li>
+              <ProfileButton user={sessionUser} />
+            </li>
+          )}
+        </div>
+      </ul>
+    </div>
   );
 }
 
