@@ -34,7 +34,7 @@ function SpotsList() {
                   {city}, {state}
                 </p>
                 <p id="price">${price} night</p>
-                <p id="avgRating">{avgRating || "New"}</p>
+                <p id="avgRating"><i class="fa-solid fa-star"></i>{avgRating || "New"}</p>
               </div>
             </li>
           )
