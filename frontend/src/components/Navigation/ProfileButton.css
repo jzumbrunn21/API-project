@@ -1,0 +1,21 @@
+/* .ulClassName {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: px;
+} */
+
+.dropdown-menu {
+  display: grid;
+  align-items: center;
+  position: absolute;
+  right: 30px;
+  background-color: #fff;
+  border: 3px solid black;
+  z-index: 1;
+}
+
+.line-break {
+  background-color: black;
+  height: 3px;
+  width: 100px;
+}

@@ -5,6 +5,7 @@ import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
+import "./ProfileButton.css";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -51,20 +52,24 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
+        <i class="fa-solid fa-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-          <>
-            <li>Hello, {user.firstName}</li>
-            <li>{user.email}</li>
-            <li>
-              <button onClick={manageRedirect}>Manage Spots</button>
+
+            <li className="dropdown-menu">
+              <li>Hello, {user.firstName}</li>
+              <li>{user.email}</li>
+              <div className="line-break"></div>
+              <li>
+                <button onClick={manageRedirect}>Manage Spots</button>
+              </li>
+              <div className="line-break"></div>
+              <li>
+                <button onClick={logout}>Log Out</button>
+              </li>
             </li>
-            <li>
-              <button onClick={logout}>Log Out</button>
-            </li>
-          </>
+
         ) : (
           <>
             <OpenModalMenuItem
