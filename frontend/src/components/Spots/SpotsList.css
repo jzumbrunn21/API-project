@@ -2,15 +2,42 @@ ul {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 25px;
 }
 
 li {
   /* border: 1px solid black; */
-  padding: 10px;
+  padding: 8px;
 }
 
 img {
   max-width: 100%;
   height: auto;
+}
+
+.spotImage {
+  display: grid;
+  height: 300px;
+  width: 300px;
+  border: 2px solid black;
+}
+.spot-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+#city-state {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+#price {
+  grid-row: 2;
+  grid-column: 1;
+  font-weight: bold;
+}
+#avgRating {
+  display: flex;
+  justify-content: right;
+  margin-right: 5px;
 }

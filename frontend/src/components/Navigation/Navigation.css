@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  
+
   border-bottom: 2px solid lightgray;
 }
 .spotsList {
@@ -24,4 +24,5 @@
   justify-content: space-evenly;
   margin-left: auto;
   margin-right: 10px;
+  gap: 10px;
 }

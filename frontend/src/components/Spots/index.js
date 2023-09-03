@@ -21,6 +21,7 @@ function SpotsList() {
             <li key={id} className="single-spot">
               <Link exact to={`/api/spots/${id}`}>
                 <img
+                  className="spotImage"
                   src={previewImage}
                   alt={`Spot ${id}`}
                   data-tooltip-id="tooltip"
@@ -28,11 +29,13 @@ function SpotsList() {
                   data-tooltip-place="top"
                 />
               </Link>
-              <p className="spot-info">
-                {city},{state}
-              </p>
-              <p className="spot-info">${price} night</p>
-              <p className="spot-info">{avgRating || "New"}</p>
+              <div className="spot-info">
+                <p id="city-state">
+                  {city}, {state}
+                </p>
+                <p id="price">${price} night</p>
+                <p id="avgRating">{avgRating || "New"}</p>
+              </div>
             </li>
           )
         )}
