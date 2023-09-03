@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import "./LoginForm.css";
 import { useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
@@ -46,34 +47,51 @@ function LoginFormModal() {
         }
       });
   };
+  const handleLoginDisable = credential.length < 4 || password.length < 6;
 
   return (
-    <>
+    // <div className="'login-container">
+    <div className="login-form">
       <h1>Log In</h1>
       <form onSubmit={handleSubmit}>
+        <label id="errors">
+          {errors.credential && <p>{errors.credential}</p>}
+        </label>
         <label>
-          Username or Email
+          <label id='errors'>
+            {credential.length < 4 && (
+              <p>Username must be longer that 4 characters</p>
+            )}
+          </label>
           <input
             type="text"
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
+            placeholder="Username or Email"
             required
           />
         </label>
+        <label id='errors'>
+            {password.length < 6 && (
+              <p>Password must be longer that 6 characters</p>
+            )}
+          </label>
         <label>
-          Password
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+        <button type="submit" disabled={handleLoginDisable}>
+          Log In
+        </button>
       </form>
-      <button onClick={handleDemoUser}>Log in as Demo User</button>
-    </>
+      <Link onClick={handleDemoUser}>Log in as Demo User</Link>
+    </div>
+    // </div>
   );
 }
 

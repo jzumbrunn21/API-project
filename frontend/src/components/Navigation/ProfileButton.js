@@ -56,32 +56,41 @@ function ProfileButton({ user }) {
       </button>
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
-
-            <li className="dropdown-menu">
-              <li>Hello, {user.firstName}</li>
-              <li>{user.email}</li>
-              <div className="line-break"></div>
-              <li>
-                <button onClick={manageRedirect}>Manage Spots</button>
-              </li>
-              <div className="line-break"></div>
-              <li>
-                <button onClick={logout}>Log Out</button>
-              </li>
+          <li className="dropdown-menu">
+            <li>Hello, {user.firstName}</li>
+            <li>{user.email}</li>
+            <div className="line-break"></div>
+            <li>
+              <button className="cursor-pointer" onClick={manageRedirect}>
+                Manage Spots
+              </button>
             </li>
-
+            <div className="line-break"></div>
+            <li>
+              <button className="cursor-pointer" onClick={logout}>
+                Log Out
+              </button>
+            </li>
+          </li>
         ) : (
           <>
-            <OpenModalMenuItem
-              itemText="Log In"
-              onItemClick={closeMenu}
-              modalComponent={<LoginFormModal />}
-            />
-            <OpenModalMenuItem
-              itemText="Sign Up"
-              onItemClick={closeMenu}
-              modalComponent={<SignupFormModal />}
-            />
+            <div className="dropdown-menu">
+              <div className="cursor-pointer">
+                <OpenModalMenuItem
+                  itemText="Log In"
+                  onItemClick={closeMenu}
+                  modalComponent={<LoginFormModal />}
+                />
+              </div>
+              <div className="cursor-pointer">
+                <OpenModalMenuItem
+                  className="cursor-pointer"
+                  itemText="Sign Up"
+                  onItemClick={closeMenu}
+                  modalComponent={<SignupFormModal />}
+                />
+              </div>
+            </div>
           </>
         )}
       </ul>

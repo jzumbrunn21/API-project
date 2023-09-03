@@ -5,12 +5,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  
+  border-bottom: 2px solid lightgray;
 }
 .spotsList {
   display: flex;
-  max-height: 75px;
+  max-height: 70px;
   width: 100%;
   align-items: center;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 #home-image {
   max-height: 75px;
