@@ -70,11 +70,7 @@ function SpotReviews() {
             </li>
           ))}
         </ul>
-      ) : (
-        <div>
-          <p>Be the first to post a review!</p>
-        </div>
-      )}
+      ) : null}
     </>
   );
 }

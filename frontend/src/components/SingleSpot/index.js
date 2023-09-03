@@ -86,34 +86,40 @@ function SingleSpot() {
       <div className="line-break"></div>
       <div className="reviews-ticker">
         {currentUser === null && numReviews > 0 ? (
-          <>
-            <p>STARIMAGE</p>
-            <p>Stars: {avgStarRating}</p>
-            <p>*</p>
-            <p>{numReviews} reviews</p>
-          </>
+          <div className="review-container">
+            <p>
+              <i class="fa-solid fa-star"></i> {""}
+              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+            </p>
+          </div>
         ) : numReviews < 1 ? (
-          <>
-            <p>STARIMAGE</p>
-            <p>New</p>
+          <div className="review-container">
+            <p>
+              <i class="fa-solid fa-star"></i>
+              {""} New
+            </p>
             {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
               <>
                 <CreateReviewModal />
               </>
             ) : null}
-          </>
+
+            <div>
+              <p>Be the first to post a review!</p>
+            </div>
+          </div>
         ) : numReviews > 0 ? (
-          <>
-            <p>STARIMAGE</p>
-            <p>Stars: {avgStarRating}</p>
-            <p>*</p>
-            <p>{numReviews} reviews</p>
+          <div className="review-container">
+            <p>
+              <i class="fa-solid fa-star"></i> {""}
+              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+            </p>
             {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
               <>
                 <CreateReviewModal />
               </>
             ) : null}
-          </>
+          </div>
         ) : // : currentUser !== null &&
         //   numReviews > 0 &&
         //   Owner &&

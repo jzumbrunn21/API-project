@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { createNewReview } from "../../store/reviews";
 import { useParams } from "react-router-dom";
+import "./CreateReviewModal.css";
 
 function CreateReviewModal({ review }) {
   const dispatch = useDispatch();
@@ -57,7 +58,11 @@ function CreateReviewModal({ review }) {
     );
   };
 
-  return <button onClick={openModal}>Post Your Review</button>;
+  return (
+    <button onClick={openModal} id="post-review-button">
+      Post Your Review
+    </button>
+  );
 }
 
 export default CreateReviewModal;
