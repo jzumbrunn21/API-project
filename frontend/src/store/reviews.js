@@ -3,7 +3,7 @@ import { csrfFetch } from "./csrf";
 // contants
 const GET_ALL_REVIEWS = "reviews/getAllReviews";
 const DELETE_REVIEW = "reviews/deleteReview";
-const CREATE_NEW_REVIEW = "review/createReview";
+const CREATE_NEW_REVIEW = "reviews/createReview";
 
 // regular action creater
 export const loadReviews = (reviews) => {
@@ -67,7 +67,7 @@ export const deleteReview = (reviewId) => async (dispatch) => {
 
 const initialState = {
   spot: {},
-  user: {},
+  // user: {},
 };
 
 const reviewsReducer = (state = initialState, action) => {
@@ -84,6 +84,8 @@ const reviewsReducer = (state = initialState, action) => {
       const newState = { ...state };
       const { review } = action;
       newState.spot[review.id] = review;
+      // console.log(review);
+      // const newState = { ...state, [action.review.id]: action.review };
       return newState;
     }
     case DELETE_REVIEW: {

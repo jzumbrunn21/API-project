@@ -13,7 +13,6 @@ function SingleSpot() {
   const currentUser = useSelector((state) => state.session.user || null);
 
   const {
-
     name,
     city,
     state,
@@ -33,8 +32,6 @@ function SingleSpot() {
     dispatch(getSingleSpot(spotId));
   }, [dispatch, spotId]);
 
-
-
   useEffect(() => {
     setAvgStarRating(singleSpot.avgStarRating);
     setNumReviews(singleSpot.numReviews);
@@ -44,8 +41,6 @@ function SingleSpot() {
     e.preventDefault();
     alert("Feature Coming Soon!");
   };
-
-
 
   return (
     <>
