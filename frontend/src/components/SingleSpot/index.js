@@ -49,31 +49,39 @@ function SingleSpot() {
         {city}, {state}, {country}
       </h4>
       <div className="image-container">
-        {SpotImages &&
-          SpotImages.length > 0 &&
-          // <ul>
-          SpotImages.map(({ id, url }) => (
-            <div key={id} className="spot-image" >
-              <img src={url} alt={`Spot ${id}`} />
-            </div>
-          ))
+        {
+          SpotImages &&
+            SpotImages.length > 0 &&
+            // <ul>
+            SpotImages.map(({ id, url }) => (
+              <div key={id} className="spot-image">
+                <img src={url} alt={`Spot ${id}`} />
+              </div>
+            ))
           // </ul>
         }
       </div>
-      {Owner && (
-        <h3>
-          Hosted by {Owner.firstName} {Owner.lastName}
-        </h3>
-      )}
-      <p>{description}</p>
-      <div className="reservation-details">
-        <p>STARIMAGE</p>
-        <p>${price} night</p>
-        <p>{avgStarRating}</p>
-        <p>{numReviews} reviews</p>
-        <button id="reserve-button" onClick={handleReservationClick}>
-          Reserve
-        </button>
+      <div className="reservation-container">
+        {Owner && (
+          <h3 id="name">
+            Hosted by {Owner.firstName} {Owner.lastName}
+          </h3>
+        )}
+        <p id="description">{description}</p>
+        <div className="reservation-details">
+          <p id="priceSpot">${price} night</p>
+          <div className="reviewsSpot">
+            <p>
+              <i class="fa-solid fa-star"></i> {""}
+              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+            </p>
+            {/* <p id="avgRatingSpot">{avgStarRating}</p> */}
+            {/* <p id="reviewsSpot">{numReviews} reviews</p> */}
+          </div>
+          <button id="reserve-button" onClick={handleReservationClick}>
+            Reserve
+          </button>
+        </div>
       </div>
       <div className="line-break"></div>
       <div className="reviews-ticker">

@@ -30,3 +30,53 @@
   grid-row: span 2;
   object-fit: cover;
 }
+
+.reservation-container {
+  display: grid;
+  /* grid-template-columns: 1fr 1fr; */
+  /* height: 100px;
+  width: 75px; */
+}
+
+#description {
+  grid-row: 1;
+  grid-column: 1;
+  position: relative;
+  top: 50px;
+}
+#name {
+  grid-row: 1;
+  grid-column: 1;
+}
+
+.reservation-details {
+  border: 2px solid black;
+  border-radius: 8px;
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  margin-left: 100px;
+  margin-bottom: 50px;
+  margin-top: 10px;
+  padding: 15px;
+  padding-top: -20px;
+}
+
+#reserve-button {
+  grid-column: span 2;
+  grid-row: 2;
+  cursor: pointer;
+  /* width: 600px; */
+  background-color: red;
+  color: white;
+}
+
+#priceSpot {
+  grid-row: 1;
+  grid-column: 1;
+}
+.reviewsSpot {
+  position: relative;
+}
