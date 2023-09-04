@@ -516,37 +516,47 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 const validateCreateSpot = [
   check("country")
     // .optional()
-    .isString()
+    .isLength({ min: 2 })
+    .withMessage("Country must be longer than 2 characters")
+    .isAlpha()
     .withMessage("Country cannot be a number"),
   check("address")
     // .optional()
-    .isAlphanumeric()
-    .withMessage("Country cannot be a number"),
+    .isLength({ min: 6 })
+    .withMessage("Address must be longer than 6 characters")
+    .isAlpha()
+    .withMessage("Address cannot be a number"),
   check("city")
     .optional()
-    .isAlphanumeric()
-    .withMessage("Country cannot be a number"),
+    .isAlpha()
+    .withMessage("City cannot be a number")
+    .isLength({ min: 2 })
+    .withMessage("City must be longer than 2 characters"),
   check("state")
     // .optional()
-    .isAlphanumeric()
-    .withMessage("Country cannot be a number"),
+    .isLength({ min: 2 })
+    .withMessage("State must be longer than 2 characters")
+    .isAlpha()
+    .withMessage("State cannot be a number"),
   check("lat")
     // .optional()
     .isDecimal()
-    .withMessage("Minimum longitude is invalid"),
+    .withMessage("Latitude must be a number"),
   check("lng")
     // .optional()
     .isDecimal()
-    .withMessage("Maximum longitude is invalid"),
+    .withMessage("Longitude must be a number"),
   check("name")
-    .isAlphanumeric()
+    .isAlpha()
     .withMessage("Name cannot be a number")
     .isLength(2)
     .withMessage("Name must be longer than two characters"),
   check("description")
     // .optional()
-    .isAlphanumeric()
-    .withMessage("Country cannot be a number"),
+    .isLength({ min: 30 })
+    .withMessage("Description must be longer than 30 characters")
+    .isAlpha()
+    .withMessage("Description cannot be a number"),
   check("price")
     // .optional()
     .isDecimal({ min: 1 })

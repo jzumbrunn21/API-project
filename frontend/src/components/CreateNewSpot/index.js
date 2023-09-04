@@ -120,7 +120,8 @@ function CreateNewSpot({ spot }) {
           {errors.address && <p>{errors.address}</p>}
           {errors.city && <p>{errors.city}</p>}
           {errors.state && <p>{errors.state}</p>}
-          {errors.lat && <p>{errors.lng}</p>}
+          {errors.lat && <p>{errors.lat}</p>}
+          {errors.lng && <p>{errors.lng}</p>}
           {errors.name && <p>{errors.name}</p>}
           {errors.description && <p>{errors.description}</p>}
           {errors.price && <p>{errors.price}</p>}
