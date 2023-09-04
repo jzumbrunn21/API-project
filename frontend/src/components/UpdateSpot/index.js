@@ -70,7 +70,7 @@ function UpdateSpot() {
     !country || !address || !city || !state || !lat || !lng || !price;
   return (
     <div className="create-spot-container">
-      <form className="spot-form" onSubmit={handleSubmit}>
+      <form className="spot-form" onSubmit={(e) => handleSubmit(e, spotId)}>
         <div className="details">
           <h1>Create a new Spot</h1>
           <h3>Where's your place located?</h3>
