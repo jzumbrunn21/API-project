@@ -153,3 +153,6 @@ h5 {
   background-color: grey;
   cursor: not-allowed;
 }
+.spot-form input {
+  border: 2px solid black;
+}

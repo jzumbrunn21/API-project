@@ -17,7 +17,8 @@ img {
 .spotImage {
   display: grid;
   height: 250px;
-  width: 350px;
+  width: 250px;
+  max-width: 100%;
   border: 2px solid black;
 }
 .spot-info {
