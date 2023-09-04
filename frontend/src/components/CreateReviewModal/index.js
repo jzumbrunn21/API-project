@@ -38,25 +38,28 @@ function CreateReviewModal({ review }) {
   const openModal = () => {
     setModalContent(
       <div className="create-review-container">
-
-      <form onSubmit={handleSubmit}>
-        <h2>How was your stay?</h2>
-        <input
-          name="review"
-          type="text"
-          value={reviewSubmit.review}
-          onChange={handleChange}
-          placeholder="Leave your review here..."
-        />
-        <input
-          name="stars"
-          type="number"
-          value={reviewSubmit.stars}
-          onChange={handleChange}
-          placeholder="Enter star rating (1-5)"
-        />
-        <button type="submit">Submit Your Review</button>
-      </form>
+        <form id="form" onSubmit={handleSubmit}>
+          <h2>How was your stay?</h2>
+          <div className="review-input">
+            <textarea
+              name="review"
+              type="text"
+              value={reviewSubmit.review}
+              onChange={handleChange}
+              placeholder="Leave your review here..."
+            />
+          </div>
+          <div className="stars-input">
+            <input
+              name="stars"
+              type="number"
+              value={reviewSubmit.stars}
+              onChange={handleChange}
+              placeholder="Enter star rating (1-5)"
+            />
+          </div>
+          <button type="submit">Submit Your Review</button>
+        </form>
       </div>
     );
   };
