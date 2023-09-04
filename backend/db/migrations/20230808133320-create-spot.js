@@ -51,6 +51,11 @@ module.exports = {
         name: {
           type: Sequelize.STRING(50),
           allowNull: false,
+          isString(value) {
+            if (typeof value !== "string") {
+              throw new Error("Name must be a string");
+            }
+          },
         },
         description: {
           type: Sequelize.STRING,

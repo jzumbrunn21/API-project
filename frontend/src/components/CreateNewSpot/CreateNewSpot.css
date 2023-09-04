@@ -156,3 +156,6 @@ h5 {
 .spot-form input {
   border: 2px solid black;
 }
+.creation-errors {
+  color: red;
+}

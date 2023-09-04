@@ -513,26 +513,70 @@ router.put("/:spotId", requireAuth, async (req, res) => {
 });
 
 // Create a Spot
+const validateCreateSpot = [
+  check("country")
+    // .optional()
+    .isString()
+    .withMessage("Country cannot be a number"),
+  check("address")
+    // .optional()
+    .isAlphanumeric()
+    .withMessage("Country cannot be a number"),
+  check("city")
+    .optional()
+    .isAlphanumeric()
+    .withMessage("Country cannot be a number"),
+  check("state")
+    // .optional()
+    .isAlphanumeric()
+    .withMessage("Country cannot be a number"),
+  check("lat")
+    // .optional()
+    .isDecimal()
+    .withMessage("Minimum longitude is invalid"),
+  check("lng")
+    // .optional()
+    .isDecimal()
+    .withMessage("Maximum longitude is invalid"),
+  check("name")
+    .isAlphanumeric()
+    .withMessage("Name cannot be a number")
+    .isLength(2)
+    .withMessage("Name must be longer than two characters"),
+  check("description")
+    // .optional()
+    .isAlphanumeric()
+    .withMessage("Country cannot be a number"),
+  check("price")
+    // .optional()
+    .isDecimal({ min: 1 })
+    .withMessage("Maximum price must be greater than or equal to 0"),
+  check("previewImage")
+    // .optional()
+    .matches(/\.(jpeg|jpg|png)$/)
+    .withMessage("Preview Image must end in .jpg, .jpeg, or .png"),
+  handleValidationErrors,
+];
 
-router.post("/", requireAuth, async (req, res) => {
+router.post("/", requireAuth, validateCreateSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
-  const error = {};
+  const errors = {};
 
-  if (!address) error.address = "Street address is required";
-  if (!city) error.city = "City is required";
-  if (!state) error.state = "State is required";
-  if (!country) error.country = "Country is required";
-  if (!lat) error.lat = "Latitude is not valid";
-  if (!lng) error.lng = "Longitude is not valid";
+  if (!address) errors.address = "Street address is required";
+  if (!city) errors.city = "City is required";
+  if (!state) errors.state = "State is required";
+  if (!country) errors.country = "Country is required";
+  if (!lat) errors.lat = "Latitude is not valid";
+  if (!lng) errors.lng = "Longitude is not valid";
   if (!name || name.length > 50)
-    error.name = "Name must be less than 50 characters";
-  if (!description) error.description = "Description is required";
-  if (!price || price < 1) error.price = "Price per day is required";
+    errors.name = "Name must be less than 50 characters";
+  if (!description) errors.description = "Description is required";
+  if (!price || price < 1) errors.price = "Price per day is required";
 
-  if (Object.keys(error).length > 0) {
-    return res.status(400).json({ message: "Bad Request", errors: error });
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ message: "Bad Request", errors: errors });
   }
 
   const newSpot = await Spot.create({

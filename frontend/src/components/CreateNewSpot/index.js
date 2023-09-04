@@ -8,7 +8,6 @@ import "./CreateNewSpot.css";
 function CreateNewSpot({ spot }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [errors, setErrors] = useState({});
   const [address, setAddress] = useState("");
   const [city, setCity] = useState("");
   const [state, setState] = useState("");
@@ -25,6 +24,18 @@ function CreateNewSpot({ spot }) {
   const [url3, setUrl3] = useState("");
   const [url4, setUrl4] = useState("");
 
+  const [errors, setErrors] = useState({
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    lat,
+    lng,
+    description: "",
+    name: "",
+    price: "",
+    previewImage: "",
+  });
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
@@ -41,16 +52,29 @@ function CreateNewSpot({ spot }) {
       previewImage,
     };
 
-    const createdSpot = await dispatch(createNewSpot(spot));
+    dispatch(createNewSpot(spot))
+      .then((response) => {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else {
+          const spotId = response.id;
+          const imageUrls = [previewImage, url1, url2, url3, url4].filter(
+            Boolean
+          );
 
-    const spotId = createdSpot.id;
-    const imageUrls = [previewImage, url1, url2, url3, url4].filter(Boolean);
+          for (const imageUrl of imageUrls) {
+            dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
+          }
 
-    for (const imageUrl of imageUrls) {
-      await dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
-    }
-
-    history.push(`/api/spots/${spotId}`);
+          history.push(`/api/spots/${spotId}`);
+        }
+      })
+      .catch(async (response) => {
+        const data = await response.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
   };
 
   useEffect(() => {
@@ -91,16 +115,27 @@ function CreateNewSpot({ spot }) {
             reservation.
           </h5>
         </div>
+        <div className="creation-errors">
+          {errors.country && <p>{errors.country}</p>}
+          {errors.address && <p>{errors.address}</p>}
+          {errors.city && <p>{errors.city}</p>}
+          {errors.state && <p>{errors.state}</p>}
+          {errors.lat && <p>{errors.lng}</p>}
+          {errors.name && <p>{errors.name}</p>}
+          {errors.description && <p>{errors.description}</p>}
+          {errors.price && <p>{errors.price}</p>}
+          {errors.previewImage && <p>{errors.previewImage}</p>}
+        </div>
         <div className="spot-location">
           <div className="address-container">
-            <div id="countryErrors">Country {errors.country}</div>
+            <label id="countryErrors">Country</label>
             <input
               type="text"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               placeholder="Country"
             />
-            <div id="addressErrors">Street Address {errors.address}</div>
+            <div id="addressErrors">Street Address </div>
             <input
               type="text"
               value={address}
@@ -110,7 +145,7 @@ function CreateNewSpot({ spot }) {
           </div>
           <div className="address-details">
             <div className="city-state">
-              <div className="cityErrors">City {errors.city}</div>
+              <div className="cityErrors">City </div>
               <input
                 type="text"
                 value={city}
@@ -118,7 +153,7 @@ function CreateNewSpot({ spot }) {
                 placeholder="City"
               />
 
-              <div className="latErrors">Latitude {errors.lat}</div>
+              <div className="latErrors">Latitude </div>
               <input
                 type="text"
                 value={lat}
@@ -127,14 +162,14 @@ function CreateNewSpot({ spot }) {
               />
             </div>
             <div className="lat-lng">
-              <div className="stateErrors">State {errors.state}</div>
+              <div className="stateErrors">State </div>
               <input
                 type="text"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 placeholder="STATE"
               />
-              <div className="lngErrors">Longitude {errors.lng}</div>
+              <div className="lngErrors">Longitude </div>
               <input
                 type="text"
                 value={lng}
@@ -157,7 +192,7 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           />
-          <div id="descriptionErrors">{errors.description}</div>
+          <div id="descriptionErrors"></div>
         </div>
         <div className="line-break"></div>
         <div className="title-container">
@@ -189,7 +224,7 @@ function CreateNewSpot({ spot }) {
               placeholder="Price per night (USD)"
             />
           </div>
-          <div id="priceErrors">{errors.price}</div>
+          {/* <div id="priceErrors">{errors.price}</div> */}
         </div>
         <div className="line-break"></div>
         <div className="add-image-container">
@@ -201,7 +236,7 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setPreviewImage(e.target.value)}
             placeholder="Preview Image URL"
           />
-          <div className="previewImageErrors">{errors.previewImage}</div>
+          {/* <div className="previewImageErrors">{errors.previewImage}</div> */}
           <input
             type="text"
             value={url1}
@@ -215,7 +250,7 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setUrl2(e.target.value)}
             placeholder="Image URL"
           />
-          <div className="urlErrors">{errors.url}</div>
+          {/* <div className="urlErrors">{errors.url}</div> */}
           <input
             type="text"
             value={url3}
