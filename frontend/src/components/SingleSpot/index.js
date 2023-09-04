@@ -52,13 +52,13 @@ function SingleSpot() {
         {
           SpotImages &&
             SpotImages.length > 0 &&
-            // <ul>
+
             SpotImages.map(({ id, url }) => (
               <div key={id} className="spot-image">
                 <img src={url} alt={`Spot ${id}`} />
               </div>
             ))
-          // </ul>
+
         }
       </div>
       <div className="reservation-container">
@@ -71,12 +71,10 @@ function SingleSpot() {
         <div className="reservation-details">
           <p id="priceSpot">${price} night</p>
           <div className="reviewsSpot">
-            <p>
+            <p id="review-ticker">
               <i class="fa-solid fa-star"></i> {""}
               {avgStarRating || "New"} {""} • {""} {numReviews} reviews
             </p>
-            {/* <p id="avgRatingSpot">{avgStarRating}</p> */}
-            {/* <p id="reviewsSpot">{numReviews} reviews</p> */}
           </div>
           <button id="reserve-button" onClick={handleReservationClick}>
             Reserve
