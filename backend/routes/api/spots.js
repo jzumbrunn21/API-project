@@ -572,11 +572,11 @@ const validateCreateSpot = [
   check("address")
     // .optional()
     .isLength({ min: 6 })
-    .withMessage("Address must be longer than 6 characters")
-    .isAlpha()
-    .withMessage("Address cannot be a number"),
+    .withMessage("Address must be longer than 6 characters"),
+    // .isAlphanumeric()
+    // .withMessage("Address cannot be a number"),
   check("city")
-    .optional()
+    // .optional()
     .isAlpha()
     .withMessage("City cannot be a number")
     .isLength({ min: 2 })

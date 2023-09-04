@@ -9,10 +9,10 @@ import { useParams } from "react-router-dom";
 function UpdateSpot() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const singleSpot = useSelector((state) => state.spots.singleSpot);
   const { spotId } = useParams();
   // console.log("spotId", spotId);
 
+  const singleSpot = useSelector((state) => state.spots.singleSpot);
   const [address, setAddress] = useState(singleSpot.address);
   const [city, setCity] = useState(singleSpot.city);
   const [state, setState] = useState(singleSpot.state);
@@ -36,8 +36,10 @@ function UpdateSpot() {
   const [newSpot, setNewSpot] = useState(singleSpot);
 
   useEffect(() => {
-    dispatch(getSingleSpot(spotId));
-  }, [dispatch, spotId]);
+    if (!singleSpot) {
+      return dispatch(getSingleSpot(spotId));
+    }
+  }, [dispatch, singleSpot, spotId]);
 
   const handleSubmit = async (e, spotId) => {
     e.preventDefault();
