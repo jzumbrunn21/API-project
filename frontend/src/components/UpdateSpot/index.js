@@ -12,7 +12,7 @@ function UpdateSpot() {
   const singleSpot = useSelector((state) => state.spots.singleSpot);
   const { spotId } = useParams();
   // console.log("spotId", spotId);
-  const [errors, setErrors] = useState({});
+
   const [address, setAddress] = useState(singleSpot.address);
   const [city, setCity] = useState(singleSpot.city);
   const [state, setState] = useState(singleSpot.state);
@@ -22,6 +22,17 @@ function UpdateSpot() {
   const [price, setPrice] = useState(singleSpot.price);
   const [lat, setLat] = useState(singleSpot.lat);
   const [lng, setLng] = useState(singleSpot.lng);
+  const [errors, setErrors] = useState({
+    country: "",
+    address: "",
+    city: "",
+    state: "",
+    lat,
+    lng,
+    description: "",
+    name: "",
+    price: "",
+  });
   const [newSpot, setNewSpot] = useState(singleSpot);
 
   useEffect(() => {
@@ -29,7 +40,6 @@ function UpdateSpot() {
   }, [dispatch, spotId]);
 
   const handleSubmit = async (e, spotId) => {
-    // console.log("spotId", spotId);
     e.preventDefault();
     setErrors({});
     const updatedSpot = {
@@ -44,13 +54,23 @@ function UpdateSpot() {
       description,
       price,
     };
-    // console.log(updatedSpot);
+    dispatch(updateSpot(spotId, updatedSpot))
+      .then((response) => {
+        if (response.errors) {
+          setErrors(response.errors);
+        } else {
+          dispatch(getSingleSpot(updatedSpot.id));
+          setNewSpot(response);
 
-    const editedSpot = await dispatch(updateSpot(spotId, updatedSpot));
-    dispatch(getSingleSpot(updatedSpot.id));
-    setNewSpot(editedSpot);
-    // console.log("editedSpot", editedSpot);
-    history.push(`/api/spots/${updatedSpot.id}`);
+          history.push(`/api/spots/${updatedSpot.id}`);
+        }
+      })
+      .catch(async (response) => {
+        const data = await response.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
   };
 
   useEffect(() => {
@@ -72,23 +92,35 @@ function UpdateSpot() {
     <div className="create-spot-container">
       <form className="spot-form" onSubmit={(e) => handleSubmit(e, spotId)}>
         <div className="details">
-          <h1>Create a new Spot</h1>
+          <h1>Update your spot</h1>
           <h3>Where's your place located?</h3>
           <h5>
             Guests will only get your exact address once they booked a
             reservation.
           </h5>
         </div>
+        <div className="creation-errors">
+          {errors.country && <p>{errors.country}</p>}
+          {errors.address && <p>{errors.address}</p>}
+          {errors.city && <p>{errors.city}</p>}
+          {errors.state && <p>{errors.state}</p>}
+          {errors.lat && <p>{errors.lat}</p>}
+          {errors.lng && <p>{errors.lng}</p>}
+          {errors.name && <p>{errors.name}</p>}
+          {errors.description && <p>{errors.description}</p>}
+          {errors.price && <p>{errors.price}</p>}
+          {errors.previewImage && <p>{errors.previewImage}</p>}
+        </div>
         <div className="spot-location">
           <div className="address-container">
-            <div id="countryErrors">Country {errors.country}</div>
+            <div id="countryErrors">Country</div>
             <input
               type="text"
               value={country}
               onChange={(e) => setCountry(e.target.value)}
               placeholder="Country"
             />
-            <div id="addressErrors">Street Address {errors.address}</div>
+            <div id="addressErrors">Street Address</div>
             <input
               type="text"
               value={address}
@@ -98,7 +130,7 @@ function UpdateSpot() {
           </div>
           <div className="address-details">
             <div className="city-state">
-              <div className="cityErrors">City {errors.city}</div>
+              <div className="cityErrors">City</div>
               <input
                 type="text"
                 value={city}
@@ -106,7 +138,7 @@ function UpdateSpot() {
                 placeholder="City"
               />
 
-              <div className="latErrors">Latitude {errors.lat}</div>
+              <div className="latErrors">Latitude</div>
               <input
                 type="text"
                 value={lat}
@@ -115,14 +147,14 @@ function UpdateSpot() {
               />
             </div>
             <div className="lat-lng">
-              <div className="stateErrors">State {errors.state}</div>
+              <div className="stateErrors">State</div>
               <input
                 type="text"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
                 placeholder="STATE"
               />
-              <div className="lngErrors">Longitude {errors.lng}</div>
+              <div className="lngErrors">Longitude</div>
               <input
                 type="text"
                 value={lng}
@@ -145,7 +177,7 @@ function UpdateSpot() {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           />
-          <div id="descriptionErrors">{errors.description}</div>
+          <div id="descriptionErrors"></div>
         </div>
         <div className="line-break"></div>
         <div className="title-container">
@@ -177,7 +209,7 @@ function UpdateSpot() {
               placeholder="Price per night (USD)"
             />
           </div>
-          <div id="priceErrors">{errors.price}</div>
+          <div id="priceErrors"></div>
         </div>
         <div className="line-break"></div>
         <button type="submit" disabled={handleDisable}>

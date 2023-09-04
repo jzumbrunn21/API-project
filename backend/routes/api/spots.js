@@ -465,8 +465,57 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 });
 
 // Edit a Spot
-
-router.put("/:spotId", requireAuth, async (req, res) => {
+const validateEditSpot = [
+  check("country")
+    // .optional()
+    .isLength({ min: 2 })
+    .withMessage("Country must be longer than 2 characters")
+    .isAlpha()
+    .withMessage("Country cannot be a number"),
+  check("address")
+    // .optional()
+    .isLength({ min: 6 })
+    .withMessage("Address must be longer than 6 characters")
+    .isAlpha()
+    .withMessage("Address cannot be a number"),
+  check("city")
+    // .optional()
+    .isAlpha()
+    .withMessage("City cannot be a number")
+    .isLength({ min: 2 })
+    .withMessage("City must be longer than 2 characters"),
+  check("state")
+    // .optional()
+    .isLength({ min: 2 })
+    .withMessage("State must be longer than 2 characters")
+    .isAlpha()
+    .withMessage("State cannot be a number"),
+  check("lat")
+    // .optional()
+    .isNumeric()
+    .withMessage("Latitude must be a number"),
+  check("lng")
+    // .optional()
+    .isNumeric()
+    .withMessage("Longitude must be a number"),
+  check("name")
+    .isAlpha()
+    .withMessage("Name cannot be a number")
+    .isLength(2)
+    .withMessage("Name must be longer than two characters"),
+  check("description")
+    // .optional()
+    .isLength({ min: 30 })
+    .withMessage("Description must be longer than 30 characters")
+    .isAlpha()
+    .withMessage("Description cannot be a number"),
+  check("price")
+    // .optional()
+    .isDecimal({ min: 1 })
+    .withMessage("Maximum price must be greater than or equal to 0"),
+  handleValidationErrors,
+];
+router.put("/:spotId", requireAuth, validateEditSpot, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   if (!spot) {
     res.status(404).json({ message: "Spot couldn't be found" });
@@ -478,21 +527,21 @@ router.put("/:spotId", requireAuth, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
 
-  const error = {};
+  const errors = {};
 
-  if (!address) error.address = "Street address is required";
-  if (!city) error.city = "City is required";
-  if (!state) error.state = "State is required";
-  if (!country) error.country = "Country is required";
-  if (!lat) error.lat = "Latitude is not valid";
-  if (!lng) error.lng = "Longitude is not valid";
+  if (!address) errors.address = "Street address is required";
+  if (!city) errors.city = "City is required";
+  if (!state) errors.state = "State is required";
+  if (!country) errors.country = "Country is required";
+  if (!lat) errors.lat = "Latitude is not valid";
+  if (!lng) errors.lng = "Longitude is not valid";
   if (!name || name.length > 50)
-    error.name = "Name must be less than 50 characters";
-  if (!description) error.description = "Description is required";
-  if (!price || price < 1) error.price = "Price per day is required";
+    errors.name = "Name must be less than 50 characters";
+  if (!description) errors.description = "Description is required";
+  if (!price || price < 1) errors.price = "Price per day is required";
 
-  if (Object.keys(error).length > 0) {
-    return res.status(400).json({ message: "Bad Request", errors: error });
+  if (Object.keys(errors).length > 0) {
+    return res.status(400).json({ message: "Bad Request", errors: errors });
   }
 
   spot.set({
