@@ -1,5 +1,6 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
+import "./DeleteReviewModal.css";
 
 function DeleteReviewModal({ reviewId, onDelete }) {
   const { setModalContent, setOnModalClose, closeModal } = useModal();
@@ -7,10 +8,13 @@ function DeleteReviewModal({ reviewId, onDelete }) {
     setModalContent(null);
 
     setModalContent(
-      <>
-        <h2>Confirm Delete</h2>
+      <div className="delete-container">
+        <div id="delete">
+          <h2>Confirm Delete</h2>
+        </div>
         <h4>Are you sure you want to remove this review?</h4>
         <button
+          id="confirm"
           onClick={() => {
             onDelete(reviewId);
             closeModal();
@@ -18,8 +22,10 @@ function DeleteReviewModal({ reviewId, onDelete }) {
         >
           Yes (Delete Review)
         </button>
-        <button onClick={closeModal}>No (Keep Review)</button>
-      </>
+        <button id="deny" onClick={closeModal}>
+          No (Keep Review)
+        </button>
+      </div>
     );
   };
   return <button onClick={openModal}>Delete</button>;

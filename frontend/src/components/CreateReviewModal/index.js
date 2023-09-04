@@ -37,6 +37,8 @@ function CreateReviewModal({ review }) {
 
   const openModal = () => {
     setModalContent(
+      <div className="create-review-container">
+
       <form onSubmit={handleSubmit}>
         <h2>How was your stay?</h2>
         <input
@@ -55,6 +57,7 @@ function CreateReviewModal({ review }) {
         />
         <button type="submit">Submit Your Review</button>
       </form>
+      </div>
     );
   };
 

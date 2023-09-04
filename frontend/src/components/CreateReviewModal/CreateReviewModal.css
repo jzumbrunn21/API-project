@@ -3,4 +3,10 @@
   color: white;
   box-shadow: 2px 2px 2px 0px black;
   height: 25px;
+  cursor: pointer;
+}
+.create-review-container {
+  display: grid;
+  align-items: center;
+  justify-items: center;
 }
