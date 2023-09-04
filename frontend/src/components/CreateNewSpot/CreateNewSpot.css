@@ -3,6 +3,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 450px;
 }
 .line-break {
   background-color: black;
@@ -10,4 +11,98 @@
   width: 100%;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+.spot-form {
+  /* z-index: 2; */
+  /* display: grid; */
+  /* align-items: center; */
+  /* justify-items: center; */
+  height: auto;
+  width: 500px;
+  /* gap: 10px; */
+  text-align: center;
+  padding: 10px;
+}
+
+.create-spot-container {
+  display: flex;
+  justify-content: center;
+}
+.details {
+  display: grid;
+  align-items: center;
+}
+.details h1,
+h2,
+h3 {
+  justify-self: start;
+}
+
+.details h2,
+h3,
+h5 {
+  margin-top: 5px;
+}
+
+.details h5 {
+  margin-top: -10px;
+  margin-left: -97px;
+}
+
+.spot-location {
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+}
+.address-container {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  gap: 4px;
+  /* align-items: start; */
+}
+#countryErrors,
+#addressErrors {
+  display: flex;
+  justify-self: start;
+}
+.address-details {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.city-state,
+.lat-lng {
+  display: flex;
+  flex-direction: column;
+  /* align-items: flex-start; */
+  /* justify-self: start; */
+  flex-grow: 1;
+  gap: 3px;
+  margin-left: 3px;
+}
+
+.create-description {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  align-items: flex-start;
+}
+
+.create-description input {
+  width: 500px;
+  height: 100px;
+}
+.cityErrors {
+  margin-left: -220px;
+}
+.stateErrors {
+  margin-left: -212px;
+}
+.latErrors {
+  margin-left: -195px;
+}
+.lngErrors {
+  margin-left: -180px;
 }
