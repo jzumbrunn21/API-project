@@ -37,6 +37,7 @@
   /* grid-template-columns: 1fr 1fr; */
   /* height: 100px;
   width: 75px; */
+  /* margin-left: ; */
 }
 
 #description {
@@ -86,4 +87,7 @@
 }
 #review-ticker {
   margin-top: 5px;
+}
+.review-container {
+  margin-left: 10px;
 }

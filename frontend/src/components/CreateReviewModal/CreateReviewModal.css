@@ -4,17 +4,9 @@
   box-shadow: 2px 2px 2px 0px black;
   height: 25px;
   cursor: pointer;
+  margin-bottom: 15px;
+  /* margin-left: -14px; */
 }
-/* .form {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-items: center;
-  width: 350px;
-  gap: 10px;
-  text-align: center;
-  padding: 20px;
-} */
 .create-review-container {
   display: flex;
   flex-direction: column;
@@ -59,4 +51,7 @@
   display: flex;
   justify-content: center;
   margin-bottom: 10px;
+}
+.reviews-ticker {
+  margin-left: -15px;
 }
