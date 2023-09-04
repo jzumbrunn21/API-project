@@ -1,0 +1,62 @@
+#create-spot {
+  cursor: pointer;
+}
+.buttons {
+  background-color: dark gray;
+  box-shadow: 2px 2px 2px 0px black;
+  height: 20px;
+  color: black;
+  cursor: pointer;
+  margin-right: 10px;
+  /* margin-top: 20px; */
+}
+
+ul {
+  list-style: none;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+li {
+  padding: 8px;
+}
+
+#manage-spot-images {
+  width: 300px;
+  height: 250px;
+  border: 2px solid black;
+}
+
+/* .single-spot {
+    display: grid;
+    height: 250px;
+    width: 250px;
+    max-width: 100%;
+  } */
+.spot-info {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+}
+
+#city-state {
+  grid-row: 1;
+  grid-column: 1;
+  display: flex;
+  /* justify-content: center; */
+  margin-top: 10px;
+}
+
+#price {
+  position: relative;
+  top: -10px;
+  grid-row: 2;
+  grid-column: 1;
+  font-weight: bold;
+  margin-top: 5px;
+}
+#avgRating {
+  display: flex;
+  justify-content: right;
+  margin-right: 5px;
+}

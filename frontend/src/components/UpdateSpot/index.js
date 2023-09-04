@@ -44,7 +44,7 @@ function UpdateSpot() {
       description,
       price,
     };
-    console.log(updatedSpot);
+    // console.log(updatedSpot);
 
     const editedSpot = await dispatch(updateSpot(spotId, updatedSpot));
     dispatch(getSingleSpot(updatedSpot.id));
@@ -179,46 +179,6 @@ function UpdateSpot() {
           </div>
           <div id="priceErrors">{errors.price}</div>
         </div>
-        {/* <div className="line-break"></div> */}
-        {/* <div className="add-image-container">
-          <h3>Liven up your spot with photos</h3>
-          <h5>Submit a link to at least one photo to publish your spot.</h5>
-          <input
-            type="text"
-            value={previewImage}
-            onChange={(e) => setPreviewImage(e.target.value)}
-            placeholder="Preview Image URL"
-          />
-          <div className="previewImageErrors">{errors.previewImage}</div>
-          <input
-            type="text"
-            value={url1}
-            onChange={(e) => setUrl1(e.target.value)}
-            placeholder="Image URL"
-          />
-          <div className="urlErrors">{errors.url}</div>
-          <input
-            type="text"
-            value={url2}
-            onChange={(e) => setUrl2(e.target.value)}
-            placeholder="Image URL"
-          />
-          <div className="urlErrors">{errors.url}</div>
-          <input
-            type="text"
-            value={url3}
-            onChange={(e) => setUrl3(e.target.value)}
-            placeholder="Image URL"
-          />
-          <div className="urlErrors">{errors.url}</div>
-          <input
-            type="text"
-            value={url4}
-            onChange={(e) => setUrl4(e.target.value)}
-            placeholder="Image URL"
-          />
-          <div className="urlErrors">{errors.url}</div>
-        </div> */}
         <div className="line-break"></div>
         <button type="submit" disabled={handleDisable}>
           Update Spot

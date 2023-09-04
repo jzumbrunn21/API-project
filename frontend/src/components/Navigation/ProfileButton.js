@@ -6,6 +6,7 @@ import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from "react-router-dom";
 import "./ProfileButton.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -52,6 +53,8 @@ function ProfileButton({ user }) {
   return (
     <>
       <button onClick={openMenu}>
+        <i class="fa-solid fa-bars"></i>
+        {""}
         <i class="fa-solid fa-user"></i>
       </button>
       <ul className={ulClassName} ref={ulRef}>

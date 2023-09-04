@@ -10,6 +10,7 @@ import DeleteSpotModal from "../DeleteSpotModal";
 import { useModal } from "../../context/Modal";
 import { deletedSpot } from "../../store/spots";
 import { useParams } from "react-router-dom";
+import "./ManageSpots.css";
 
 function ManageSpots() {
   const [currentSpots, setCurrentSpots] = useState([]);
@@ -53,8 +54,11 @@ function ManageSpots() {
   };
 
   return (
-    <>
+    <div className="manage-container">
       <h1>Manage Your Spots</h1>
+      <button id="create-spot" onClick={handleCreateSpot}>
+        Create a New Spot
+      </button>
 
       {currentSpots.length > 0 ? (
         <ul className="spots-list">
@@ -63,6 +67,7 @@ function ManageSpots() {
               <li key={id} className="single-spot">
                 <Link to={`/api/spots/${id}`}>
                   <img
+                    id="manage-spot-images"
                     src={previewImage}
                     alt={`Spot ${id}`}
                     data-tooltip-id="tooltip"
@@ -70,12 +75,25 @@ function ManageSpots() {
                     data-tooltip-place="top"
                   />
                 </Link>
-                <p className="spot-info">
-                  {city},{state}
-                </p>
-                <p className="spot-info">${price} night</p>
-                <p className="spot-info">{avgRating || "New"}</p>
-                <button onClick={() => handleUpdateSpot(id)}>Update</button>
+                <div className="spot-info">
+                  <p id="city-state">
+                    {city}, {state}
+                  </p>
+                  <p id="price">${price} night</p>
+                  <p id="avgRating">
+                    <i class="fa-solid fa-star"></i>
+                    {avgRating === null
+                      ? "New"
+                      : parseFloat(avgRating).toFixed(1)}
+                  </p>
+                </div>
+                
+                <button
+                  className="buttons"
+                  onClick={() => handleUpdateSpot(id)}
+                >
+                  Update
+                </button>
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}
@@ -85,13 +103,9 @@ function ManageSpots() {
             )
           )}
         </ul>
-      ) : (
-        <div>
-          <button onClick={handleCreateSpot}>Create a New Spot</button>
-        </div>
-      )}
+      ) : null}
       <Tooltip id="tooltip" />
-    </>
+    </div>
   );
 }
 

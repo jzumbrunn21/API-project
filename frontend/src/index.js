@@ -13,6 +13,10 @@ import { restoreCSRF, csrfFetch } from "./store/csrf";
 import * as sessionActions from "./store/session";
 import * as spotActions from "./store/spots";
 import * as reviewActions from "./store/reviews";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+library.add(faStar);
 
 const store = configureStore();
 

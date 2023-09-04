@@ -34,6 +34,7 @@ function CreateReviewModal({ review }) {
       [e.target.name]: e.target.value,
     }));
   };
+  // const handleDisable = review.length < 10;
 
   const openModal = () => {
     setModalContent(
@@ -58,7 +59,9 @@ function CreateReviewModal({ review }) {
               placeholder="Enter star rating (1-5)"
             />
           </div>
-          <button type="submit">Submit Your Review</button>
+          <button type="submit">
+            Submit Your Review
+          </button>
         </form>
       </div>
     );

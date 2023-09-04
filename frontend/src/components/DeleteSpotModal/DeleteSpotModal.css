@@ -26,3 +26,10 @@
   color: black;
   cursor: pointer;
 }
+#delete-button {
+  background-color: dark gray;
+  box-shadow: 2px 2px 2px 0px black;
+  height: 20px;
+  color: black;
+  cursor: pointer;
+}
