@@ -47,7 +47,12 @@ function SpotReviews() {
           {currentSpotReviews.map((review) => (
             <div key={review.id}>
               <h3>{review.User.firstName}</h3>
-              <h5>{review.createdAt}</h5>
+              <h5>
+                {new Date(review.createdAt).toLocaleString("default", {
+                  month: "long",
+                })}
+                {""} {new Date(review.createdAt).getFullYear()}
+              </h5>
               <h5>{review.review}</h5>
               {currentUser !== null && review.User.id === currentUser.id ? (
                 <DeleteReviewModal
