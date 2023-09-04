@@ -1,0 +1,28 @@
+.delete-container {
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 20px;
+}
+#delete {
+  /* margin-left: 0px; */
+  display: flex;
+  justify-content: center;
+  margin-bottom: -10px;
+}
+#confirm {
+  background-color: Red;
+  box-shadow: 2px 2px 2px 0px black;
+  height: 40px;
+  color: white;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+#deny {
+  background-color: dark gray;
+  box-shadow: 2px 2px 2px 0px black;
+  height: 40px;
+  color: black;
+  cursor: pointer;
+}
