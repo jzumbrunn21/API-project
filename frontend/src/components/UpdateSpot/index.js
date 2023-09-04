@@ -49,7 +49,7 @@ function UpdateSpot() {
     const editedSpot = await dispatch(updateSpot(spotId, updatedSpot));
     dispatch(getSingleSpot(updatedSpot.id));
     setNewSpot(editedSpot);
-    console.log("editedSpot", editedSpot);
+    // console.log("editedSpot", editedSpot);
     history.push(`/api/spots/${updatedSpot.id}`);
   };
 

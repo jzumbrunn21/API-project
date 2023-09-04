@@ -113,18 +113,15 @@ export const deletedSpot = (spotId) => async (dispatch) => {
   }
 };
 
-export const updateSpot = (spotId, spot) => async (dispatch, getState) => {
-  // console.log("hello");
-  // console.log("Spot ID:", spotId);
-  // console.log("SPOT", spot);
-  // console.log("Current Redux state:", getState());
+export const updateSpot = (spotId, spot) => async (dispatch) => {
+
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),
   });
-  console.log(response);
-  // console.log("spotId Thunk", spotId);
+  
+
   if (response.ok) {
     const newSpot = await response.json();
     dispatch(editSpot(newSpot));

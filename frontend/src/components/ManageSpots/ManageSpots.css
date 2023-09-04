@@ -60,3 +60,18 @@ li {
   justify-content: right;
   margin-right: 5px;
 }
+@media (max-width: 1200px) {
+  .spots-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+@media (max-width: 800px) {
+  .spots-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 600px) {
+  .spots-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
