@@ -49,17 +49,13 @@ function SingleSpot() {
         {city}, {state}, {country}
       </h4>
       <div className="image-container">
-        {
-          SpotImages &&
-            SpotImages.length > 0 &&
-
-            SpotImages.map(({ id, url }) => (
-              <div key={id} className="spot-image">
-                <img src={url} alt={`Spot ${id}`} />
-              </div>
-            ))
-
-        }
+        {SpotImages &&
+          SpotImages.length > 0 &&
+          SpotImages.map(({ id, url }) => (
+            <div key={id} className="spot-image">
+              <img src={url} alt={`Spot ${id}`} />
+            </div>
+          ))}
       </div>
       <div className="reservation-container">
         {Owner && (
@@ -73,7 +69,13 @@ function SingleSpot() {
           <div className="reviewsSpot">
             <p id="review-ticker">
               <i class="fa-solid fa-star"></i> {""}
-              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+              {avgStarRating === null
+                ? "New"
+                : parseFloat(avgStarRating).toFixed(1)}{" "}
+              {""} • {""}{" "}
+              {numReviews === 1
+                ? `${numReviews} review`
+                : ` ${numReviews} reviews`}
             </p>
           </div>
           <button id="reserve-button" onClick={handleReservationClick}>
@@ -87,7 +89,13 @@ function SingleSpot() {
           <div className="review-container">
             <p>
               <i class="fa-solid fa-star"></i> {""}
-              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+              {avgStarRating === null
+                ? "New"
+                : parseFloat(avgStarRating).toFixed(1)}{" "}
+              {""} • {""}{" "}
+              {numReviews === 1
+                ? `${numReviews} review`
+                : ` ${numReviews} reviews`}
             </p>
           </div>
         ) : numReviews < 1 ? (
@@ -110,7 +118,13 @@ function SingleSpot() {
           <div className="review-container">
             <p>
               <i class="fa-solid fa-star"></i> {""}
-              {avgStarRating || "New"} {""} • {""} {numReviews} reviews
+              {avgStarRating === null
+                ? "New"
+                : parseFloat(avgStarRating).toFixed(1)}{" "}
+              {""} • {""}{" "}
+              {numReviews === 1
+                ? `${numReviews} review`
+                : ` ${numReviews} reviews`}
             </p>
             {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
               <>
@@ -118,18 +132,7 @@ function SingleSpot() {
               </>
             ) : null}
           </div>
-        ) : // : currentUser !== null &&
-        //   numReviews > 0 &&
-        //   Owner &&
-        //   currentUser.id === Owner.id ? (
-        //   <>
-        //     <p>STARIMAGE</p>
-        //     <p>Stars: {avgStarRating}</p>
-        //     <p>*</p>
-        //     <p>{numReviews} reviews</p>
-        //   </>
-        // )
-        null}
+        ) : null}
       </div>
     </div>
   );

@@ -29,6 +29,7 @@ function SpotReviews() {
   const currentSpotReviews = Object.values(reviews).filter(
     (review) => review.spotId === parseInt(spotId)
   );
+  const currentSpotReviewsReverse = currentSpotReviews.reverse();
 
   const handleDeleteReview = async (reviewId) => {
     dispatch(deleteReview(reviewId));
@@ -42,9 +43,9 @@ function SpotReviews() {
   };
   return (
     <div className="reviews-container-2">
-      {currentSpotReviews && currentSpotReviews.length > 0 ? (
+      {currentSpotReviewsReverse && currentSpotReviewsReverse.length > 0 ? (
         <div className="reviews-list">
-          {currentSpotReviews.map((review) => (
+          {currentSpotReviewsReverse.map((review) => (
             <div key={review.id}>
               <h3>{review.User.firstName}</h3>
               <h5>
