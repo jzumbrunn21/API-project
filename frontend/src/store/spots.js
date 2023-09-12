@@ -120,7 +120,7 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),
   });
-  
+
 
   if (response.ok) {
     const newSpot = await response.json();

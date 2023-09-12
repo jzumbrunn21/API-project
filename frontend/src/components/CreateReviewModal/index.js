@@ -4,71 +4,75 @@ import { useModal } from "../../context/Modal";
 import { createNewReview } from "../../store/reviews";
 import { useParams } from "react-router-dom";
 import "./CreateReviewModal.css";
+import { useHistory } from "react-router-dom";
 
-function CreateReviewModal({ review }) {
+function CreateReviewModal() {
   const dispatch = useDispatch();
   const { setModalContent, closeModal } = useModal();
   const { spotId } = useParams();
 
-  // const [reviewText, setReviewText] = useState("");
-  // const [stars, setStars] = useState(1);
-  const [reviewSubmit, setReviewSubmit] = useState({
-    review: "Jimmy Buffett would be disappointed",
-    stars: "3",
-  });
-  const handleSubmit = async (e) => {
+  const [review, setReview] = useState("");
+  const [stars, setStars] = useState(1);
+  const [reviews, setReviews] = useState([]);
+  const [errors, setErrors] = useState({});
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const history = useHistory();
+
+  const handleSubmit = (e) => {
     e.preventDefault();
+    setErrors({});
 
-    const newReview = {
-      review: reviewSubmit.review,
-      stars: reviewSubmit.stars,
-    };
-
-    await dispatch(createNewReview(newReview, spotId));
-
-    closeModal();
+    setIsModalOpen(false);
+    return dispatch(createNewReview({ review, stars }, spotId))
+      .then((newReview) => {
+        setReviews([...reviews, newReview]);
+        closeModal();
+        history.push(`/api/spots/${spotId}`);
+      })
+      // .catch(async (response) => {
+      //   const data = await response.json();
+      //   if (data && data.errors) {
+      //     setErrors(data.errors);
+      //   }
+      // });
   };
-  const handleChange = (e) => {
-    setReviewSubmit((state) => ({
-      ...state,
-      [e.target.name]: e.target.value,
-    }));
-  };
-  // const handleDisable = review.length < 10;
 
   const openModal = () => {
-    setModalContent(
-      <div className="create-review-container">
-        <form id="form" onSubmit={handleSubmit}>
-          <h2>How was your stay?</h2>
-          <div className="review-input">
-            <textarea
-              name="review"
-              type="text"
-              value={reviewSubmit.review}
-              onChange={handleChange}
-              placeholder="Leave your review here..."
-            />
-          </div>
-          <div className="stars-input">
-            <input
-              name="stars"
-              type="number"
-              value={reviewSubmit.stars}
-              onChange={handleChange}
-              placeholder="Enter star rating (1-5)"
-            />
-          </div>
-          <button type="submit">Submit Your Review</button>
-        </form>
-      </div>
-    );
+    setIsModalOpen(true);
   };
 
   return (
-    <button onClick={openModal} id="post-review-button">
-      Post Your Review
-    </button>
+    <>
+      <button onClick={openModal} id="post-review-button">
+        Post Your Review
+      </button>
+      {isModalOpen && (
+        <div className="create-review-container">
+          <form id="form" onSubmit={handleSubmit}>
+            <h2>How was your stay?</h2>
+            <label className="review-input">
+              <textarea
+                name="review"
+                type="text"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                placeholder="Leave your review here..."
+              />
+            </label>
+            <label className="stars-input">
+              <input
+                name="stars"
+                type="number"
+                value={stars}
+                onChange={(e) => setStars(e.target.value)}
+                placeholder="Enter star rating (1-5)"
+              />
+            </label>
+            <button type="submit">Submit Your Review</button>
+          </form>
+        </div>
+      )}
+    </>
   );
 }
 

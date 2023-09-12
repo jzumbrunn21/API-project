@@ -67,7 +67,7 @@ export const deleteReview = (reviewId) => async (dispatch) => {
 
 const initialState = {
   spot: {},
-  // user: {},
+  
 };
 
 const reviewsReducer = (state = initialState, action) => {

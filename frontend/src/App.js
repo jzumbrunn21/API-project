@@ -24,9 +24,6 @@ function App() {
       <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route exact path="/">
-            <SpotsList />
-          </Route>
           <Route exact path="/api/spots/new">
             <CreateNewSpot />
           </Route>
@@ -39,6 +36,9 @@ function App() {
           <Route exact path="/api/spots/:spotId">
             <SingleSpot />
             <SpotReviews />
+          </Route>
+          <Route exact path="/">
+            <SpotsList />
           </Route>
         </Switch>
       )}
