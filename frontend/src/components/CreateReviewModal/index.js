@@ -13,8 +13,8 @@ function CreateReviewModal({ review }) {
   // const [reviewText, setReviewText] = useState("");
   // const [stars, setStars] = useState(1);
   const [reviewSubmit, setReviewSubmit] = useState({
-    review: "",
-    stars: "",
+    review: "Jimmy Buffett would be disappointed",
+    stars: "3",
   });
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -59,9 +59,7 @@ function CreateReviewModal({ review }) {
               placeholder="Enter star rating (1-5)"
             />
           </div>
-          <button type="submit">
-            Submit Your Review
-          </button>
+          <button type="submit">Submit Your Review</button>
         </form>
       </div>
     );
