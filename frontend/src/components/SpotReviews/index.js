@@ -21,15 +21,18 @@ function SpotReviews() {
   const { closeModal } = useModal();
   const [updatedReviews, setUpdatedReviews] = useState([]);
 
+  // useEffect(() => {
+  //   dispatch(getAllReviews(spotId)).then(() => {
+  //     setLoaded(true);
+  //   });
+  // }, [dispatch, spotId]);
+
   useEffect(() => {
+    setUpdatedReviews(reviews);
     dispatch(getAllReviews(spotId)).then(() => {
       setLoaded(true);
     });
   }, [dispatch, spotId]);
-
-  useEffect(() => {
-    setUpdatedReviews(reviews);
-  }, [reviews]);
 
   const currentSpotReviews = Object.values(updatedReviews).filter(
     (review) => review.spotId === parseInt(spotId)
@@ -46,7 +49,7 @@ function SpotReviews() {
       history.push(`/api/spots/${spotId}`);
     }, 1000);
   };
-  console.log("currentspot reviews", currentSpotReviewsReverse);
+  // console.log("currentspot reviews", currentSpotReviewsReverse);
   return (
     <div className="reviews-container-2">
       {currentSpotReviewsReverse && currentSpotReviewsReverse.length > 0 ? (
@@ -54,9 +57,7 @@ function SpotReviews() {
           {currentSpotReviewsReverse.map((review) => (
             <div key={review.id}>
               {console.log("current review", review)}
-              <h3>
-                {review.User.firstName}
-              </h3>
+              <h3>{review.User.firstName}</h3>
               <h5>
                 {new Date(review.createdAt).toLocaleString("default", {
                   month: "long",

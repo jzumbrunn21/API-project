@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { createNewReview } from "../../store/reviews";
+import { createNewReview, getAllReviews } from "../../store/reviews";
 import { useParams } from "react-router-dom";
 import "./CreateReviewModal.css";
 import { useHistory } from "react-router-dom";
@@ -13,29 +13,28 @@ function CreateReviewModal() {
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(1);
-  const [reviews, setReviews] = useState([]);
+  // const [reviews, setReviews] = useState([]);
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const history = useHistory();
 
-  const handleSubmit = (e) => {
+  const reviews = useSelector((state) => state.reviews);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
 
-    setIsModalOpen(false);
-    return dispatch(createNewReview({ review, stars }, spotId))
-      .then((newReview) => {
-        setReviews([...reviews, newReview]);
-        closeModal();
-        history.push(`/api/spots/${spotId}`);
-      })
-      // .catch(async (response) => {
-      //   const data = await response.json();
-      //   if (data && data.errors) {
-      //     setErrors(data.errors);
-      //   }
-      // });
+    setReview("");
+    setStars(1);
+    await dispatch(createNewReview({ review, stars }, spotId));
+    dispatch(getAllReviews(spotId));
+    setTimeout(() => {
+      history.push(`/api/spots/${spotId}`);
+    }, 1000);
+    closeModal();
   };
+  // useEffect(() => {
+  // }, [spotId]);
 
   const openModal = () => {
     setIsModalOpen(true);
