@@ -56,7 +56,7 @@ function SpotReviews() {
         <div className="reviews-list">
           {currentSpotReviewsReverse.map((review) => (
             <div key={review.id}>
-              {console.log("current review", review)}
+              {/* {console.log("current review", review)} */}
               <h3>{review.User.firstName}</h3>
               <h5>
                 {new Date(review.createdAt).toLocaleString("default", {

@@ -1,53 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
-import { createNewReview, getAllReviews } from "../../store/reviews";
 import { useParams } from "react-router-dom";
-import "./CreateReviewModal.css";
 import { useHistory } from "react-router-dom";
+import { createNewReview, getAllReviews } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
+import "./CreateReviewModal.css";
 
 function CreateReviewModal() {
   const dispatch = useDispatch();
-  const { setModalContent, closeModal } = useModal();
   const { spotId } = useParams();
+  const history = useHistory();
+  const reviews = useSelector((state) => state.reviews);
+  const { setModalContent, closeModal } = useModal();
 
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(1);
-  // const [reviews, setReviews] = useState([]);
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const history = useHistory();
-
-  const reviews = useSelector((state) => state.reviews);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrors({});
-
-    setReview("");
-    setStars(1);
-    await dispatch(createNewReview({ review, stars }, spotId));
-    dispatch(getAllReviews(spotId));
-    dispatch(getSingleSpot(spotId));
-    setTimeout(() => {
-      history.push(`/api/spots/${spotId}`);
-    }, 1000);
-    closeModal();
-  };
-  // useEffect(() => {
-  // }, [spotId]);
-
-  const openModal = () => {
-    setIsModalOpen(true);
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen).then(setIsModalOpen(false));
   };
 
-  return (
-    <>
-      <button onClick={openModal} id="post-review-button">
-        Post Your Review
-      </button>
-      {isModalOpen && (
+  useEffect(() => {
+    if (isModalOpen === true) {
+      setModalContent(
         <div className="create-review-container">
           <form id="form" onSubmit={handleSubmit}>
             <h2>How was your stay?</h2>
@@ -72,7 +49,42 @@ function CreateReviewModal() {
             <button type="submit">Submit Your Review</button>
           </form>
         </div>
-      )}
+      );
+    } else {
+      setTimeout(() => {
+        resetModal();
+      }, 300);
+    }
+  }, [isModalOpen, review, stars]);
+
+  const resetModal = () => {
+    setReview("");
+    setStars(1);
+    setErrors({});
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setErrors({});
+
+    await dispatch(createNewReview({ review, stars }, spotId));
+    dispatch(getAllReviews(spotId));
+    dispatch(getSingleSpot(spotId));
+
+    // setIsModalOpen(false);
+    toggleModal();
+    setTimeout(() => {
+      closeModal();
+      history.push(`/api/spots/${spotId}`);
+    }, 1000);
+    resetModal();
+  };
+
+  return (
+    <>
+      <button onClick={() => toggleModal()} id="post-review-button">
+        Post Your Review {console.log(isModalOpen)}
+      </button>
     </>
   );
 }
