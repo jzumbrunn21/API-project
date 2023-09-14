@@ -5,6 +5,7 @@ import { createNewReview, getAllReviews } from "../../store/reviews";
 import { useParams } from "react-router-dom";
 import "./CreateReviewModal.css";
 import { useHistory } from "react-router-dom";
+import { getSingleSpot } from "../../store/spots";
 
 function CreateReviewModal() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function CreateReviewModal() {
     setStars(1);
     await dispatch(createNewReview({ review, stars }, spotId));
     dispatch(getAllReviews(spotId));
+    dispatch(getSingleSpot(spotId));
     setTimeout(() => {
       history.push(`/api/spots/${spotId}`);
     }, 1000);
