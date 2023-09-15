@@ -11,17 +11,16 @@ function UpdateSpot() {
   const history = useHistory();
   const singleSpot = useSelector((state) => state.spots.singleSpot);
   const { spotId } = useParams();
-  // console.log("spotId", spotId);
 
-  const [address, setAddress] = useState(singleSpot.address);
-  const [city, setCity] = useState(singleSpot.city);
-  const [state, setState] = useState(singleSpot.state);
-  const [country, setCountry] = useState(singleSpot.country);
-  const [name, setName] = useState(singleSpot.name);
-  const [description, setDescription] = useState(singleSpot.description);
-  const [price, setPrice] = useState(singleSpot.price);
-  const [lat, setLat] = useState(singleSpot.lat);
-  const [lng, setLng] = useState(singleSpot.lng);
+  const [address, setAddress] = useState("");
+  const [city, setCity] = useState("");
+  const [state, setState] = useState("");
+  const [country, setCountry] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
+  const [price, setPrice] = useState("");
+  const [lat, setLat] = useState("");
+  const [lng, setLng] = useState("");
   const [errors, setErrors] = useState({
     country: "",
     address: "",
@@ -73,19 +72,20 @@ function UpdateSpot() {
       });
   };
 
-  // useEffect(() => {
-  //   if (newSpot && !newSpot.errors) {
-  //     setCountry(newSpot.country);
-  //     setAddress(newSpot.address);
-  //     setCity(newSpot.city);
-  //     setState(newSpot.state);
-  //     setDescription(newSpot.description);
-  //     setLat(newSpot.lat);
-  //     setLng(newSpot.lng);
-  //     setName(newSpot.name);
-  //     setPrice(newSpot.price);
-  //   }
-  // }, [newSpot]);
+  useEffect(() => {
+    if (singleSpot) {
+      setCountry(singleSpot.country);
+      setAddress(singleSpot.address);
+      setCity(singleSpot.city);
+      setState(singleSpot.state);
+      setDescription(singleSpot.description);
+      setLat(singleSpot.lat);
+      setLng(singleSpot.lng);
+      setName(singleSpot.name);
+      setPrice(singleSpot.price);
+    }
+  }, [singleSpot]);
+  // console.log("singleSpot: ", singleSpot);
   const handleDisable =
     !country || !address || !city || !state || !lat || !lng || !price;
   return (
