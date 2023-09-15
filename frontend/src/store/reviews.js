@@ -35,15 +35,15 @@ export const getAllReviews = (spotId) => async (dispatch) => {
 };
 
 export const createNewReview = (review, spotId) => async (dispatch) => {
-  console.log("sppotId", spotId);
-  console.log("review", review);
+  // console.log("sppotId", spotId);
+  // console.log("review", review);
   const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(review),
   });
 
-  console.log("response", response);
+  // console.log("response", response);
 
   if (response.ok) {
     const newReview = await response.json();
@@ -67,7 +67,7 @@ export const deleteReview = (reviewId) => async (dispatch) => {
 
 const initialState = {
   spot: {},
-  // user: {},
+
 };
 
 const reviewsReducer = (state = initialState, action) => {

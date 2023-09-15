@@ -68,7 +68,7 @@ function SingleSpot() {
           <p id="priceSpot">${price} night</p>
           <div className="reviewsSpot">
             <p id="review-ticker">
-              <i class="fa-solid fa-star"></i> {""}
+              <i className="fa-solid fa-star"></i> {""}
               {avgStarRating === null
                 ? "New"
                 : parseFloat(avgStarRating).toFixed(1)}{" "}
@@ -88,7 +88,7 @@ function SingleSpot() {
         {currentUser === null && numReviews > 0 ? (
           <div className="review-container">
             <p>
-              <i class="fa-solid fa-star"></i> {""}
+              <i className="fa-solid fa-star"></i> {""}
               {avgStarRating === null
                 ? "New"
                 : parseFloat(avgStarRating).toFixed(1)}{" "}
@@ -101,7 +101,7 @@ function SingleSpot() {
         ) : numReviews < 1 ? (
           <div className="review-container">
             <p>
-              <i class="fa-solid fa-star"></i>
+              <i className="fa-solid fa-star"></i>
               {""} New
             </p>
             {!Owner || (currentUser !== null && currentUser.id !== Owner.id) ? (
@@ -117,7 +117,7 @@ function SingleSpot() {
         ) : numReviews > 0 ? (
           <div className="review-container">
             <p>
-              <i class="fa-solid fa-star"></i> {""}
+              <i className="fa-solid fa-star"></i> {""}
               {avgStarRating === null
                 ? "New"
                 : parseFloat(avgStarRating).toFixed(1)}{" "}
