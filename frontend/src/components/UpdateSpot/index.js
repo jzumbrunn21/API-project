@@ -73,19 +73,19 @@ function UpdateSpot() {
       });
   };
 
-  useEffect(() => {
-    if (newSpot && !newSpot.errors) {
-      setCountry(newSpot.country);
-      setAddress(newSpot.address);
-      setCity(newSpot.city);
-      setState(newSpot.state);
-      setDescription(newSpot.description);
-      setLat(newSpot.lat);
-      setLng(newSpot.lng);
-      setName(newSpot.name);
-      setPrice(newSpot.price);
-    }
-  }, [newSpot]);
+  // useEffect(() => {
+  //   if (newSpot && !newSpot.errors) {
+  //     setCountry(newSpot.country);
+  //     setAddress(newSpot.address);
+  //     setCity(newSpot.city);
+  //     setState(newSpot.state);
+  //     setDescription(newSpot.description);
+  //     setLat(newSpot.lat);
+  //     setLng(newSpot.lng);
+  //     setName(newSpot.name);
+  //     setPrice(newSpot.price);
+  //   }
+  // }, [newSpot]);
   const handleDisable =
     !country || !address || !city || !state || !lat || !lng || !price;
   return (

@@ -63,11 +63,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           notEmpty: true,
-          isValidString(value) {
-            if (typeof value !== "string") {
-              throw new Error("Country cannot be a number");
-            }
-          },
         },
       },
       lat: {
@@ -89,7 +84,6 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
         validate: {
           len: [2, 49],
-          
         },
       },
       description: {

@@ -470,17 +470,17 @@ const validateEditSpot = [
     // .optional()
     .isLength({ min: 2 })
     .withMessage("Country must be longer than 2 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Country cannot be a number"),
   check("address")
     // .optional()
     .isLength({ min: 6 })
     .withMessage("Address must be longer than 6 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Address cannot be a number"),
   check("city")
     // .optional()
-    .isAlpha()
+    .isString()
     .withMessage("City cannot be a number")
     .isLength({ min: 2 })
     .withMessage("City must be longer than 2 characters"),
@@ -488,7 +488,7 @@ const validateEditSpot = [
     // .optional()
     .isLength({ min: 2 })
     .withMessage("State must be longer than 2 characters")
-    .isAlpha()
+    .isString()
     .withMessage("State cannot be a number"),
   check("lat")
     // .optional()
@@ -499,7 +499,7 @@ const validateEditSpot = [
     .isNumeric()
     .withMessage("Longitude must be a number"),
   check("name")
-    .isAlpha()
+    .isString()
     .withMessage("Name cannot be a number")
     .isLength(2)
     .withMessage("Name must be longer than two characters"),
@@ -507,7 +507,7 @@ const validateEditSpot = [
     // .optional()
     .isLength({ min: 30 })
     .withMessage("Description must be longer than 30 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Description cannot be a number"),
   check("price")
     // .optional()
@@ -567,17 +567,17 @@ const validateCreateSpot = [
     // .optional()
     .isLength({ min: 2 })
     .withMessage("Country must be longer than 2 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Country cannot be a number"),
   check("address")
     // .optional()
     .isLength({ min: 6 })
     .withMessage("Address must be longer than 6 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Address cannot be a number"),
   check("city")
     .optional()
-    .isAlpha()
+    .isString()
     .withMessage("City cannot be a number")
     .isLength({ min: 2 })
     .withMessage("City must be longer than 2 characters"),
@@ -585,7 +585,7 @@ const validateCreateSpot = [
     // .optional()
     .isLength({ min: 2 })
     .withMessage("State must be longer than 2 characters")
-    .isAlpha()
+    .isString()
     .withMessage("State cannot be a number"),
   check("lat")
     // .optional()
@@ -596,7 +596,7 @@ const validateCreateSpot = [
     .isDecimal()
     .withMessage("Longitude must be a number"),
   check("name")
-    .isAlpha()
+    .isString()
     .withMessage("Name cannot be a number")
     .isLength(2)
     .withMessage("Name must be longer than two characters"),
@@ -604,7 +604,7 @@ const validateCreateSpot = [
     // .optional()
     .isLength({ min: 30 })
     .withMessage("Description must be longer than 30 characters")
-    .isAlpha()
+    .isString()
     .withMessage("Description cannot be a number"),
   check("price")
     // .optional()
