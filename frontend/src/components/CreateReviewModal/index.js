@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState, useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -11,21 +11,29 @@ function CreateReviewModal() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const history = useHistory();
-  const reviews = useSelector((state) => state.reviews);
   const { setModalContent, closeModal } = useModal();
-
   const [review, setReview] = useState("");
   const [stars, setStars] = useState(1);
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const modalRef = useRef(null);
+
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen).then(setIsModalOpen(false));
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const handleOutsideClick = (e) => {
+    if (modalRef.current && !modalRef.current.contains(e.target)) {
+      closeModal();
+      resetModal();
+    }
   };
 
   useEffect(() => {
-    if (isModalOpen === true) {
+    if (isModalOpen) {
+      document.addEventListener("mousedown", handleOutsideClick);
       setModalContent(
-        <div className="create-review-container">
+        <div ref={modalRef} className="create-review-container">
           <form id="form" onSubmit={handleSubmit}>
             <h2>How was your stay?</h2>
             <label className="review-input">
@@ -51,13 +59,13 @@ function CreateReviewModal() {
         </div>
       );
     } else {
-      setTimeout(() => {
-        resetModal();
-      }, 300);
+      document.removeEventListener("mousedown", handleOutsideClick);
+      resetModal();
     }
   }, [isModalOpen, review, stars]);
 
   const resetModal = () => {
+    setIsModalOpen(false);
     setReview("");
     setStars(1);
     setErrors({});
@@ -71,8 +79,6 @@ function CreateReviewModal() {
     dispatch(getAllReviews(spotId));
     dispatch(getSingleSpot(spotId));
 
-    // setIsModalOpen(false);
-    toggleModal();
     setTimeout(() => {
       closeModal();
       history.push(`/api/spots/${spotId}`);
@@ -82,8 +88,8 @@ function CreateReviewModal() {
 
   return (
     <>
-      <button onClick={() => toggleModal()} id="post-review-button">
-        Post Your Review {console.log(isModalOpen)}
+      <button onClick={toggleModal} id="post-review-button">
+        Post Your Review
       </button>
     </>
   );
