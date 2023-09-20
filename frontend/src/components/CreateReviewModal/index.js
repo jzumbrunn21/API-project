@@ -81,7 +81,7 @@ function CreateReviewModal() {
 
     setTimeout(() => {
       closeModal();
-      history.push(`/api/spots/${spotId}`);
+      history.push(`/spots/${spotId}`);
     }, 1000);
     resetModal();
   };
