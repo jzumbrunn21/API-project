@@ -45,7 +45,7 @@ function ProfileButton({ user }) {
   const manageRedirect = (e) => {
     e.preventDefault();
     closeMenu();
-    history.push("/api/spots/current");
+    history.push("/spots/current");
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

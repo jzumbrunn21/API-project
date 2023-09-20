@@ -61,7 +61,7 @@ function UpdateSpot() {
           dispatch(getSingleSpot(updatedSpot.id));
           setNewSpot(response);
 
-          history.push(`/api/spots/${updatedSpot.id}`);
+          history.push(`/spots/${updatedSpot.id}`);
         }
       })
       .catch(async (response) => {

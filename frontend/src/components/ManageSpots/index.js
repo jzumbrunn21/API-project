@@ -28,7 +28,7 @@ function ManageSpots() {
   useEffect(() => {
     async function fetchSpots() {
       const response = await csrfFetch("/api/spots/current");
-      //   console.log("api Response:", response);
+      
       const responseData = await response.json();
       setCurrentSpots(responseData.Spots);
     }
@@ -36,11 +36,11 @@ function ManageSpots() {
   }, []);
   const handleCreateSpot = (e) => {
     e.preventDefault();
-    history.push("/api/spots/new");
+    history.push("/spots/new");
   };
   const handleUpdateSpot = (id) => {
     // e.preventDefault();
-    history.push(`/api/spots/${id}/edit`);
+    history.push(`/spots/${id}/edit`);
   };
 
   const handleDeleteSpot = async (spotId) => {
@@ -48,7 +48,7 @@ function ManageSpots() {
     setCurrentSpots((spots) => spots.filter((spot) => spot.id !== spotId));
     closeModal();
     setTimeout(() => {
-      history.push("/api/spots/current");
+      history.push("/spots/current");
     }, 1000);
     // }
   };
@@ -65,7 +65,7 @@ function ManageSpots() {
           {currentSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
               <li key={id} className="single-spot">
-                <Link to={`/api/spots/${id}`}>
+                <Link to={`/spots/${id}`}>
                   <img
                     id="manage-spot-images"
                     src={previewImage}
@@ -87,7 +87,7 @@ function ManageSpots() {
                       : parseFloat(avgRating).toFixed(1)}
                   </p>
                 </div>
-                
+
                 <button
                   className="buttons"
                   onClick={() => handleUpdateSpot(id)}

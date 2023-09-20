@@ -19,7 +19,7 @@ function SpotsList() {
         {spotList.map(
           ({ id, previewImage, city, state, price, avgRating, name }) => (
             <li key={id} className="single-spot">
-              <Link exact to={`/api/spots/${id}`}>
+              <Link exact to={`/spots/${id}`}>
                 <img
                   className="spotImage"
                   src={previewImage}
@@ -35,7 +35,7 @@ function SpotsList() {
                 </p>
                 <p id="price">${price} night</p>
                 <p id="avgRating">
-                  <i class="fa-solid fa-star"></i>
+                  <i className="fa-solid fa-star"></i>
                   {avgRating === null
                     ? "New"
                     : parseFloat(avgRating).toFixed(1)}

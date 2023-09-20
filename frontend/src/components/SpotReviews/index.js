@@ -46,7 +46,7 @@ function SpotReviews() {
 
     closeModal();
     setTimeout(() => {
-      history.push(`/api/spots/${spotId}`);
+      history.push(`/spots/${spotId}`);
     }, 1000);
   };
   // console.log("currentspot reviews", currentSpotReviewsReverse);

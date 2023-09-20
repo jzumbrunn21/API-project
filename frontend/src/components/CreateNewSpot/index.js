@@ -66,7 +66,7 @@ function CreateNewSpot({ spot }) {
             dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
           }
 
-          history.push(`/api/spots/${spotId}`);
+          history.push(`/spots/${spotId}`);
         }
       })
       .catch(async (response) => {
