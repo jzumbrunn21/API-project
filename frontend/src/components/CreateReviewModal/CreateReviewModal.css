@@ -32,6 +32,9 @@
   color: white;
   cursor: pointer;
 }
+.create-review-container button:disabled {
+  background-color: grey;
+}
 .signup-form button:disabled {
   background-color: grey;
   cursor: not-allowed;

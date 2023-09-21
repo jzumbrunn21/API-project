@@ -95,6 +95,7 @@ function CreateNewSpot({ spot }) {
       setUrl4(newSpot.url4);
     }
   }, [newSpot]);
+  
   const handleDisable =
     !country ||
     !address ||

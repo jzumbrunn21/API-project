@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 import { useParams } from "react-router-dom";
 import { useHistory } from "react-router-dom";
@@ -17,6 +17,8 @@ function CreateReviewModal() {
   const [errors, setErrors] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const modalRef = useRef(null);
+  const currentUser = useSelector((state) => state.session.user || null);
+  const reviews = useSelector((state) => state.reviews.spot || null);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -28,6 +30,19 @@ function CreateReviewModal() {
       resetModal();
     }
   };
+
+  const isDuplicate = (reviews, currentUser) => {
+    let reviewsArray = Object.values(reviews);
+    for (const review of reviewsArray) {
+      if (review.userId === currentUser.id) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  const duplicateCheck = isDuplicate(reviews, currentUser);
+  const handleDisable = review.length < 1;
 
   useEffect(() => {
     if (isModalOpen) {
@@ -54,7 +69,9 @@ function CreateReviewModal() {
                 placeholder="Enter star rating (1-5)"
               />
             </label>
-            <button type="submit">Submit Your Review</button>
+            <button type="submit" disabled={handleDisable}>
+              Submit Your Review
+            </button>
           </form>
         </div>
       );
@@ -88,9 +105,11 @@ function CreateReviewModal() {
 
   return (
     <>
-      <button onClick={toggleModal} id="post-review-button">
-        Post Your Review
-      </button>
+      {duplicateCheck === false && (
+        <button onClick={toggleModal} id="post-review-button">
+          Post Your Review
+        </button>
+      )}
     </>
   );
 }
