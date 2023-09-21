@@ -157,5 +157,8 @@ h5 {
   border: 2px solid black;
 }
 .creation-errors {
+  display: flex;
+  align-items: center;
+  justify-items: center;
   color: red;
 }

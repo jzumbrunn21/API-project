@@ -132,10 +132,10 @@ function CreateNewSpot({ spot }) {
           <div className="address-container">
             <label id="countryErrors">
               Country{" "}
+              </label>
               {errors.country && (
-                <p className="creation-errors">{errors.country}</p>
+                <div className="creation-errors">{errors.country}</div>
               )}
-            </label>
             <input
               type="text"
               value={country}
@@ -144,7 +144,7 @@ function CreateNewSpot({ spot }) {
             />
             <div id="addressErrors">Street Address </div>
             {errors.address && (
-              <p className="creation-errors">{errors.address}</p>
+              <div className="creation-errors">{errors.address}</div>
             )}
             <input
               type="text"
@@ -156,7 +156,9 @@ function CreateNewSpot({ spot }) {
           <div className="address-details">
             <div className="city-state">
               <div className="cityErrors">City </div>
-              {errors.city && <p className="creation-errors">{errors.city}</p>}
+              {errors.city && (
+                <div className="creation-errors">{errors.city}</div>
+              )}
               <input
                 type="text"
                 value={city}
@@ -165,7 +167,9 @@ function CreateNewSpot({ spot }) {
               />
 
               <div className="latErrors">Latitude </div>
-              {errors.lat && <p className="creation-errors">{errors.lat}</p>}
+              {errors.lat && (
+                <div className="creation-errors">{errors.lat}</div>
+              )}
               <input
                 type="text"
                 value={lat}
@@ -176,7 +180,7 @@ function CreateNewSpot({ spot }) {
             <div className="lat-lng">
               <div className="stateErrors">State </div>
               {errors.state && (
-                <p className="creation-errors">{errors.state}</p>
+                <div className="creation-errors">{errors.state}</div>
               )}
               <input
                 type="text"
@@ -185,7 +189,9 @@ function CreateNewSpot({ spot }) {
                 placeholder="STATE"
               />
               <div className="lngErrors">Longitude </div>
-              {errors.lng && <p className="creation-errors">{errors.lng}</p>}
+              {errors.lng && (
+                <div className="creation-errors">{errors.lng}</div>
+              )}
               <input
                 type="text"
                 value={lng}
@@ -203,7 +209,7 @@ function CreateNewSpot({ spot }) {
             fast wifi or parking, and what you love about the neighborhood.
           </h5>
           {errors.description && (
-            <p className="creation-errors">{errors.description}</p>
+            <div className="creation-errors">{errors.description}</div>
           )}
           <input
             type="text"
@@ -211,7 +217,7 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Description"
           />
-          <div id="descriptionErrors"></div>
+          {/* <div id="descriptionErrors"></div> */}
         </div>
         <div className="line-break"></div>
         <div className="title-container">
@@ -220,7 +226,11 @@ function CreateNewSpot({ spot }) {
             Catch guests' attention with a spot title that highlights what makes
             your place special.
           </h5>
-          {errors.name && <p className="creation-errors">{errors.name}</p>}
+          {errors.name && (
+            <div className="creation-errors">
+              {errors.name}
+            </div>
+          )}
           <input
             type="text"
             value={name}
@@ -235,7 +245,9 @@ function CreateNewSpot({ spot }) {
             Competitive pricing can help your listing stand out and rank higher
             in search results.
           </h5>
-          {errors.price && <p className="creation-errors">{errors.price}</p>}
+          {errors.price && (
+            <div className="creation-errors">{errors.price}</div>
+          )}
           <div>
             ${" "}
             <input
@@ -252,7 +264,7 @@ function CreateNewSpot({ spot }) {
           <h3>Liven up your spot with photos</h3>
           <h5>Submit a link to at least one photo to publish your spot.</h5>
           {errors.previewImage && (
-            <p className="creation-errors">{errors.previewImage}</p>
+            <div className="creation-errors">{errors.previewImage}</div>
           )}
           <input
             type="text"
