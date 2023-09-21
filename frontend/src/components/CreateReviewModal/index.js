@@ -90,6 +90,7 @@ function CreateReviewModal() {
                     />
                   </span>
                 ))}
+                <div>{""} Stars</div>
               </div>
             </label>
             <button type="submit" disabled={handleDisable}>

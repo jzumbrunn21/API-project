@@ -512,7 +512,7 @@ const validateEditSpot = [
   check("price")
     // .optional()
     .isDecimal({ min: 1 })
-    .withMessage("Maximum price must be greater than or equal to 0"),
+    .withMessage("Maximum price must be greater than 0"),
   handleValidationErrors,
 ];
 router.put("/:spotId", requireAuth, validateEditSpot, async (req, res) => {
@@ -538,7 +538,7 @@ router.put("/:spotId", requireAuth, validateEditSpot, async (req, res) => {
   if (!name || name.length > 50)
     errors.name = "Name must be less than 50 characters";
   if (!description) errors.description = "Description is required";
-  if (!price || price < 1) errors.price = "Price per day is required";
+  if (!price || price < 1) errors.price = "Price must be greater than 0";
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({ message: "Bad Request", errors: errors });
@@ -609,7 +609,7 @@ const validateCreateSpot = [
   check("price")
     // .optional()
     .isDecimal({ min: 1 })
-    .withMessage("Maximum price must be greater than or equal to 0"),
+    .withMessage("Maximum price must be greater than 0"),
   check("previewImage")
     // .optional()
     .matches(/\.(jpeg|jpg|png)$/)
@@ -632,7 +632,7 @@ router.post("/", requireAuth, validateCreateSpot, async (req, res) => {
   if (!name || name.length > 50)
     errors.name = "Name must be less than 50 characters";
   if (!description) errors.description = "Description is required";
-  if (!price || price < 1) errors.price = "Price per day is required";
+  // if (!price) errors.price = "Price per day is required";
 
   if (Object.keys(errors).length > 0) {
     return res.status(400).json({ message: "Bad Request", errors: errors });

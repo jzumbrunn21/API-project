@@ -99,21 +99,24 @@ function UpdateSpot() {
             reservation.
           </h5>
         </div>
-        <div className="creation-errors">
-          {errors.country && <p>{errors.country}</p>}
-          {errors.address && <p>{errors.address}</p>}
-          {errors.city && <p>{errors.city}</p>}
-          {errors.state && <p>{errors.state}</p>}
-          {errors.lat && <p>{errors.lat}</p>}
-          {errors.lng && <p>{errors.lng}</p>}
-          {errors.name && <p>{errors.name}</p>}
-          {errors.description && <p>{errors.description}</p>}
-          {errors.price && <p>{errors.price}</p>}
+        {/* <div className="creation-errors">
+
+
+
+
+
+
+
+
+
           {errors.previewImage && <p>{errors.previewImage}</p>}
-        </div>
+        </div> */}
         <div className="spot-location">
           <div className="address-container">
             <div id="countryErrors">Country</div>
+            {errors.country && (
+              <p className="creation-errors">{errors.country}</p>
+            )}
             <input
               type="text"
               value={country}
@@ -121,6 +124,9 @@ function UpdateSpot() {
               placeholder="Country"
             />
             <div id="addressErrors">Street Address</div>
+            {errors.address && (
+              <p className="creation-errors">{errors.address}</p>
+            )}
             <input
               type="text"
               value={address}
@@ -131,6 +137,7 @@ function UpdateSpot() {
           <div className="address-details">
             <div className="city-state">
               <div className="cityErrors">City</div>
+              {errors.city && <p className="creation-errors">{errors.city}</p>}
               <input
                 type="text"
                 value={city}
@@ -139,6 +146,7 @@ function UpdateSpot() {
               />
 
               <div className="latErrors">Latitude</div>
+              {errors.lat && <p className="creation-errors">{errors.lat}</p>}
               <input
                 type="text"
                 value={lat}
@@ -148,6 +156,9 @@ function UpdateSpot() {
             </div>
             <div className="lat-lng">
               <div className="stateErrors">State</div>
+              {errors.state && (
+                <p className="creation-errors">{errors.state}</p>
+              )}
               <input
                 type="text"
                 value={state}
@@ -155,6 +166,7 @@ function UpdateSpot() {
                 placeholder="STATE"
               />
               <div className="lngErrors">Longitude</div>
+              {errors.lng && <p className="creation-errors">{errors.lng}</p>}
               <input
                 type="text"
                 value={lng}
@@ -171,6 +183,9 @@ function UpdateSpot() {
             Mention the best features of your space, any special amenities like
             fast wifi or parking, and what you love about the neighborhood.
           </h5>
+          {errors.description && (
+            <p className="creation-errors">{errors.description}</p>
+          )}
           <input
             type="text"
             value={description}
@@ -186,6 +201,7 @@ function UpdateSpot() {
             Catch guests' attention with a spot title that highlights what makes
             your place special.
           </h5>
+          {errors.name && <p className="creation-errors">{errors.name}</p>}
           <input
             type="text"
             value={name}
@@ -200,6 +216,7 @@ function UpdateSpot() {
             Competitive pricing can help your listing stand out and rank higher
             in search results.
           </h5>
+          {errors.price && <p className="creation-errors">{errors.price}</p>}
           <div>
             ${" "}
             <input
