@@ -95,7 +95,7 @@ function CreateNewSpot({ spot }) {
       setUrl4(newSpot.url4);
     }
   }, [newSpot]);
-  
+
   const handleDisable =
     !country ||
     !address ||
@@ -116,7 +116,7 @@ function CreateNewSpot({ spot }) {
             reservation.
           </h5>
         </div>
-        <div className="creation-errors">
+        {/* <div className="creation-errors">
           {errors.country && <p>{errors.country}</p>}
           {errors.address && <p>{errors.address}</p>}
           {errors.city && <p>{errors.city}</p>}
@@ -127,10 +127,15 @@ function CreateNewSpot({ spot }) {
           {errors.description && <p>{errors.description}</p>}
           {errors.price && <p>{errors.price}</p>}
           {errors.previewImage && <p>{errors.previewImage}</p>}
-        </div>
+        </div> */}
         <div className="spot-location">
           <div className="address-container">
-            <label id="countryErrors">Country</label>
+            <label id="countryErrors">
+              Country{" "}
+              {errors.country && (
+                <p className="creation-errors">{errors.country}</p>
+              )}
+            </label>
             <input
               type="text"
               value={country}
