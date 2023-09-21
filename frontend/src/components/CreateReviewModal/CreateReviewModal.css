@@ -58,3 +58,19 @@
 .reviews-ticker {
   margin-left: -15px;
 }
+.star-rating {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  cursor: pointer;
+  font-size: 24px;
+  color: #ccc;
+}
+.star-filled {
+  color: red;
+}
+.validation-message {
+  color: red;
+}

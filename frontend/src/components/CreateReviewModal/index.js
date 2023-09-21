@@ -7,6 +7,10 @@ import { createNewReview, getAllReviews } from "../../store/reviews";
 import { getSingleSpot } from "../../store/spots";
 import "./CreateReviewModal.css";
 
+import { FontAwesome, FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faStar as solidStar } from "@fortawesome/free-solid-svg-icons";
+import { faStar as emptyStar } from "@fortawesome/free-solid-svg-icons";
+
 function CreateReviewModal() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
@@ -19,6 +23,7 @@ function CreateReviewModal() {
   const modalRef = useRef(null);
   const currentUser = useSelector((state) => state.session.user || null);
   const reviews = useSelector((state) => state.reviews.spot || null);
+  const [validationMessage, setValidationMessage] = useState("");
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -42,16 +47,25 @@ function CreateReviewModal() {
   };
 
   const duplicateCheck = isDuplicate(reviews, currentUser);
-  const handleDisable = review.length < 1;
+  const handleDisable = review.length < 10 || stars < 1;
 
   useEffect(() => {
     if (isModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
+
+      if (review.length < 10) {
+        setValidationMessage("Review must be longer than 10 characters");
+      } else {
+        setValidationMessage("");
+      }
       setModalContent(
         <div ref={modalRef} className="create-review-container">
           <form id="form" onSubmit={handleSubmit}>
             <h2>How was your stay?</h2>
             <label className="review-input">
+              {validationMessage && (
+                <p className="validation-message">{validationMessage}</p>
+              )}
               <textarea
                 name="review"
                 type="text"
@@ -61,13 +75,21 @@ function CreateReviewModal() {
               />
             </label>
             <label className="stars-input">
-              <input
-                name="stars"
-                type="number"
-                value={stars}
-                onChange={(e) => setStars(e.target.value)}
-                placeholder="Enter star rating (1-5)"
-              />
+              <div className="star-rating">
+                {[1, 2, 3, 4, 5].map((index) => (
+                  <span
+                    key={index}
+                    onClick={() => setStars(index)}
+                    className={
+                      index <= stars ? "star star-filled" : "star empty"
+                    }
+                  >
+                    <FontAwesomeIcon
+                      icon={index <= stars ? solidStar : emptyStar}
+                    />
+                  </span>
+                ))}
+              </div>
             </label>
             <button type="submit" disabled={handleDisable}>
               Submit Your Review
@@ -79,7 +101,7 @@ function CreateReviewModal() {
       document.removeEventListener("mousedown", handleOutsideClick);
       resetModal();
     }
-  }, [isModalOpen, review, stars]);
+  }, [isModalOpen, review, stars, validationMessage]);
 
   const resetModal = () => {
     setIsModalOpen(false);
