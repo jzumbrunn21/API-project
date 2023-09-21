@@ -143,6 +143,9 @@ function CreateNewSpot({ spot }) {
               placeholder="Country"
             />
             <div id="addressErrors">Street Address </div>
+            {errors.address && (
+              <p className="creation-errors">{errors.address}</p>
+            )}
             <input
               type="text"
               value={address}
@@ -153,6 +156,7 @@ function CreateNewSpot({ spot }) {
           <div className="address-details">
             <div className="city-state">
               <div className="cityErrors">City </div>
+              {errors.city && <p className="creation-errors">{errors.city}</p>}
               <input
                 type="text"
                 value={city}
@@ -161,6 +165,7 @@ function CreateNewSpot({ spot }) {
               />
 
               <div className="latErrors">Latitude </div>
+              {errors.lat && <p className="creation-errors">{errors.lat}</p>}
               <input
                 type="text"
                 value={lat}
@@ -170,6 +175,9 @@ function CreateNewSpot({ spot }) {
             </div>
             <div className="lat-lng">
               <div className="stateErrors">State </div>
+              {errors.state && (
+                <p className="creation-errors">{errors.state}</p>
+              )}
               <input
                 type="text"
                 value={state}
@@ -177,6 +185,7 @@ function CreateNewSpot({ spot }) {
                 placeholder="STATE"
               />
               <div className="lngErrors">Longitude </div>
+              {errors.lng && <p className="creation-errors">{errors.lng}</p>}
               <input
                 type="text"
                 value={lng}
@@ -193,6 +202,9 @@ function CreateNewSpot({ spot }) {
             Mention the best features of your space, any special amenities like
             fast wifi or parking, and what you love about the neighborhood.
           </h5>
+          {errors.description && (
+            <p className="creation-errors">{errors.description}</p>
+          )}
           <input
             type="text"
             value={description}
@@ -208,6 +220,7 @@ function CreateNewSpot({ spot }) {
             Catch guests' attention with a spot title that highlights what makes
             your place special.
           </h5>
+          {errors.name && <p className="creation-errors">{errors.name}</p>}
           <input
             type="text"
             value={name}
@@ -222,6 +235,7 @@ function CreateNewSpot({ spot }) {
             Competitive pricing can help your listing stand out and rank higher
             in search results.
           </h5>
+          {errors.price && <p className="creation-errors">{errors.price}</p>}
           <div>
             ${" "}
             <input
@@ -237,13 +251,15 @@ function CreateNewSpot({ spot }) {
         <div className="add-image-container">
           <h3>Liven up your spot with photos</h3>
           <h5>Submit a link to at least one photo to publish your spot.</h5>
+          {errors.previewImage && (
+            <p className="creation-errors">{errors.previewImage}</p>
+          )}
           <input
             type="text"
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
             placeholder="Preview Image URL"
           />
-          {/* <div className="previewImageErrors">{errors.previewImage}</div> */}
           <input
             type="text"
             value={url1}

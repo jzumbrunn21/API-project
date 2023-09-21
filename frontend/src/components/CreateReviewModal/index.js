@@ -23,6 +23,7 @@ function CreateReviewModal() {
   const modalRef = useRef(null);
   const currentUser = useSelector((state) => state.session.user || null);
   const reviews = useSelector((state) => state.reviews.spot || null);
+
   const [validationMessage, setValidationMessage] = useState("");
 
   const toggleModal = () => {
