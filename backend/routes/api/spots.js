@@ -468,28 +468,44 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
 const validateEditSpot = [
   check("country")
     // .optional()
-    .isString()
-    .withMessage("Country cannot be a number")
+    .custom((value) => {
+      if (!isNaN(parseFloat(value))) {
+        throw new Error("Country cannot be a number");
+      }
+      return true;
+    })
     .isLength({ min: 2 })
     .withMessage("Country must be longer than 2 characters"),
   check("address")
     // .optional()
     .isLength({ min: 6 })
     .withMessage("Address must be longer than 6 characters")
-    .isString()
-    .withMessage("Address cannot be a number"),
+    .custom((value) => {
+      if (!isNaN(parseFloat(value))) {
+        throw new Error("Address cannot be a number");
+      }
+      return true;
+    }),
   check("city")
     // .optional()
-    .isString()
-    .withMessage("City cannot be a number")
+    .custom((value) => {
+      if (!isNaN(parseFloat(value))) {
+        throw new Error("City cannot be a number");
+      }
+      return true;
+    })
     .isLength({ min: 2 })
     .withMessage("City must be longer than 2 characters"),
   check("state")
     // .optional()
     .isLength({ min: 2 })
     .withMessage("State must be longer than 2 characters")
-    .isString()
-    .withMessage("State cannot be a number"),
+    .custom((value) => {
+      if (!isNaN(parseFloat(value))) {
+        throw new Error("State cannot be a number");
+      }
+      return true;
+    }),
   check("lat")
     // .optional()
     .isNumeric()
@@ -499,8 +515,12 @@ const validateEditSpot = [
     .isNumeric()
     .withMessage("Longitude must be a number"),
   check("name")
-    .isString()
-    .withMessage("Name cannot be a number")
+    .custom((value) => {
+      if (!isNaN(parseFloat(value))) {
+        throw new Error("Name cannot be a number");
+      }
+      return true;
+    })
     .isLength(2)
     .withMessage("Name must be longer than two characters"),
   check("description")
