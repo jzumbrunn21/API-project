@@ -16,7 +16,7 @@ function SpotReviews() {
   const { spotId } = useParams();
   const reviews = useSelector((state) => state.reviews.spot || []);
   const currentUser = useSelector((state) => state.session.user || null);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const history = useHistory();
   const { closeModal } = useModal();
   const [updatedReviews, setUpdatedReviews] = useState([]);
@@ -30,7 +30,7 @@ function SpotReviews() {
   useEffect(() => {
     setUpdatedReviews(reviews);
     dispatch(getAllReviews(spotId)).then(() => {
-      setLoaded(true);
+      setLoaded(false);
     });
   }, [dispatch, spotId]);
 
@@ -50,6 +50,9 @@ function SpotReviews() {
     }, 1000);
   };
   // console.log("currentspot reviews", currentSpotReviewsReverse);
+  if (loaded) {
+    return <div></div>;
+  }
   return (
     <div className="reviews-container-2">
       {currentSpotReviewsReverse && currentSpotReviewsReverse.length > 0 ? (
