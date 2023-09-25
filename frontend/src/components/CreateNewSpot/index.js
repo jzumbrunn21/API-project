@@ -86,8 +86,9 @@ function CreateNewSpot({ spot }) {
           for (const imageUrl of imageUrls) {
             dispatch(addNewImage({ url: imageUrl, preview: true }, spotId));
           }
-
-          history.push(`/spots/${spotId}`);
+          setTimeout(() => {
+            history.push(`/spots/${spotId}`);
+          }, 1000);
         }
       })
       .catch(async (response) => {
