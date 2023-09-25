@@ -1,4 +1,4 @@
- import { useState } from "react";
+import { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewImage, createNewSpot } from "../../store/spots";
@@ -51,6 +51,27 @@ function CreateNewSpot({ spot }) {
       price,
       previewImage,
     };
+
+    function validateImage(imageUrl) {
+      const validEndings = [".jpg", ".jpeg", ".png"];
+      const validImage = validEndings.some((ending) =>
+        imageUrl.toLowerCase().endsWith(ending)
+      );
+      return validImage;
+    }
+    const imageUrls = [url1, url2, url3, url4];
+    const urlErrors = imageUrls.reduce((errors, imageUrl, index) => {
+      if (!validateImage(imageUrl)) {
+        errors[`url${index + 1}`] =
+          "Image Url must end in .jpg, .jpeg, or .png.";
+      }
+      return errors;
+    }, {});
+
+    if (Object.keys(urlErrors).length > 0) {
+      setErrors({ ...urlErrors });
+      return;
+    }
 
     dispatch(createNewSpot(spot))
       .then((response) => {
@@ -130,12 +151,10 @@ function CreateNewSpot({ spot }) {
         </div> */}
         <div className="spot-location">
           <div className="address-container">
-            <label id="countryErrors">
-              Country{" "}
-              </label>
-              {errors.country && (
-                <div className="creation-errors">{errors.country}</div>
-              )}
+            <label id="countryErrors">Country </label>
+            {errors.country && (
+              <div className="creation-errors">{errors.country}</div>
+            )}
             <input
               type="text"
               value={country}
@@ -226,11 +245,7 @@ function CreateNewSpot({ spot }) {
             Catch guests' attention with a spot title that highlights what makes
             your place special.
           </h5>
-          {errors.name && (
-            <div className="creation-errors">
-              {errors.name}
-            </div>
-          )}
+          {errors.name && <div className="creation-errors">{errors.name}</div>}
           <input
             type="text"
             value={name}
@@ -272,34 +287,34 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setPreviewImage(e.target.value)}
             placeholder="Preview Image URL"
           />
+          {errors.url1 && <div className="creation-errors">{errors.url1}</div>}
           <input
             type="text"
             value={url1}
             onChange={(e) => setUrl1(e.target.value)}
             placeholder="Image URL"
           />
-          <div className="urlErrors">{errors.url}</div>
+          {errors.url1 && <div className="creation-errors">{errors.url2}</div>}
           <input
             type="text"
             value={url2}
             onChange={(e) => setUrl2(e.target.value)}
             placeholder="Image URL"
           />
-          {/* <div className="urlErrors">{errors.url}</div> */}
+          {errors.url1 && <div className="creation-errors">{errors.url3}</div>}
           <input
             type="text"
             value={url3}
             onChange={(e) => setUrl3(e.target.value)}
             placeholder="Image URL"
           />
-          <div className="urlErrors">{errors.url}</div>
+          {errors.url1 && <div className="creation-errors">{errors.url4}</div>}
           <input
             type="text"
             value={url4}
             onChange={(e) => setUrl4(e.target.value)}
             placeholder="Image URL"
           />
-          <div className="urlErrors">{errors.url}</div>
         </div>
         <div className="line-break"></div>
         <button type="submit" disabled={handleDisable}>

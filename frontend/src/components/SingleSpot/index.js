@@ -44,7 +44,7 @@ function SingleSpot() {
   };
 
   if (isLoading) {
-    return <div>...Loading</div>;
+    return <div></div>;
   }
   return (
     <div className="single-spot">

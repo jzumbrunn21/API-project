@@ -592,14 +592,13 @@ const validateCreateSpot = [
   check("address")
     // .optional()
     .isLength({ min: 6 })
-    .withMessage("Address must be longer than 6 characters")
-    // .custom((value) => {
-    //   if (!isNaN(parseFloat(value))) {
-    //     throw new Error("Address cannot be a number");
-    //   }
-    //   return true;
-    // })
-    ,
+    .withMessage("Address must be longer than 6 characters"),
+  // .custom((value) => {
+  //   if (!isNaN(parseFloat(value))) {
+  //     throw new Error("Address cannot be a number");
+  //   }
+  //   return true;
+  // })
   check("city")
     .optional()
     .custom((value) => {
