@@ -480,12 +480,14 @@ const validateEditSpot = [
     // .optional()
     .isLength({ min: 6 })
     .withMessage("Address must be longer than 6 characters")
-    .custom((value) => {
-      if (!isNaN(parseFloat(value))) {
-        throw new Error("Address cannot be a number");
-      }
-      return true;
-    }),
+    // .custom((value) => {
+    //   if (!isNaN(parseFloat(value))) {
+    //     throw new Error("Address cannot be a number");
+    //   }
+    //   return true;
+    // }),
+    .isAlpha()
+    .withMessage("Must be a valid address"),
   check("city")
     // .optional()
     .custom((value) => {
@@ -599,12 +601,13 @@ const validateCreateSpot = [
     // .optional()
     .isLength({ min: 6 })
     .withMessage("Address must be longer than 6 characters")
-    .custom((value) => {
-      if (!isNaN(parseFloat(value))) {
-        throw new Error("Address cannot be a number");
-      }
-      return true;
-    }),
+    // .custom((value) => {
+    //   if (!isNaN(parseFloat(value))) {
+    //     throw new Error("Address cannot be a number");
+    //   }
+    //   return true;
+    // })
+    ,
   check("city")
     .optional()
     .custom((value) => {

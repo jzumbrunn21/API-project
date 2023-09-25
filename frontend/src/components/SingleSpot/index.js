@@ -9,8 +9,8 @@ import "./SingleSpot.css";
 function SingleSpot() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
-  const singleSpot = useSelector((state) => state.spots.singleSpot);
   const currentUser = useSelector((state) => state.session.user || null);
+  const singleSpot = useSelector((state) => state.spots.singleSpot);
 
   const {
     name,
@@ -27,9 +27,10 @@ function SingleSpot() {
   } = singleSpot;
   const [avgStarRating, setAvgStarRating] = useState(singleSpot.avgStarRating);
   const [numReviews, setNumReviews] = useState(singleSpot.numReviews);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getSingleSpot(spotId));
+    dispatch(getSingleSpot(spotId)).then(() => setIsLoading(false));
   }, [dispatch, spotId]);
 
   useEffect(() => {
@@ -42,6 +43,9 @@ function SingleSpot() {
     alert("Feature Coming Soon!");
   };
 
+  if (isLoading) {
+    return <div>...Loading</div>;
+  }
   return (
     <div className="single-spot">
       <h2>{name}</h2>

@@ -114,13 +114,11 @@ export const deletedSpot = (spotId) => async (dispatch) => {
 };
 
 export const updateSpot = (spotId, spot) => async (dispatch) => {
-
   const response = await csrfFetch(`/api/spots/${spotId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(spot),
   });
-
 
   if (response.ok) {
     const newSpot = await response.json();
@@ -137,7 +135,9 @@ export const updateSpot = (spotId, spot) => async (dispatch) => {
 
 const initialState = {
   allSpots: {},
-  singleSpot: {},
+  singleSpot: {
+    SpotImages: [],
+  },
 };
 
 const spotsReducer = (state = initialState, action) => {
