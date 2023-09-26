@@ -25,6 +25,9 @@ function CreateReviewModal() {
   const reviews = useSelector((state) => state.reviews.spot || null);
 
   const [validationMessage, setValidationMessage] = useState("");
+  // useEffect(() => {
+  //   dispatch(getAllReviews(spotId));
+  // }, []);
 
   const toggleModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -39,8 +42,13 @@ function CreateReviewModal() {
 
   const isDuplicate = (reviews, currentUser) => {
     let reviewsArray = Object.values(reviews);
+    // console.log(
+    //   "🚀 ~ file: index.js:42 ~ isDuplicate ~ reviewsArray:",
+    //   reviewsArray
+    // );
     for (const review of reviewsArray) {
-      if (review.userId === currentUser.id) {
+      // console.log("🚀 ~ file: index.js:50 ~ isDuplicate ~ review:", review);
+      if (review.userId === currentUser.id && spotId == review.spotId) {
         return true;
       }
     }
@@ -48,13 +56,14 @@ function CreateReviewModal() {
   };
 
   const duplicateCheck = isDuplicate(reviews, currentUser);
-  const handleDisable = review.length < 10 || stars < 1;
+  const handleDisable = review.length < 10 || stars < 1 || duplicateCheck;
 
   useEffect(() => {
     if (isModalOpen) {
       document.addEventListener("mousedown", handleOutsideClick);
-
-      if (review.length < 10) {
+      if (duplicateCheck)
+        setValidationMessage("User cannot review a spot more than once");
+      else if (review.length < 10) {
         setValidationMessage("Review must be longer than 10 characters");
       } else {
         setValidationMessage("");
@@ -130,9 +139,9 @@ function CreateReviewModal() {
   return (
     <>
       {/* {duplicateCheck === false && ( */}
-        <button onClick={toggleModal} id="post-review-button">
-          Post Your Review
-        </button>
+      <button onClick={toggleModal} id="post-review-button">
+        Post Your Review
+      </button>
       {/* )} */}
     </>
   );
