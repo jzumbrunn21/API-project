@@ -54,9 +54,9 @@ function CreateNewSpot({ spot }) {
 
     function validateImage(imageUrl) {
       const validEndings = [".jpg", ".jpeg", ".png"];
-      const validImage = validEndings.some((ending) =>
-        imageUrl.toLowerCase().endsWith(ending)
-      );
+      const validImage =
+        !imageUrl ||
+        validEndings.some((ending) => imageUrl.toLowerCase().endsWith(ending));
       return validImage;
     }
     const imageUrls = [url1, url2, url3, url4];

@@ -474,12 +474,12 @@ const validateEditSpot = [
       }
       return true;
     })
-    .isLength({ min: 2 })
-    .withMessage("Country must be longer than 2 characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Country must be between 2 and 30 characters"),
   check("address")
     // .optional()
-    .isLength({ min: 6 })
-    .withMessage("Address must be longer than 6 characters"),
+    .isLength({ min: 6, max: 50 })
+    .withMessage("Address must be between 6 and 50 characters"),
   check("city")
     // .optional()
     .custom((value) => {
@@ -488,12 +488,12 @@ const validateEditSpot = [
       }
       return true;
     })
-    .isLength({ min: 2 })
-    .withMessage("City must be longer than 2 characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("City must be between 2 and 30 characters"),
   check("state")
     // .optional()
-    .isLength({ min: 2 })
-    .withMessage("State must be longer than 2 characters")
+    .isLength({ min: 2, max: 30 })
+    .withMessage("State must be between 2 and 30 characters")
     .custom((value) => {
       if (!isNaN(parseFloat(value))) {
         throw new Error("State cannot be a number");
@@ -515,12 +515,12 @@ const validateEditSpot = [
       }
       return true;
     })
-    .isLength(2)
-    .withMessage("Name must be longer than two characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Name must be between 2 and 30 characters"),
   check("description")
     // .optional()
-    .isLength({ min: 30 })
-    .withMessage("Description must be longer than 30 characters")
+    .isLength({ min: 30, max: 255 })
+    .withMessage("Description must be between 30 and 255 characters")
     .isString()
     .withMessage("Description cannot be a number"),
   check("price")
@@ -587,12 +587,12 @@ const validateCreateSpot = [
       }
       return true;
     })
-    .isLength({ min: 2 })
-    .withMessage("Country must be longer than 2 characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Country must be between 2 and 30 characters"),
   check("address")
     // .optional()
-    .isLength({ min: 6 })
-    .withMessage("Address must be longer than 6 characters"),
+    .isLength({ min: 6, max: 50 })
+    .withMessage("Address must be between 6 and 50 characters"),
   // .custom((value) => {
   //   if (!isNaN(parseFloat(value))) {
   //     throw new Error("Address cannot be a number");
@@ -607,12 +607,12 @@ const validateCreateSpot = [
       }
       return true;
     })
-    .isLength({ min: 2 })
-    .withMessage("City must be longer than 2 characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("City must be between 2 and 30 characters"),
   check("state")
     // .optional()
-    .isLength({ min: 2 })
-    .withMessage("State must be longer than 2 characters")
+    .isLength({ min: 2, max: 30 })
+    .withMessage("State must be between 2 and 30 characters")
     .custom((value) => {
       if (!isNaN(parseFloat(value))) {
         throw new Error("State cannot be a number");
@@ -634,18 +634,18 @@ const validateCreateSpot = [
       }
       return true;
     })
-    .isLength(2)
-    .withMessage("Name must be longer than two characters"),
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Name must be between 2 and 30 characters"),
   check("description")
     // .optional()
-    .isLength({ min: 30 })
-    .withMessage("Description must be longer than 30 characters"),
+    .isLength({ min: 30, max: 255 })
+    .withMessage("Description must be between 30 and 255 characters"),
   check("price")
     // .optional()
     .isDecimal({ min: 1 })
     .withMessage("Maximum price must be greater than 0"),
   check("previewImage")
-    // .optional()
+    .optional()
     .matches(/\.(jpeg|jpg|png)$/)
     .withMessage("Preview Image must end in .jpg, .jpeg, or .png"),
   handleValidationErrors,
