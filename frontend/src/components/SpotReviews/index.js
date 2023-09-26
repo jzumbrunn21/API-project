@@ -16,16 +16,16 @@ function SpotReviews() {
   const { spotId } = useParams();
   const reviews = useSelector((state) => state.reviews.spot || []);
   const currentUser = useSelector((state) => state.session.user || null);
-  const [loaded, setLoaded] = useState(false);
+  const [loaded, setLoaded] = useState(true);
   const history = useHistory();
   const { closeModal } = useModal();
   const [updatedReviews, setUpdatedReviews] = useState([]);
 
-
   useEffect(() => {
     setUpdatedReviews(reviews);
-    dispatch(getAllReviews(spotId));
-    setLoaded(true);
+    dispatch(getAllReviews(spotId)).then(() => {
+      setLoaded(false);
+    });
   }, [dispatch, spotId]);
 
   const currentSpotReviews = Object.values(updatedReviews).filter(
