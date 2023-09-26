@@ -129,11 +129,11 @@ function CreateReviewModal() {
 
   return (
     <>
-      {duplicateCheck === false && (
+      {/* {duplicateCheck === false && ( */}
         <button onClick={toggleModal} id="post-review-button">
           Post Your Review
         </button>
-      )}
+      {/* )} */}
     </>
   );
 }
