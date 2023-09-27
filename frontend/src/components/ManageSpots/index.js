@@ -80,18 +80,18 @@ function ManageSpots() {
                       : parseFloat(avgRating).toFixed(1)}
                   </p>
 
-                <button
-                  className="manage-spot-buttons"
-                  onClick={() => handleUpdateSpot(id)}
-                  >
-                  Update
-                </button>
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}
                   onDelete={handleDeleteSpot}
                   />
                   </div>
+                <button
+                  className="manage-spot-buttons"
+                  onClick={() => handleUpdateSpot(id)}
+                  >
+                  Update
+                </button>
               </li>
             )
           )}
