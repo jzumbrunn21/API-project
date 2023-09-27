@@ -62,8 +62,14 @@
 #create-spot {
   cursor: pointer;
   color: white;
-  background-color: red;
+  background-color: darkcyan;
   box-shadow: 2px 2px 2px 0px black;
+  position: relative;
+  right: -15px;
+}
+.manage-container h1 {
+  position: relative;
+  right: -15px;
 }
 .manage-spots-list {
   list-style: none;
@@ -94,7 +100,7 @@
   width: 100%;
   /* height: 5px; */
   /* max-height: 50px; */
-  gap:5px;
+  gap: 5px;
   font-size: small;
   padding-bottom: 100px;
 }
@@ -122,10 +128,10 @@
   top: -10px;
 }
 .manage-spot-buttons {
-  background-color: dark gray;
+  background-color: darkcyan;
   box-shadow: 2px 2px 2px 0px black;
   height: 20px;
-  color: black;
+  color: white;
   cursor: pointer;
   width: 80%;
   position: relative;

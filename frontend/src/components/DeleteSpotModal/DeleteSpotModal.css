@@ -12,7 +12,7 @@
   margin-bottom: -10px;
 }
 #confirm {
-  background-color: Red;
+  background-color: darkcyan;
   box-shadow: 2px 2px 2px 0px black;
   height: 40px;
   color: white;
@@ -29,10 +29,11 @@
 #delete-button {
   display: flex;
   justify-content: center;
-  background-color: dark gray;
+  background-color: darkcyan;
+  color: white;
   box-shadow: 2px 2px 2px 0px black;
   height: 20px;
-  color: black;
+
   cursor: pointer;
   width: 80%;
   position: relative;

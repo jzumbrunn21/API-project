@@ -47,6 +47,7 @@ function SingleSpot() {
     return <div></div>;
   }
   return (
+    <>
     <div className="view-single-spot">
       <h2>{name}</h2>
       <h4>
@@ -139,6 +140,7 @@ function SingleSpot() {
         ) : null}
       </div>
     </div>
+    </>
   );
 }
 

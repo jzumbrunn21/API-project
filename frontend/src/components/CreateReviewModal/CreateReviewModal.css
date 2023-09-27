@@ -1,5 +1,5 @@
-/* #post-review-button {
-  background-color: red;
+#post-review-button {
+  background-color: darkcyan;
   color: white;
   box-shadow: 2px 2px 2px 0px black;
   height: 25px;
@@ -25,7 +25,7 @@
   margin-bottom: 5px;
 }
 .create-review-container button {
-  background-color: Red;
+  background-color: darkcyan;
   box-shadow: 2px 2px 2px 0px black;
   height: 40px;
   color: white;
@@ -68,8 +68,9 @@
   color: #ccc;
 }
 .star-filled {
-  color: red;
+  color: darkcyan;
 }
 .validation-message {
   color: red;
-} */
+}
+

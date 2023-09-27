@@ -271,7 +271,7 @@ h5 {
   margin-left: -10px;
   margin-top: -10px;
 } */
- .title-container input {
+.title-container input {
   width: 100%;
 }
 /* .price-container h3 {
@@ -297,7 +297,7 @@ h5 {
   width: 100%;
 }
 .spot-form button {
-  background-color: Red;
+  background-color: darkcyan;
   box-shadow: 2px 2px 2px 0px black;
   height: 40px;
   color: white;
