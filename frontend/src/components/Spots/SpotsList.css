@@ -1,20 +1,21 @@
-/* .wrapper {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 5px;
-} */
-
 .spots-list {
   list-style: none;
   display: grid;
+  /* justify-self: center; */
+  width: 98%;
+  padding: 15px;
+  margin: auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: -10px;
+  justify-items: center;
+  gap: 10px;
 }
 
 .spotImage {
-  height: 250px;
-  width: 250px;
-  max-width: 100%;
+  height: 70%;
+  /* max-height: auto; */
+  width: 100%;
+  /* max-width: 98%; */
+  object-fit: cover;
   border: 2px solid black;
   border-radius: 5px;
 }
@@ -23,6 +24,7 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(2, 1fr);
+  width: 100%;
 }
 
 #city-state {

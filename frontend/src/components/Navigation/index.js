@@ -9,7 +9,7 @@ function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   return (
-    <div className="header-container">
+    <div className="navigation-header-container">
       <ul className="navigation-spotsList">
         <li>
           <NavLink exact to="/">
@@ -20,10 +20,10 @@ function Navigation({ isLoaded }) {
             />
           </NavLink>
         </li>
-        <div id="header-right">
+        <div id="navigation-header-right">
           {sessionUser && (
             <li>
-              <NavLink exact to="/spots/new">
+              <NavLink id='nav-create-spot' exact to="/spots/new">
                 Create New Spot
               </NavLink>
             </li>

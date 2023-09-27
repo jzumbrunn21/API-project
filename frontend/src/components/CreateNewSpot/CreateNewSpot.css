@@ -29,10 +29,11 @@
   justify-content: center;
 }
 .details {
-  display: grid;
+  /* display: grid; */
+  justify-content: center;
   align-items: center;
 }
-.details h1,
+/* .details h1,
 h2,
 h3 {
   justify-self: start;
@@ -46,8 +47,8 @@ h5 {
 
 .details h5 {
   margin-top: -10px;
-  margin-left: -97px;
-}
+  margin-left: -50px;
+} */
 
 .spot-location {
   display: flex;
@@ -87,7 +88,7 @@ h5 {
   display: flex;
   flex-direction: column;
   margin-bottom: 10px;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .create-description input {
@@ -110,33 +111,33 @@ h5 {
 .lngErrors {
   margin-left: -180px;
 }
-.title-container h3 {
+/* .title-container h3 {
   margin-left: -285px;
 }
 .title-container h5 {
   margin-left: -10px;
   margin-top: -10px;
-}
-.title-container input {
+} */
+ .title-container input {
   width: 100%;
 }
-.price-container h3 {
+/* .price-container h3 {
   margin-left: -265px;
 }
 .price-container h5 {
   margin-left: -15px;
   margin-top: -10px;
-}
+} */
 .price-container input {
-  width: 96%;
+  width: 95%;
 }
-.add-image-container h3 {
+/* .add-image-container h3 {
   margin-left: -248px;
 }
 .add-image-container h5 {
   margin-left: -185px;
   margin-top: 10px;
-}
+} */
 .add-image-container input {
   margin-top: 5px;
   margin-bottom: 5px;
@@ -161,4 +162,5 @@ h5 {
   align-items: center;
   justify-items: center;
   color: red;
+  font-size: small;
 }
