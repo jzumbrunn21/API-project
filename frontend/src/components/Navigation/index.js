@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import "./Navigation.css";
+import logo from "./bnb_logo.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -13,17 +14,13 @@ function Navigation({ isLoaded }) {
       <ul className="navigation-spotsList">
         <li>
           <NavLink exact to="/">
-            <img
-              id="home-image"
-              src="https://img.icons8.com/?size=512&id=63956&format=png"
-              alt="Bnb Logo"
-            />
+            <img id="home-image" src={logo} alt="Bnb Logo" />
           </NavLink>
         </li>
         <div id="navigation-header-right">
           {sessionUser && (
             <li>
-              <NavLink id='nav-create-spot' exact to="/spots/new">
+              <NavLink id="nav-create-spot" exact to="/spots/new">
                 Create New Spot
               </NavLink>
             </li>

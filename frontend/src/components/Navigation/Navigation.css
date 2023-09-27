@@ -15,7 +15,7 @@
   border-bottom: 2px solid lightgray;
 }
 #home-image {
-  max-height: 100px;
+  max-height: 75px;
 }
 #navigation-header-right {
   display: flex;
