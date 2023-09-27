@@ -1,7 +1,7 @@
-.spots-list {
+.all-spots-list {
   list-style: none;
   display: grid;
-  /* justify-self: center; */
+
   width: 98%;
   padding: 15px;
   margin: auto;
@@ -12,9 +12,9 @@
 
 .spotImage {
   height: 70%;
-  /* max-height: auto; */
+
   width: 100%;
-  /* max-width: 98%; */
+
   object-fit: cover;
   border: 2px solid black;
   border-radius: 5px;

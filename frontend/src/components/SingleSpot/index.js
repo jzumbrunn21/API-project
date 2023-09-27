@@ -47,7 +47,7 @@ function SingleSpot() {
     return <div></div>;
   }
   return (
-    <div className="single-spot">
+    <div className="view-single-spot">
       <h2>{name}</h2>
       <h4>
         {city}, {state}, {country}

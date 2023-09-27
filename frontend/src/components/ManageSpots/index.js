@@ -20,11 +20,6 @@ function ManageSpots() {
   const singleSpot = useSelector((state) => state.spots.singleSpot);
   const { spotId } = useParams();
 
-  // useEffect(() => {
-  //   if (singleSpot) {
-  //     const spotId = singleSpot.spotId;
-  //   }
-  // }, [singleSpot]);
   useEffect(() => {
     async function fetchSpots() {
       const response = await csrfFetch("/api/spots/current");
@@ -39,7 +34,6 @@ function ManageSpots() {
     history.push("/spots/new");
   };
   const handleUpdateSpot = (id) => {
-    // e.preventDefault();
     history.push(`/spots/${id}/edit`);
   };
 
@@ -50,7 +44,6 @@ function ManageSpots() {
     setTimeout(() => {
       history.push("/spots/current");
     }, 1000);
-    // }
   };
 
   return (
@@ -86,19 +79,19 @@ function ManageSpots() {
                       ? "New"
                       : parseFloat(avgRating).toFixed(1)}
                   </p>
-                </div>
 
                 <button
                   className="manage-spot-buttons"
                   onClick={() => handleUpdateSpot(id)}
-                >
+                  >
                   Update
                 </button>
                 <DeleteSpotModal
                   spotId={id}
                   spotName={name}
                   onDelete={handleDeleteSpot}
-                />
+                  />
+                  </div>
               </li>
             )
           )}

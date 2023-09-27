@@ -28,7 +28,7 @@ function DeleteReviewModal({ reviewId, onDelete }) {
       </div>
     );
   };
-  return <button onClick={openModal}>Delete</button>;
+  return <button onClick={openModal} id='manage-delete-button'>Delete</button>;
 }
 
 export default DeleteReviewModal;

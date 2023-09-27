@@ -15,7 +15,7 @@ function SpotsList() {
 
   return (
     <>
-      <ul className="spots-list">
+      <ul className="all-spots-list">
         {spotList.map(
           ({ id, previewImage, city, state, price, avgRating, name }) => (
             <li key={id} className="single-spot">

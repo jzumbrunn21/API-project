@@ -1,4 +1,4 @@
-/* .single-spot {
+.view-single-spot {
   margin-left: 40px;
   margin-right: 40px;
 }
@@ -22,7 +22,7 @@
   height: 50%;
 }
 
-.spot-image:first-child {
+.spot-image:first-child image {
   grid-column: span 2;
   grid-row: span 2;
   object-fit: cover;
@@ -80,4 +80,4 @@
 }
 .review-container {
   margin-left: 10px;
-} */
+}
