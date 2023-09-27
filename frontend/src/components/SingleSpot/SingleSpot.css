@@ -89,6 +89,10 @@
 }
 #review-ticker {
   margin-top: 5px;
+  display: flex;
+  justify-content: end;
+  margin-right: 10px;
+  margin-left: 5px;
 }
 .review-container {
   margin-left: 10px;
