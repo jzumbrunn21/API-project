@@ -28,7 +28,7 @@ function ManageSpots() {
   useEffect(() => {
     async function fetchSpots() {
       const response = await csrfFetch("/api/spots/current");
-      
+
       const responseData = await response.json();
       setCurrentSpots(responseData.Spots);
     }
@@ -61,10 +61,10 @@ function ManageSpots() {
       </button>
 
       {currentSpots.length > 0 ? (
-        <ul className="spots-list">
+        <ul className="manage-spots-list">
           {currentSpots.map(
             ({ id, previewImage, city, state, price, avgRating, name }) => (
-              <li key={id} className="single-spot">
+              <li key={id} className="manage-single-spot">
                 <Link to={`/spots/${id}`}>
                   <img
                     id="manage-spot-images"
@@ -75,12 +75,12 @@ function ManageSpots() {
                     data-tooltip-place="top"
                   />
                 </Link>
-                <div className="spot-info">
-                  <p id="city-state">
+                <div className="manage-spot-info">
+                  <p id="manage-city-state">
                     {city}, {state}
                   </p>
-                  <p id="price">${price} night</p>
-                  <p id="avgRating">
+                  <p id="manage-price">${price} night</p>
+                  <p id="manage-avgRating">
                     <i class="fa-solid fa-star"></i>
                     {avgRating === null
                       ? "New"
@@ -89,7 +89,7 @@ function ManageSpots() {
                 </div>
 
                 <button
-                  className="buttons"
+                  className="manage-spot-buttons"
                   onClick={() => handleUpdateSpot(id)}
                 >
                   Update

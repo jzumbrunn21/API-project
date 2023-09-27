@@ -14,7 +14,7 @@ function SpotsList() {
   }, [dispatch]);
 
   return (
-    <>
+    <div className="wrapper">
       <ul className="spots-list">
         {spotList.map(
           ({ id, previewImage, city, state, price, avgRating, name }) => (
@@ -46,7 +46,7 @@ function SpotsList() {
         )}
       </ul>
       <Tooltip id="tooltip" />
-    </>
+    </div>
   );
 }
 

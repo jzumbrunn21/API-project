@@ -8,7 +8,8 @@
 
   border-bottom: 2px solid lightgray;
 }
-.spotsList {
+.navigation-spotsList {
+  list-style: none;
   display: flex;
   max-height: 70px;
   width: 100%;

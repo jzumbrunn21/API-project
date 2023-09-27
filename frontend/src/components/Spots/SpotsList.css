@@ -1,26 +1,24 @@
-ul {
+/* .wrapper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+} */
+
+.spots-list {
   list-style: none;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-
-li {
-  /* border: 1px solid black; */
-  padding: 8px;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
+  gap: -10px;
 }
 
 .spotImage {
-  display: grid;
   height: 250px;
   width: 250px;
   max-width: 100%;
   border: 2px solid black;
+  border-radius: 5px;
 }
+
 .spot-info {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -43,19 +41,4 @@ img {
   display: flex;
   justify-content: right;
   margin-right: 5px;
-}
-@media (max-width: 1200px) {
-  .spots-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-@media (max-width: 800px) {
-  .spots-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-@media (max-width: 600px) {
-  .spots-list {
-    grid-template-columns: repeat(1, 1fr);
-  }
 }

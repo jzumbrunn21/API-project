@@ -10,7 +10,7 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className="header-container">
-      <ul className="spotsList">
+      <ul className="navigation-spotsList">
         <li>
           <NavLink exact to="/">
             <img
