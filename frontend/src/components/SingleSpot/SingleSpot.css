@@ -49,6 +49,8 @@
   grid-column: 1;
   position: relative;
   top: 50px;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 #name {
   grid-row: 1;
