@@ -295,21 +295,21 @@ function CreateNewSpot({ spot }) {
             onChange={(e) => setUrl1(e.target.value)}
             placeholder="Image URL"
           />
-          {errors.url1 && <div className="creation-errors">{errors.url2}</div>}
+          {errors.url2 && <div className="creation-errors">{errors.url2}</div>}
           <input
             type="text"
             value={url2}
             onChange={(e) => setUrl2(e.target.value)}
             placeholder="Image URL"
           />
-          {errors.url1 && <div className="creation-errors">{errors.url3}</div>}
+          {errors.url3 && <div className="creation-errors">{errors.url3}</div>}
           <input
             type="text"
             value={url3}
             onChange={(e) => setUrl3(e.target.value)}
             placeholder="Image URL"
           />
-          {errors.url1 && <div className="creation-errors">{errors.url4}</div>}
+          {errors.url4 && <div className="creation-errors">{errors.url4}</div>}
           <input
             type="text"
             value={url4}
